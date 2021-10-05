@@ -15,8 +15,9 @@
 		04D90A04270CC6C100D5DEF7 /* PPTurlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A03270CC6C100D5DEF7 /* PPTurlTests.swift */; };
 		04D90A0E270CC6C100D5DEF7 /* PPTurlUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A0D270CC6C100D5DEF7 /* PPTurlUITests.swift */; };
 		04D90A10270CC6C100D5DEF7 /* PPTurlUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A0F270CC6C100D5DEF7 /* PPTurlUITestsLaunchTests.swift */; };
-		04D90A1F270CE10000D5DEF7 /* API in Resources */ = {isa = PBXBuildFile; fileRef = 04D90A1E270CE10000D5DEF7 /* API */; };
-		04D90A21270CE11D00D5DEF7 /* Data Model in Resources */ = {isa = PBXBuildFile; fileRef = 04D90A20270CE11D00D5DEF7 /* Data Model */; };
+		04D90A23270CE3EE00D5DEF7 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A22270CE3EE00D5DEF7 /* HomeVC.swift */; };
+		04D90A26270CE7C800D5DEF7 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A25270CE7C800D5DEF7 /* API.swift */; };
+		04D90A29270CE80500D5DEF7 /* BuzzsproutEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A28270CE80500D5DEF7 /* BuzzsproutEpisode.swift */; };
 		E3F66844D2A4FCD8FF3DCE8C /* Pods_PPTurl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED4C5D2F67FE83192807B39 /* Pods_PPTurl.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,8 +51,9 @@
 		04D90A09270CC6C100D5DEF7 /* PPTurlUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPTurlUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D90A0D270CC6C100D5DEF7 /* PPTurlUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPTurlUITests.swift; sourceTree = "<group>"; };
 		04D90A0F270CC6C100D5DEF7 /* PPTurlUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPTurlUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		04D90A1E270CE10000D5DEF7 /* API */ = {isa = PBXFileReference; lastKnownFileType = folder; path = API; sourceTree = "<group>"; };
-		04D90A20270CE11D00D5DEF7 /* Data Model */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Data Model"; sourceTree = "<group>"; };
+		04D90A22270CE3EE00D5DEF7 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		04D90A25270CE7C800D5DEF7 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		04D90A28270CE80500D5DEF7 /* BuzzsproutEpisode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuzzsproutEpisode.swift; sourceTree = "<group>"; };
 		5E1BBF948A89C87FD9CCF862 /* Pods-PPTurl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPTurl.release.xcconfig"; path = "Target Support Files/Pods-PPTurl/Pods-PPTurl.release.xcconfig"; sourceTree = "<group>"; };
 		6589FD2C5222F425B346CE2D /* Pods-PPTurl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPTurl.debug.xcconfig"; path = "Target Support Files/Pods-PPTurl/Pods-PPTurl.debug.xcconfig"; sourceTree = "<group>"; };
 		7ED4C5D2F67FE83192807B39 /* Pods_PPTurl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PPTurl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,10 +110,11 @@
 		04D909EB270CC6BC00D5DEF7 /* PPTurl */ = {
 			isa = PBXGroup;
 			children = (
-				04D90A20270CE11D00D5DEF7 /* Data Model */,
-				04D90A1E270CE10000D5DEF7 /* API */,
+				04D90A27270CE7EA00D5DEF7 /* Model */,
+				04D90A24270CE7AA00D5DEF7 /* API */,
 				04D909EC270CC6BC00D5DEF7 /* AppDelegate.swift */,
 				04D909F0270CC6BC00D5DEF7 /* ViewController.swift */,
+				04D90A22270CE3EE00D5DEF7 /* HomeVC.swift */,
 				04D909F2270CC6BC00D5DEF7 /* Main.storyboard */,
 				04D909F5270CC6C000D5DEF7 /* Assets.xcassets */,
 				04D909F7270CC6C000D5DEF7 /* LaunchScreen.storyboard */,
@@ -135,6 +138,22 @@
 				04D90A0F270CC6C100D5DEF7 /* PPTurlUITestsLaunchTests.swift */,
 			);
 			path = PPTurlUITests;
+			sourceTree = "<group>";
+		};
+		04D90A24270CE7AA00D5DEF7 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				04D90A25270CE7C800D5DEF7 /* API.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		04D90A27270CE7EA00D5DEF7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04D90A28270CE80500D5DEF7 /* BuzzsproutEpisode.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		B19B7ECA0531B3F7C7299763 /* Pods */ = {
@@ -261,8 +280,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				04D909F9270CC6C000D5DEF7 /* LaunchScreen.storyboard in Resources */,
-				04D90A21270CE11D00D5DEF7 /* Data Model in Resources */,
-				04D90A1F270CE10000D5DEF7 /* API in Resources */,
 				04D909F6270CC6C000D5DEF7 /* Assets.xcassets in Resources */,
 				04D909F4270CC6BC00D5DEF7 /* Main.storyboard in Resources */,
 			);
@@ -331,7 +348,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D90A23270CE3EE00D5DEF7 /* HomeVC.swift in Sources */,
 				04D909F1270CC6BC00D5DEF7 /* ViewController.swift in Sources */,
+				04D90A29270CE80500D5DEF7 /* BuzzsproutEpisode.swift in Sources */,
+				04D90A26270CE7C800D5DEF7 /* API.swift in Sources */,
 				04D909ED270CC6BC00D5DEF7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
