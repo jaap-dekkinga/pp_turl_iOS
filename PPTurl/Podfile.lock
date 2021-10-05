@@ -1,0 +1,20 @@
+PODS:
+  - Alamofire (5.4.3)
+  - FeedKit (9.1.2)
+
+DEPENDENCIES:
+  - Alamofire
+  - FeedKit
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - FeedKit
+
+SPEC CHECKSUMS:
+  Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  FeedKit: 71653273ab08e618cd6fd1301ca08fc02dca6a9e
+
+PODFILE CHECKSUM: f645e2f63e6114028c4ab2baccc402c71c91f827
+
+COCOAPODS: 1.10.1
