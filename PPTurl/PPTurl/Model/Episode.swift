@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct BuzzsproutEpisode: Codable {
+struct Episode: Codable {
     
     let id: Int
     let title: String

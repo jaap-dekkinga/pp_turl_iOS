@@ -17,7 +17,7 @@
 		04D90A10270CC6C100D5DEF7 /* PPTurlUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A0F270CC6C100D5DEF7 /* PPTurlUITestsLaunchTests.swift */; };
 		04D90A23270CE3EE00D5DEF7 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A22270CE3EE00D5DEF7 /* HomeVC.swift */; };
 		04D90A26270CE7C800D5DEF7 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A25270CE7C800D5DEF7 /* API.swift */; };
-		04D90A29270CE80500D5DEF7 /* BuzzsproutEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A28270CE80500D5DEF7 /* BuzzsproutEpisode.swift */; };
+		04D90A29270CE80500D5DEF7 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D90A28270CE80500D5DEF7 /* Episode.swift */; };
 		E3F66844D2A4FCD8FF3DCE8C /* Pods_PPTurl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ED4C5D2F67FE83192807B39 /* Pods_PPTurl.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +53,7 @@
 		04D90A0F270CC6C100D5DEF7 /* PPTurlUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPTurlUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		04D90A22270CE3EE00D5DEF7 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		04D90A25270CE7C800D5DEF7 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		04D90A28270CE80500D5DEF7 /* BuzzsproutEpisode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuzzsproutEpisode.swift; sourceTree = "<group>"; };
+		04D90A28270CE80500D5DEF7 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		5E1BBF948A89C87FD9CCF862 /* Pods-PPTurl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPTurl.release.xcconfig"; path = "Target Support Files/Pods-PPTurl/Pods-PPTurl.release.xcconfig"; sourceTree = "<group>"; };
 		6589FD2C5222F425B346CE2D /* Pods-PPTurl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PPTurl.debug.xcconfig"; path = "Target Support Files/Pods-PPTurl/Pods-PPTurl.debug.xcconfig"; sourceTree = "<group>"; };
 		7ED4C5D2F67FE83192807B39 /* Pods_PPTurl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PPTurl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,7 +151,7 @@
 		04D90A27270CE7EA00D5DEF7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				04D90A28270CE80500D5DEF7 /* BuzzsproutEpisode.swift */,
+				04D90A28270CE80500D5DEF7 /* Episode.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -350,7 +350,7 @@
 			files = (
 				04D90A23270CE3EE00D5DEF7 /* HomeVC.swift in Sources */,
 				04D909F1270CC6BC00D5DEF7 /* ViewController.swift in Sources */,
-				04D90A29270CE80500D5DEF7 /* BuzzsproutEpisode.swift in Sources */,
+				04D90A29270CE80500D5DEF7 /* Episode.swift in Sources */,
 				04D90A26270CE7C800D5DEF7 /* API.swift in Sources */,
 				04D909ED270CC6BC00D5DEF7 /* AppDelegate.swift in Sources */,
 			);

@@ -7,7 +7,7 @@ class API {
     //Singleton
     static let shared = API()
     
-    public func getEpisodes(completion: @escaping ([BuzzsproutEpisode], Int) -> Void) {
+    public func getEpisodes(completion: @escaping ([Episode], Int) -> Void) {
     
         let url = "https://www.buzzsprout.com/api/1865534/episodes.json"
         let headers : HTTPHeaders =  [
@@ -22,30 +22,40 @@ class API {
                 return
             }
 
-            var episodes: [BuzzsproutEpisode] = []
+            var episodes: [Episode] = []
             var count = 0
             results.forEach { (item) in
                 count += 1
-                episodes.append(BuzzsproutEpisode(data: item))
+                episodes.append(Episode(data: item))
             }
 
             completion(episodes, count)
         }
+    }
+    
+    public func downloadEpisode(episode: Episode, completion: @escaping (String) -> Void, progressTracker: @escaping (Double) -> Void) {
+        let location = DownloadRequest.suggestedDownloadDestination()
+        AF.download(episode.audio_url, to: location).downloadProgress {
+            (progress) in
+                DispatchQueue.main.async {
+                   progressTracker(progress.fractionCompleted)
+                }
+            }.response { (res) in
+                let fileName = res.fileURL?.absoluteString
+                DispatchQueue.main.async {
+                    completion(fileName ?? episode.audio_url)
+                }
+        }
         
-//        Alamofire.request(url, method: .get, encoding: URLEncoding.queryString, headers: headers).responseJSON {(response) in
-//            guard let results = response.value as? [[String: Any]] else {
-//                completion([], 0)
-//                return
-//            }
-//
-//            var episodes: [BuzzsproutEpisode] = []
-//            var count = 0
-//            results.forEach { (item) in
-//                count += 1
-//                episodes.append(BuzzsproutEpisode(data: item))
-//            }
-//
-//            completion(episodes, count)
+//        Alamofire.download(episode.audio_url ?? "", to: location).downloadProgress { (progress) in
+//                DispatchQueue.main.async {
+//                   progressTracker(progress.fractionCompleted)
+//                }
+//            }.response { (res) in
+//                let fileName = res.destinationURL?.absoluteString
+//                DispatchQueue.main.async {
+//                    completion(fileName ?? episode.audio_url ?? "")
+//                }
 //        }
     }
 }

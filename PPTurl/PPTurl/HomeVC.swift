@@ -9,7 +9,7 @@ import UIKit
 
 class HomeVC: UIViewController {
     
-    var episodes : [BuzzsproutEpisode] = []
+    var episodes : [Episode] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
