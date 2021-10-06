@@ -42,6 +42,18 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let download = UIContextualAction(style: .destructive, title: "Download") { (action, view, completion) in
+            
+            // Your Logic here
+            completion(true)
+        }
+        
+        let config = UISwipeActionsConfiguration(actions: [download])
+        config.performsFirstActionWithFullSwipe = false
+        return config
+    }
 
     /*
     // MARK: - Navigation
