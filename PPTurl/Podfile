@@ -9,5 +9,6 @@ target 'PPTurl' do
   pod 'Alamofire' 
   pod 'FeedKit'
   pod 'SDWebImage', '~> 5.0'
+  pod 'SVProgressHUD'
 
 end

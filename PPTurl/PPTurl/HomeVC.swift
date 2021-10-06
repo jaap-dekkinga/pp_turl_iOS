@@ -6,12 +6,12 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    
-    
     var episodes : [Episode] = []
+    
     @IBOutlet var episodesTable: UITableView!
     
     override func viewDidLoad() {
@@ -47,13 +47,40 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let download = UIContextualAction(style: .destructive, title: "Download") { (action, view, completion) in
             
             // Your Logic here
+            self.downloadEpisode(index: indexPath.row)
             completion(true)
         }
-        
+        download.backgroundColor = .optionGreen
         let config = UISwipeActionsConfiguration(actions: [download])
         config.performsFirstActionWithFullSwipe = false
         return config
     }
+    
+    func downloadEpisode(index : Int) {
+        
+        var episode = self.episodes[index]
+        
+        SVProgressHUD.show()
+        API.shared.downloadEpisode(episode: episode) { [weak self]
+            (file) in
+            SVProgressHUD.dismiss()
+            episode.audio_url = file
+            
+            if UserDefaults.standard.addToDownloads(episode: episode) {
+                self?.addedToDownloads()
+            } else {
+                self?.showError(message: .downloadFailed)
+            }
+        } progressTracker: { completed in
+            //SVProgressHUD.showProgress(Float(completed) * 100)
+        }
+    }
+    
+    func addedToDownloads() {
+        //SVProgressHUD.dismiss()
+    }
+    
+    
 
     /*
     // MARK: - Navigation

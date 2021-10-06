@@ -12,8 +12,8 @@ struct Episode: Codable {
     
     let id: Int
     let title: String
-    let audio_url: String
-    let artwork_url: String
+    var audio_url: String
+    var artwork_url: String
     let description: String
     let artist: String
     let published_at: String
@@ -59,5 +59,10 @@ struct Episode: Codable {
         dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
         
         self.published_at = dateFormatter.string(from: date!)
+    }
+    
+    func isEqual(_ object: Any?) -> Bool {
+        guard let otherEpisode = object as? Episode else { return false }
+        return otherEpisode.published_at == published_at && otherEpisode.title == title
     }
 }

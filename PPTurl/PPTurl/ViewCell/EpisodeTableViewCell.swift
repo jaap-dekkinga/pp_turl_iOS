@@ -30,7 +30,7 @@ class EpisodeTableViewCell: UITableViewCell {
     func setEpisode(episode : Episode) {
         
         titleLbl.text = episode.title
-        descLbl.text = episode.description
+        descLbl.text = episode.description.sanatizeHTML()
         publishDate.text = episode.published_at
         artImg.sd_setImage(with: URL(string: episode.artwork_url), completed: nil)
     }
