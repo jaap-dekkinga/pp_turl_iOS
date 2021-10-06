@@ -15,6 +15,15 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        loadEpisodes()
+    }
+    
+    func loadEpisodes() {
+        API.shared.getEpisodes { result, resultCnt in
+            if (resultCnt > 0) {
+                self.episodes = result
+            }
+        }
     }
     
 
