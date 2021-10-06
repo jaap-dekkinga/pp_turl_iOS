@@ -7,10 +7,13 @@
 
 import UIKit
 
-class HomeVC: UIViewController {
+class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    
     
     var episodes : [Episode] = []
-
+    @IBOutlet var episodesTable: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,10 +25,23 @@ class HomeVC: UIViewController {
         API.shared.getEpisodes { result, resultCnt in
             if (resultCnt > 0) {
                 self.episodes = result
+                self.episodesTable.reloadData()
             }
         }
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.episodes.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "episode_cell") as! EpisodeTableViewCell
+        let episode = self.episodes[indexPath.row]
+        cell.setEpisode(episode: episode)
+        
+        return cell
+    }
 
     /*
     // MARK: - Navigation

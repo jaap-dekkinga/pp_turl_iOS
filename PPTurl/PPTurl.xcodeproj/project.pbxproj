@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0430EB55270D5C1000E0C508 /* EpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0430EB54270D5C1000E0C508 /* EpisodeTableViewCell.swift */; };
 		04D909ED270CC6BC00D5DEF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D909EC270CC6BC00D5DEF7 /* AppDelegate.swift */; };
 		04D909F1270CC6BC00D5DEF7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D909F0270CC6BC00D5DEF7 /* ViewController.swift */; };
 		04D909F4270CC6BC00D5DEF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04D909F2270CC6BC00D5DEF7 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0430EB54270D5C1000E0C508 /* EpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		04D909E9270CC6BC00D5DEF7 /* PPTurl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPTurl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D909EC270CC6BC00D5DEF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04D909F0270CC6BC00D5DEF7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +87,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0430EB53270D5BE900E0C508 /* ViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				0430EB54270D5C1000E0C508 /* EpisodeTableViewCell.swift */,
+			);
+			path = ViewCell;
+			sourceTree = "<group>";
+		};
 		04D909E0270CC6BC00D5DEF7 = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +120,7 @@
 		04D909EB270CC6BC00D5DEF7 /* PPTurl */ = {
 			isa = PBXGroup;
 			children = (
+				0430EB53270D5BE900E0C508 /* ViewCell */,
 				04D90A27270CE7EA00D5DEF7 /* Model */,
 				04D90A24270CE7AA00D5DEF7 /* API */,
 				04D909EC270CC6BC00D5DEF7 /* AppDelegate.swift */,
@@ -351,6 +362,7 @@
 				04D90A23270CE3EE00D5DEF7 /* HomeVC.swift in Sources */,
 				04D909F1270CC6BC00D5DEF7 /* ViewController.swift in Sources */,
 				04D90A29270CE80500D5DEF7 /* Episode.swift in Sources */,
+				0430EB55270D5C1000E0C508 /* EpisodeTableViewCell.swift in Sources */,
 				04D90A26270CE7C800D5DEF7 /* API.swift in Sources */,
 				04D909ED270CC6BC00D5DEF7 /* AppDelegate.swift in Sources */,
 			);

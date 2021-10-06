@@ -15,7 +15,7 @@ class API {
                     "Accept": "application/json",
                     "Content-Type": "application/json"]
         
-        AF.request(url, method: .get,headers: headers).responseJSON{(response) in
+        AF.request(url, method: .get,headers: headers).responseJSON {(response) in
             
             guard let results = response.value as? [[String: Any]] else {
                 completion([], 0)
@@ -34,6 +34,7 @@ class API {
     }
     
     public func downloadEpisode(episode: Episode, completion: @escaping (String) -> Void, progressTracker: @escaping (Double) -> Void) {
+        
         let location = DownloadRequest.suggestedDownloadDestination()
         AF.download(episode.audio_url, to: location).downloadProgress {
             (progress) in
@@ -46,16 +47,5 @@ class API {
                     completion(fileName ?? episode.audio_url)
                 }
         }
-        
-//        Alamofire.download(episode.audio_url ?? "", to: location).downloadProgress { (progress) in
-//                DispatchQueue.main.async {
-//                   progressTracker(progress.fractionCompleted)
-//                }
-//            }.response { (res) in
-//                let fileName = res.destinationURL?.absoluteString
-//                DispatchQueue.main.async {
-//                    completion(fileName ?? episode.audio_url ?? "")
-//                }
-//        }
     }
 }
