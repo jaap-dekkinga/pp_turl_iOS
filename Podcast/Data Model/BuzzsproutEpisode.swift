@@ -24,7 +24,7 @@ struct BuzzsproutEpisode: Codable {
     init(data: [String: Any]) {
         self.id = data["id"] as? Int ?? 0
         
-        self.artist = data["title"] as? String ?? "Unknown"
+        self.artist = data["artist"] as? String ?? "Unknown"
         self.title = data["title"] as? String ?? "No Title"
         self.audio_url = data["audio_url"] as? String ?? ""
         self.artwork_url = data["artwork_url"] as? String ?? ""
