@@ -4,6 +4,7 @@ class Settings: UIViewController {
 
     @IBOutlet var autoDownloadSwitch: UISwitch!
     @IBOutlet var autoDeleteSwitch: UISwitch!
+    @IBOutlet var searchSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -11,7 +12,10 @@ class Settings: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-
+    @IBAction func searchCategoryChanged(_ sender: UISwitch) {
+        isApplePodcast = sender.isOn
+    }
+    
     /*
     // MARK: - Navigation
 

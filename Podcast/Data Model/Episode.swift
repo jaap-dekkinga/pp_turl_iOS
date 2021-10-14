@@ -21,7 +21,11 @@ struct Episode: Codable {
     init(data: [String: Any]) {
         self.title = data["title"] as? String ?? "No Title"
         self.description = data["description"] as? String ?? ""
-        self.date = data["published_at"] as? String ?? ""
+        
+        let dateFormat = DateFormatter()
+        dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS-HH:mm"
+        self.date = dateFormat.date(from: data["published_at"] as! String)?.formatDate() ?? "Unknown"
+        //self.date = data["published_at"] as? String ?? ""
         self.author = data["artist"] as? String ?? "Unknown"
         self.url = data["audio_url"] as? String ?? ""
         self.artwork = data["artwork_url"] as? String ?? ""

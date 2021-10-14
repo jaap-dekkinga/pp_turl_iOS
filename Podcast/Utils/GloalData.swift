@@ -3,6 +3,7 @@ import Foundation
 //MARK:- Lists
 var favourites: [Podcast] = []
 var downloads: [Episode] = []
+var isApplePodcast : Bool = true
 
 //MARK:- Contain Functions
 func isFavourited(other: Podcast) -> Bool{

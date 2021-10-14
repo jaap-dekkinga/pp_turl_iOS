@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="autoDeleteSwitch" destination="GCf-Os-FSh" id="F5h-JF-ixb"/>
                 <outlet property="autoDownloadSwitch" destination="z9O-Dp-02R" id="fDt-uY-c4y"/>
+                <outlet property="searchSwitch" destination="Ai5-8s-SQg" id="Xjd-rZ-C83"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -92,6 +93,9 @@
                                 <constraint firstAttribute="height" constant="31" id="4jB-3I-4by"/>
                                 <constraint firstAttribute="width" constant="49" id="zby-Lr-U9s"/>
                             </constraints>
+                            <connections>
+                                <action selector="searchCategoryChanged:" destination="-1" eventType="valueChanged" id="Htq-Oj-zX6"/>
+                            </connections>
                         </switch>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>

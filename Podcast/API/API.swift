@@ -50,6 +50,30 @@ class API {
         }
     }
     
+    public func fetchEpisodesBuzz(completion: @escaping ([Episode], Int) -> Void) {
+    
+        let url = "https://www.buzzsprout.com/api/1865534/episodes.json"
+        let headers = [
+                    "Authorization": "Token token=135e81a09c9db21a3893046af8b3d080",
+                    "Accept": "application/json",
+                    "Content-Type": "application/json" ]
+        Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.queryString, headers: headers).responseJSON {(response) in
+            guard let results = response.value as? [[String: Any]] else {
+                completion([], 0)
+                return
+            }
+            
+            var episodes: [Episode] = []
+            var count = 0
+            results.forEach { (item) in
+                count += 1
+                episodes.append(Episode(data: item))
+            }
+        
+            completion(episodes, count)
+        }
+    }
+    
     public func fetchEpisodesFeed(urlString: String, completions: @escaping (RSSFeed?) -> Void) {
         if let result = dataCache.object(forKey: urlString as AnyObject) as? RSSFeed{
             completions(result)

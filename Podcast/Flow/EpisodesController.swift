@@ -72,7 +72,11 @@ class EpisodesController: BaseViewController {
     override func setup() {
         view.backgroundColor = .white
         setupTable()
-        addLoader()
+        
+        if (isApplePodcast) {
+            addLoader()
+        }
+        
     }
     
     @objc fileprivate func favouritePodcast() {

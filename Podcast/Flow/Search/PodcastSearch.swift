@@ -77,15 +77,30 @@ extension PodcastSearch: UISearchBarDelegate {
         self.podcasts = []
         isSearching = true
         tableView.reloadData()
-        let searchText = searchBar.text!
-        if searchText.isEmpty { return }
         
-        API.shared.searchPodcasts(searchText: searchText) {[unowned self] (searchedPodcasts, count) in
-            self.podcasts = searchedPodcasts
-            self.isSearching = false
-            self.headerString = "We couldn't find any results for\n\n\"\(searchText)\"\n\nPlease try again."
-            self.tableView.reloadData()
+        if (isApplePodcast) {
+            let searchText = searchBar.text!
+            if searchText.isEmpty { return }
+            
+            API.shared.searchPodcasts(searchText: searchText) {[unowned self] (searchedPodcasts, count) in
+                self.podcasts = searchedPodcasts
+                self.isSearching = false
+                self.headerString = "We couldn't find any results for\n\n\"\(searchText)\"\n\nPlease try again."
+                self.tableView.reloadData()
+            }
+            
+            
+        } else {
+            
+            API.shared.fetchEpisodesBuzz { fetchedEpisodes, count in
+                self.searchController.dismiss(animated: true, completion: nil)
+                let controller = EpisodesController()
+                controller.episodes = fetchedEpisodes
+                
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
         }
+        
         searchController.dismiss(animated: true, completion: nil)
     }
     
