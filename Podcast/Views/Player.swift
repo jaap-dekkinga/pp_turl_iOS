@@ -170,6 +170,54 @@ class Player: UIView {
         let stack = UIStackView(arrangedSubviews: [dummyView1, backButton, dummyView2, playButton, dummyView3, forwardButton, dummyView4])
         stack.axis = .horizontal
         stack.distribution = .fillEqually
+        stack.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        return stack
+    }()
+    
+    // Add social buttons
+    lazy var dislikeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "dislike").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.addTarget(self, action: #selector(dislike), for: .touchUpInside)
+        button.tintColor = .black
+        return button
+    }()
+    
+    lazy var agreeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "agree").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.addTarget(self, action: #selector(agree), for: .touchUpInside)
+        button.tintColor = .black
+        return button
+    }()
+    
+    lazy var likeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "like").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.addTarget(self, action: #selector(like), for: .touchUpInside)
+        button.tintColor = .black
+        return button
+    }()
+    
+    lazy var loveButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "love").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.addTarget(self, action: #selector(love), for: .touchUpInside)
+        button.tintColor = .black
+        return button
+    }()
+    
+    lazy var socialsStack: UIStackView = {
+        let dummyView1 = UIView()
+        let dummyView2 = UIView()
+        let dummyView3 = UIView()
+        let dummyView4 = UIView()
+        let dummyView5 = UIView()
+        
+        let stack = UIStackView(arrangedSubviews: [dislikeButton, dummyView2, agreeButton, dummyView3, likeButton, dummyView4, loveButton])
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.heightAnchor.constraint(equalToConstant: 80).isActive = true
         return stack
     }()
     
@@ -208,7 +256,10 @@ class Player: UIView {
     }()
     
     lazy var stackView: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [dissmissButton, episodeImage,  progressSlider, timeStack, title, author, controlsStack, volumeStack])
+//        let stack = UIStackView(arrangedSubviews: [dissmissButton, episodeImage,  progressSlider, timeStack, title, author, controlsStack, volumeStack])
+        let dummyView1 = UIView()
+        dummyView1.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        let stack = UIStackView(arrangedSubviews: [dissmissButton, episodeImage,  progressSlider, timeStack, title, author, controlsStack, socialsStack, dummyView1])
         stack.axis = .vertical
         stack.backgroundColor = .white
         
@@ -340,6 +391,23 @@ class Player: UIView {
     @objc fileprivate func backward() {
        seekTo(delta: -10)
     }
+    
+    @objc fileprivate func dislike() {
+        dislikeButton.setImage(#imageLiteral(resourceName: "dislike_sel").withRenderingMode(.alwaysTemplate), for: .normal)
+    }
+    
+    @objc fileprivate func agree() {
+        agreeButton.setImage(#imageLiteral(resourceName: "agree_sel").withRenderingMode(.alwaysTemplate), for: .normal)
+    }
+    
+    @objc fileprivate func like() {
+        likeButton.setImage(#imageLiteral(resourceName: "like_sel").withRenderingMode(.alwaysTemplate), for: .normal)
+    }
+    
+    @objc fileprivate func love() {
+        loveButton.setImage(#imageLiteral(resourceName: "love_sel").withRenderingMode(.alwaysTemplate), for: .normal)
+    }
+    
     
     @objc fileprivate func changeVolume(_ slider: UISlider) {
         player.volume = slider.value
