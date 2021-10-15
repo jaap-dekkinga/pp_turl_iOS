@@ -214,7 +214,7 @@ class Player: UIView {
         let dummyView4 = UIView()
         let dummyView5 = UIView()
         
-        let stack = UIStackView(arrangedSubviews: [dislikeButton, dummyView2, agreeButton, dummyView3, likeButton, dummyView4, loveButton])
+        let stack = UIStackView(arrangedSubviews: [dislikeButton, dummyView2, likeButton, dummyView4, loveButton])
         stack.axis = .horizontal
         stack.distribution = .fillEqually
         stack.heightAnchor.constraint(equalToConstant: 80).isActive = true
