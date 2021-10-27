@@ -16,7 +16,7 @@ class Main: UITabBarController {
         let favourites = getController(root: Favourites(), selectedImage: #imageLiteral(resourceName: "playSelected"), image: #imageLiteral(resourceName: "play"), title: "Favourites")
         let search = getController(root: PodcastSearch(), selectedImage: #imageLiteral(resourceName: "searchSelected"), image: #imageLiteral(resourceName: "search"), title: "Search")
         let downloads = getController(root: Downloads(), selectedImage: #imageLiteral(resourceName: "downloadSelected"), image: #imageLiteral(resourceName: "download"), title: "Downloads")
-        let setting = getController(root: Settings(), selectedImage: UIImage(named: "settingSelected")!, image: UIImage(named: "setting")!, title: "Settings")
+        let setting = getController(root: Settings(), selectedImage: UIImage(named: "setting_sel")!, image: UIImage(named: "setting")!, title: "Settings")
         let bookmark = getController(root: Bookmark(), selectedImage: UIImage(named: "bookmark_sel")!, image: UIImage(named: "bookmark")!, title: "Bookmark")
         viewControllers = [favourites, search, downloads, bookmark, setting]
         //viewControllers = [search, downloads]

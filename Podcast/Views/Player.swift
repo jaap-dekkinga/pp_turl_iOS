@@ -86,6 +86,16 @@ class Player: UIView {
         return imageView
     }()
     
+    lazy var bookmarkButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "bookmark_yellow").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(play), for: .touchUpInside)
+        button.tintColor = .yellow
+        button.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        return button
+    }()
+    
     lazy var currentTime: UILabel = {
         let label = UILabel()
         label.textAlignment = .left

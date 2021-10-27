@@ -1,3 +1,11 @@
+//
+//  Bookmark.swift
+//  Podcast
+//
+//  Created by mac on 10/15/21.
+//  Copyright © 2021 Sholom. All rights reserved.
+//
+
 import Foundation
 
 struct Podcast: Codable {

@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "outline_settings_black_18pt_2x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "setting@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
