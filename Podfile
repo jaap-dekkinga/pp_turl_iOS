@@ -8,5 +8,6 @@ target 'Podcast' do
   # Pods for Podcast
   pod 'Alamofire' 
   pod 'FeedKit'
+  pod 'TuneURL'
 
 end
