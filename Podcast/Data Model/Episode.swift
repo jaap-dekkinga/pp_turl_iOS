@@ -16,6 +16,7 @@ struct Episode: Codable {
         self.date = feed.pubDate?.formatDate() ?? "Unknown"
         self.url = feed.enclosure?.attributes?.url
         self.author = feed.iTunes?.iTunesAuthor ?? "Unknown"
+        self.artwork = feed.iTunes?.iTunesImage?.attributes?.href ?? ""
     }
     
     init(data: [String: Any]) {

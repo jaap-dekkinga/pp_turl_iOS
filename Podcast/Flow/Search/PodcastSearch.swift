@@ -6,6 +6,7 @@ class PodcastSearch: BaseViewController {
     private var podcasts:[Podcast] = []
     var headerString: String = "Search the largest library of podcasts by title or artist's name."
     private var isSearching = false
+    private var rssFeedUrl: String = "https://media.rss.com/tuneurl/feed.xml"
     
     lazy var tableView: UITableView = {
         let table = UITableView()
@@ -88,17 +89,29 @@ extension PodcastSearch: UISearchBarDelegate {
                 self.headerString = "We couldn't find any results for\n\n\"\(searchText)\"\n\nPlease try again."
                 self.tableView.reloadData()
             }
-            
-            
         } else {
-            
-            API.shared.fetchEpisodesBuzz { fetchedEpisodes, count in
-                self.searchController.dismiss(animated: true, completion: nil)
-                let controller = EpisodesController()
-                controller.episodes = fetchedEpisodes
+            API.shared.fetchEpisodesFeed(urlString: self.rssFeedUrl) { [weak self] (feed) in
+                guard let feed = feed else { return }
                 
-                self.navigationController?.pushViewController(controller, animated: true)
+                var episodes = [] as! [Episode]
+                for item in feed.items ?? [] {
+                    let newEpisode = Episode(feed: item)
+                    episodes.append(newEpisode)
+                }
+                
+                DispatchQueue.main.async {[weak self] in
+                    let controller = EpisodesController()
+                    controller.episodes = episodes
+                    self!.searchController.dismiss(animated: true, completion: nil)
+                    self?.navigationController?.pushViewController(controller, animated: true)
+                }
             }
+//            API.shared.fetchEpisodesBuzz { fetchedEpisodes, count in
+//                self.searchController.dismiss(animated: true, completion: nil)
+//                let controller = EpisodesController()
+//                controller.episodes = fetchedEpisodes
+//                self.navigationController?.pushViewController(controller, animated: true)
+//            }
         }
         
         searchController.dismiss(animated: true, completion: nil)

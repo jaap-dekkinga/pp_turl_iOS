@@ -1,4 +1,5 @@
 import UIKit
+import TuneURL
 
 class Main: UITabBarController {
 
@@ -6,6 +7,7 @@ class Main: UITabBarController {
     private var minimizedConstraint: NSLayoutConstraint!
     private var colapsedConstraint: NSLayoutConstraint!
     private var coverHeight: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()

@@ -1,6 +1,7 @@
 import UIKit
 import AVKit
 import MediaPlayer
+import TuneURL
 
 protocol PlayerDelegate {
     func minimize()
@@ -338,6 +339,20 @@ class Player: UIView {
         player.play()
         playerBuffered()
         trackProgress()
+        
+        // TuneURL
+        //TuneURL Sample Test
+        DispatchQueue.main.async {
+            print("This is run on the main queue, after the previous code in outer block")
+            guard let url = Bundle.main.url(forResource: "tuneURL_sample", withExtension: "wav") else { return }
+            Detector.processAudio(for: url) { response in
+                if (response.count > 0) {
+                    for tuneURL in response {
+                        
+                    }
+                }
+            }
+        }
     }
     
     fileprivate func enlargeImage() {
@@ -364,6 +379,16 @@ class Player: UIView {
             enlargeImage()
             player.play()
             miniPlay.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
+            
+            //TuneURL
+//            Detector.processAudio(for: URL(string: (episode?.url)!)!) { response in
+//                if (response.count > 0) {
+//                    for tuneURL in response as! [MatchResponse] {
+//
+//                    }
+//                }
+//            }
+            
         } else {
             playButton.setImage(#imageLiteral(resourceName: "playButton").withRenderingMode(.alwaysTemplate), for: .normal)
             player.pause()
