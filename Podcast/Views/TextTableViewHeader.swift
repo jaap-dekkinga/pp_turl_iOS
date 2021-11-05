@@ -22,9 +22,8 @@ class TextTableViewHeader: UIView {
     }
     
     fileprivate func setup() {
-        backgroundColor = .white
-        //Setup Label
         addSubview(label)
         label.fillSuperview(padding: 20)
     }
+
 }

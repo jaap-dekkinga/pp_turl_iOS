@@ -87,7 +87,6 @@ class EpisodeCell: BaseTableViewCell {
     }
     
     override func setup() {
-        backgroundColor = .white
         setupImageView()
         setupStackView()
     }

@@ -14,7 +14,7 @@ class SearchLoadingHeader: UIView {
     }()
     
     let activity: UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(style: .whiteLarge)
+        let activity = UIActivityIndicatorView(style: .large)
         activity.color = .hotBlack
         activity.startAnimating()
         activity.translatesAutoresizingMaskIntoConstraints = false
@@ -43,8 +43,8 @@ class SearchLoadingHeader: UIView {
     }
     
     fileprivate func setup() {
-        backgroundColor = .white
         setupActivityIndicatorView()
         setupLabel()
     }
+
 }

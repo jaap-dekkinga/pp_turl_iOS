@@ -1,13 +1,15 @@
 import Foundation
 
-//MARK:- Lists
-var favourites: [Podcast] = []
-var downloads: [Episode] = []
-var isApplePodcast : Bool = true
+// MARK: - Lists
 
-//MARK:- Contain Functions
-func isFavourited(other: Podcast) -> Bool{
-    for podcast in favourites {
+var favorites: [Podcast] = []
+var downloads: [Episode] = []
+var isApplePodcast: Bool = true
+
+// MARK: -
+
+func isFavorited(other: Podcast) -> Bool{
+    for podcast in favorites {
         if podcast.isEqual(other) {
             return true
         }

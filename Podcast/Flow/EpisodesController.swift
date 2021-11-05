@@ -1,14 +1,16 @@
 import UIKit
 import FeedKit
 
-class EpisodesController: BaseViewController {
-    fileprivate let cellId = "episodesCell"
+class EpisodesController: UIViewController {
+
+	fileprivate let cellId = "episodesCell"
     private var downloadProgress:LoadingView!
-    var podcast: Podcast? {
+
+	var podcast: Podcast? {
         didSet {
             if let podcast = podcast {
                 navigationItem.title = podcast.trackName
-                setupNavigationBarButtons(isFavourite: isFavourited(other: podcast))
+                setupNavigationBarButtons(isFavorite: isFavorited(other: podcast))
                 API.shared.fetchEpisodesFeed(urlString: podcast.feedUrl) {[weak self] (feed) in
                     guard let feed = feed else { return }
                     self?.episodes = []
@@ -26,23 +28,22 @@ class EpisodesController: BaseViewController {
             }
         }
     }
-    
+
     var episodes: [Episode] = []
-    private let activity = UIActivityIndicatorView(style: .gray)
-    
+    private let activity = UIActivityIndicatorView(style: .medium)
+
     lazy var tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.showsVerticalScrollIndicator = true
         let footer = UIView()
-        footer.backgroundColor = .white
         table.tableFooterView = footer
         table.delegate = self
         table.dataSource = self
         table.register(EpisodeCell.self, forCellReuseIdentifier: cellId)
         return table
     }()
-    
+
     fileprivate func setupTable() {
         view.addSubview(tableView)
         tableView.fillSuperview()
@@ -59,42 +60,42 @@ class EpisodesController: BaseViewController {
         activity.removeFromSuperview()
     }
     
-    fileprivate func setupNavigationBarButtons(isFavourite: Bool) {
+    fileprivate func setupNavigationBarButtons(isFavorite: Bool) {
         //Get Fav Button
-        let fav =  UIBarButtonItem(title: "Favourite", style: .plain, target: self, action: #selector(favouritePodcast))
+        let fav =  UIBarButtonItem(title: "Favorite", style: .plain, target: self, action: #selector(favoritePodcast))
         fav.tintColor = .purple
         //Get Heart Icon
         let heartIcon = UIBarButtonItem(image: #imageLiteral(resourceName: "heart").withRenderingMode(.alwaysTemplate), style: .plain, target: nil, action: nil)
         heartIcon.tintColor = .purple
-        navigationItem.rightBarButtonItem = isFavourite ? heartIcon: fav
+        navigationItem.rightBarButtonItem = isFavorite ? heartIcon: fav
     }
-    
-    override func setup() {
-        view.backgroundColor = .white
+
+    override func viewDidLoad() {
+		super.viewDidLoad()
+
         setupTable()
         
         if (isApplePodcast) {
             addLoader()
         }
-        
     }
-    
-    @objc fileprivate func favouritePodcast() {
-        if UserDefaults.standard.addToFavourites(podcast: podcast!) {
-            addedToFavourites()
+
+    @objc fileprivate func favoritePodcast() {
+        if UserDefaults.standard.addToFavorites(podcast: podcast!) {
+            addedToFavorites()
         } else {
-            showError(message: .favouriteFailed)
+            showError(message: .favoriteFailed)
         }
         
     }
     
-    fileprivate func addedToFavourites() {
-        setupNavigationBarButtons(isFavourite: true)
+    fileprivate func addedToFavorites() {
+        setupNavigationBarButtons(isFavorite: true)
         let main = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
         main.viewControllers?[0].tabBarItem.badgeValue = "new"
-        presentConfirmation(image: #imageLiteral(resourceName: "tick"), message: "Podcast Favourited")
+        presentConfirmation(image: #imageLiteral(resourceName: "tick"), message: "Podcast Favorited")
     }
-    
+
     fileprivate func addedToDownloads() {
         downloadProgress.removeFromSuperview()
         let main = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController

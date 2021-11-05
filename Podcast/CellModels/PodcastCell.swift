@@ -50,8 +50,8 @@ class PodcastCell: BaseTableViewCell {
     }
     
     override func setup() {
-        backgroundColor = .white
         setupImageView()
         setupInfoLabel()
     }
+
 }

@@ -2,14 +2,14 @@ import Foundation
 
 extension UserDefaults {
     //MARK:- Keys
-    static let favouritesKey = "favouritesPodcastsKey"
+    static let favoritesKey = "favoritesPodcastsKey"
     static let downloadsKey = "downloadsPodcastsKey"
     
     //MARK:- Remove element functions
-    func removeFavouriteAt(index: Int) -> Bool {
-        let removedPodcast = favourites.remove(at: index)
-        if !saveFavourites() {
-            favourites.insert(removedPodcast, at: index)
+    func removeFavoriteAt(index: Int) -> Bool {
+        let removedPodcast = favorites.remove(at: index)
+        if !saveFavorites() {
+            favorites.insert(removedPodcast, at: index)
             return false
         }
         return true
@@ -25,10 +25,10 @@ extension UserDefaults {
     }
     
     //MARK:- Add element functions
-    func addToFavourites(podcast: Podcast) -> Bool{
-        favourites.append(podcast)
-        if !saveFavourites() {
-            _ = favourites.dropLast()
+    func addToFavorites(podcast: Podcast) -> Bool{
+        favorites.append(podcast)
+        if !saveFavorites() {
+            _ = favorites.dropLast()
             return false
         }
         return true
@@ -44,33 +44,33 @@ extension UserDefaults {
     }
 
     //MARK:- Retrieve List functions
-    func retriveFavourites(){
-        if let data = self.data(forKey: UserDefaults.favouritesKey) {
+    func retrieveFavorites() {
+        if let data = self.data(forKey: UserDefaults.favoritesKey) {
             do {
-                favourites = try JSONDecoder().decode([Podcast].self, from: data)
+                favorites = try JSONDecoder().decode([Podcast].self, from: data)
             } catch let err {
-                debugPrint("Retriving Failed", err)
+                debugPrint("Retrieving Failed", err)
             }
         }
     }
     
-    func retriveDownloads(){
+    func retrieveDownloads() {
         if let data = self.data(forKey: UserDefaults.downloadsKey) {
             do {
                 downloads = try JSONDecoder().decode([Episode].self, from: data)
             } catch let err {
-                debugPrint("Retriving Failed", err)
+                debugPrint("Retrieving Failed", err)
             }
         }
     }
     
     //MARK:- Save List functions
-    private func saveFavourites() -> Bool {
+    private func saveFavorites() -> Bool {
         do {
-            let data = try JSONEncoder().encode(favourites)
-            self.set(data, forKey: UserDefaults.favouritesKey)
+            let data = try JSONEncoder().encode(favorites)
+            self.set(data, forKey: UserDefaults.favoritesKey)
         } catch let err {
-            debugPrint("Saving Back Failed", err)
+            debugPrint("Saving Failed", err)
             return false
         }
         return true
@@ -81,7 +81,7 @@ extension UserDefaults {
             let data = try JSONEncoder().encode(downloads)
             self.set(data, forKey: UserDefaults.downloadsKey)
         } catch let err {
-            debugPrint("Saving Back Failed", err)
+            debugPrint("Saving Failed", err)
             return false
         }
         return true

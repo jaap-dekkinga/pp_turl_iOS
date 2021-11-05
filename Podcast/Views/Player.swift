@@ -65,13 +65,13 @@ class Player: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    lazy var dissmissButton: UIButton = {
+    lazy var dismissButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Dissmiss", for: .normal)
+        button.setTitle("Dismiss", for: .normal)
         
         button.widthAnchor.constraint(equalToConstant: frame.width - 2*outterPadding).isActive = true
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        button.addTarget(self, action: #selector(dissmiss), for: .touchUpInside)
+        button.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
         button.setTitleColor(.hotBlack, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
         return button
@@ -267,13 +267,13 @@ class Player: UIView {
     }()
     
     lazy var stackView: UIStackView = {
-//        let stack = UIStackView(arrangedSubviews: [dissmissButton, episodeImage,  progressSlider, timeStack, title, author, controlsStack, volumeStack])
+//        let stack = UIStackView(arrangedSubviews: [dismissButton, episodeImage,  progressSlider, timeStack, title, author, controlsStack, volumeStack])
         let dummyView1 = UIView()
         dummyView1.heightAnchor.constraint(equalToConstant: 64).isActive = true
-        let stack = UIStackView(arrangedSubviews: [dissmissButton, episodeImage,  progressSlider, timeStack, title, author, controlsStack, socialsStack, dummyView1])
+        let stack = UIStackView(arrangedSubviews: [dismissButton, episodeImage,  progressSlider, timeStack, title, author, controlsStack, socialsStack, dummyView1])
         stack.axis = .vertical
-        stack.backgroundColor = .white
-        
+		stack.backgroundColor = .white
+
         return stack
     }()
     
@@ -295,7 +295,7 @@ class Player: UIView {
     }
     
     fileprivate func setup() {
-        backgroundColor = .white
+		backgroundColor = .white
         setupMainStack()
         setupMiniPlayer()
         NotificationCenter.default.addObserver(self, selector: #selector(playerStalled), name: NSNotification.Name.AVPlayerItemPlaybackStalled, object: nil)
@@ -330,31 +330,33 @@ class Player: UIView {
             label.heightAnchor.constraint(equalToConstant: label.frame.height + 10).isActive = true
         }
     }
-    
+
     fileprivate func startPlaying() {
-        guard let url = generateAudioURL(from:  episode?.url ?? "") else { return }
+        guard let url = generateAudioURL(from: episode?.url ?? "") else { return }
         let item = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: item)
         player.automaticallyWaitsToMinimizeStalling = false
         player.play()
         playerBuffered()
         trackProgress()
-        
-        // TuneURL
-        //TuneURL Sample Test
-        DispatchQueue.main.async {
-            print("This is run on the main queue, after the previous code in outer block")
-            guard let url = Bundle.main.url(forResource: "tuneURL_sample", withExtension: "wav") else { return }
-            Detector.processAudio(for: url) { response in
-                if (response.count > 0) {
-                    for tuneURL in response {
-                        
-                    }
-                }
+
+// TEMP
+		print("podcast url: \(url)")
+
+		if url.isFileURL {
+			Detector.processAudio(for: url) { response in
+//				if (response.count > 0) {
+					DispatchQueue.main.async {
+						print("processed podcast: \(response.count)")
+//						for tuneURL in response {
+//						}
+					}
+//				}
             }
-        }
-    }
-    
+		}
+// ----
+	}
+
     fileprivate func enlargeImage() {
         UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             [unowned self] in
@@ -369,7 +371,7 @@ class Player: UIView {
         })
     }
 
-    @objc fileprivate func dissmiss() {
+    @objc fileprivate func dismiss() {
       delegate.minimize()
     }
     
@@ -408,7 +410,7 @@ class Player: UIView {
             let translation = gesture.translation(in: superview)
             let velocity = gesture.velocity(in: superview)
             if translation.y > 200 || (velocity.y > 500 && translation.y < 200) {
-                dissmiss()
+                dismiss()
                 return
             }
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {

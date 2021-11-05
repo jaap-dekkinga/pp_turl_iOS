@@ -1,7 +1,5 @@
 import UIKit
 
-import UIKit
-
 struct OptionButton {
     var image: UIImage
     var title: String
@@ -62,17 +60,16 @@ class OptionSheet: UIViewController {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
         return view
     }()
     
     private lazy var cancel: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .purple
-        button.setTitle("Dissmiss", for: .normal)
+        button.setTitle("Dismiss", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
-        button.addTarget(self, action: #selector(dissmissPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(dismissPressed), for: .touchUpInside)
         return button
     }()
     
@@ -100,7 +97,7 @@ class OptionSheet: UIViewController {
             }
         }
     }
-    
+
     public func show() {
         if buttons.count == 0 {
             fatalError("The Options View is comletely empty, which is not allowed. Add alteast 1 button, or title, or message.")
@@ -201,11 +198,11 @@ class OptionSheet: UIViewController {
         let location = gesture.location(in: view)
         let heightOfBackground = view.frame.height - heightOfContainer
         if(location.y < heightOfBackground) {
-            dissmissView()
+            dismissView()
         }
     }
     
-    fileprivate func dissmissView() {
+    fileprivate func dismissView() {
         UIView.animate(withDuration: 0.3,
                        delay: 0.2,
                        usingSpringWithDamping: 0.9,
@@ -224,10 +221,10 @@ class OptionSheet: UIViewController {
         let index = Int(sender.tag % tagBase)
         let function = buttons[index].action
         function()
-        dissmissView()
+        dismissView()
     }
     
-    @objc fileprivate func dissmissPressed() {
-        dissmissView()
+    @objc fileprivate func dismissPressed() {
+        dismissView()
     }
 }

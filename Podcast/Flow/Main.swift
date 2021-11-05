@@ -1,42 +1,33 @@
+//
+//  MainViewController.swift
+//  Podcast
+//
+//  Created on 10/15/21.
+//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//
+
 import UIKit
-import TuneURL
 
-class Main: UITabBarController {
+class MainViewController: UITabBarController {
 
-    private var maximizedConstraint: NSLayoutConstraint!
+	public let player = Player.shared
+
+	private var maximizedConstraint: NSLayoutConstraint!
     private var minimizedConstraint: NSLayoutConstraint!
-    private var colapsedConstraint: NSLayoutConstraint!
-    private var coverHeight: NSLayoutConstraint!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
-    }
-    public let player = Player.shared
-    //MARK:- Setup
-    fileprivate func setup() {
-        let favourites = getController(root: Favourites(), selectedImage: #imageLiteral(resourceName: "playSelected"), image: #imageLiteral(resourceName: "play"), title: "Favourites")
-        let search = getController(root: PodcastSearch(), selectedImage: #imageLiteral(resourceName: "searchSelected"), image: #imageLiteral(resourceName: "search"), title: "Search")
-        let downloads = getController(root: Downloads(), selectedImage: #imageLiteral(resourceName: "downloadSelected"), image: #imageLiteral(resourceName: "download"), title: "Downloads")
-        let setting = getController(root: Settings(), selectedImage: UIImage(named: "setting_sel")!, image: UIImage(named: "setting")!, title: "Settings")
-        let bookmark = getController(root: Bookmark(), selectedImage: UIImage(named: "bookmark_sel")!, image: UIImage(named: "bookmark")!, title: "Bookmark")
-        viewControllers = [favourites, search, downloads, bookmark, setting]
-        //viewControllers = [search, downloads]
-        addPlayer()
-        UserDefaults.standard.retriveFavourites()
-        UserDefaults.standard.retriveDownloads()
-    }
-    
-    //MARK:- Functions
-    func getController(root: UIViewController, selectedImage: UIImage, image: UIImage, title: String?) -> UIViewController {
-        let controller = UINavigationController(rootViewController: root)
-        root.navigationItem.title = title
-        controller.tabBarItem.title = title
-        controller.tabBarItem.selectedImage = selectedImage.withRenderingMode(.alwaysTemplate)
-        controller.tabBarItem.image = image.withRenderingMode(.alwaysTemplate)
-        return controller
-    }
-    
+    private var collapsedConstraint: NSLayoutConstraint!
+	private var coverHeight: NSLayoutConstraint!
+
+	// MARK: - UIViewController
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		addPlayer()
+		UserDefaults.standard.retrieveFavorites()
+		UserDefaults.standard.retrieveDownloads()
+	}
+
+	// MARK: - Private
+
     fileprivate func addPlayer() {
         player.delegate = self
         player.translatesAutoresizingMaskIntoConstraints = false
@@ -46,15 +37,18 @@ class Main: UITabBarController {
         player.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         maximizedConstraint = player.topAnchor.constraint(equalTo: view.topAnchor)
         minimizedConstraint = player.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
-        colapsedConstraint = player.topAnchor.constraint(equalTo: tabBar.bottomAnchor)
-        colapsedConstraint.isActive = true
+		collapsedConstraint = player.topAnchor.constraint(equalTo: tabBar.bottomAnchor)
+		collapsedConstraint.isActive = true
     }
+
 }
 
-//MARK:- Player Controlls
-extension Main: PlayerDelegate {
-    func minimize() {
-        colapsedConstraint.isActive = false
+// MARK: - Player Delegate
+
+extension MainViewController: PlayerDelegate {
+
+	func minimize() {
+		collapsedConstraint.isActive = false
         maximizedConstraint.isActive = false
         minimizedConstraint.isActive = true
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -68,7 +62,7 @@ extension Main: PlayerDelegate {
     }
     
     func maximize() {
-        colapsedConstraint.isActive = false
+		collapsedConstraint.isActive = false
         maximizedConstraint.isActive = true
         minimizedConstraint.isActive = false
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
@@ -79,4 +73,5 @@ extension Main: PlayerDelegate {
             self.player.stackView.alpha = 1
         })
     }
+
 }

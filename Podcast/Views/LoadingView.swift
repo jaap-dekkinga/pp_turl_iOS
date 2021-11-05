@@ -11,7 +11,7 @@ class LoadingView: UIView {
     }()
     
     private let activity: UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(style: .whiteLarge)
+        let activity = UIActivityIndicatorView(style: .large)
         activity.color = .white
         activity.startAnimating()
         activity.translatesAutoresizingMaskIntoConstraints = false
@@ -38,9 +38,9 @@ class LoadingView: UIView {
         centerX(item: label)
         label.topAnchor.constraint(equalTo: activity.bottomAnchor, constant: 5).isActive = true
     }
-    
+
     fileprivate func setup() {
-        backgroundColor =  .overlayDark
+        backgroundColor = .overlayDark
         setupActivityIndicatorView()
         setupLabel()
     }
