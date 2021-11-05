@@ -28,7 +28,7 @@
 		3C16D93B21E3BB8000BAB9B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C16D93A21E3BB8000BAB9B7 /* AppDelegate.swift */; };
 		3C16D94221E3BB8000BAB9B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C16D94121E3BB8000BAB9B7 /* Assets.xcassets */; };
 		3C16D94521E3BB8000BAB9B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C16D94321E3BB8000BAB9B7 /* LaunchScreen.storyboard */; };
-		3C16D94D21E3BC1C00BAB9B7 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C16D94C21E3BC1C00BAB9B7 /* Main.swift */; };
+		3C16D94D21E3BC1C00BAB9B7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C16D94C21E3BC1C00BAB9B7 /* MainViewController.swift */; };
 		3C16D95321E3BCA800BAB9B7 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C16D95221E3BCA800BAB9B7 /* FavoritesViewController.swift */; };
 		3C16D95521E3BD9F00BAB9B7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C16D95421E3BD9F00BAB9B7 /* SearchViewController.swift */; };
 		3C16D95721E3BE2C00BAB9B7 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C16D95621E3BE2C00BAB9B7 /* DownloadsViewController.swift */; };
@@ -44,7 +44,7 @@
 		3C8411C221E6B5E9007A10E6 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8411C121E6B5E9007A10E6 /* FavoriteCell.swift */; };
 		3CE7080D21E3FFF00007B4BF /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7080C21E3FFF00007B4BF /* API.swift */; };
 		3CE7081521E410C20007B4BF /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7081421E410C20007B4BF /* UIImageViewExtension.swift */; };
-		3CE7081821E4152A0007B4BF /* Utillity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7081721E4152A0007B4BF /* Utillity.swift */; };
+		3CE7081821E4152A0007B4BF /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7081721E4152A0007B4BF /* Utility.swift */; };
 		3CFBD72421E90209005EEE48 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBD72321E90209005EEE48 /* LoadingView.swift */; };
 		50BA61FD6D4C69B5E78AADC5 /* Pods_Podcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC241C5E1288099CD85C6B20 /* Pods_Podcast.framework */; };
 		ECB9A2312735D3F600E7A28B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECB9A22F2735D3F600E7A28B /* Main.storyboard */; };
@@ -75,7 +75,7 @@
 		3C16D94121E3BB8000BAB9B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3C16D94421E3BB8000BAB9B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3C16D94621E3BB8000BAB9B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3C16D94C21E3BC1C00BAB9B7 /* Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		3C16D94C21E3BC1C00BAB9B7 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		3C16D95221E3BCA800BAB9B7 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		3C16D95421E3BD9F00BAB9B7 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		3C16D95621E3BE2C00BAB9B7 /* DownloadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 		3C8411C121E6B5E9007A10E6 /* FavoriteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
 		3CE7080C21E3FFF00007B4BF /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		3CE7081421E410C20007B4BF /* UIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
-		3CE7081721E4152A0007B4BF /* Utillity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utillity.swift; sourceTree = "<group>"; };
+		3CE7081721E4152A0007B4BF /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		3CFBD72321E90209005EEE48 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		D041E43D9EA39502B47908E4 /* Pods-Podcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podcast.release.xcconfig"; path = "Pods/Target Support Files/Pods-Podcast/Pods-Podcast.release.xcconfig"; sourceTree = "<group>"; };
 		ECB9A22E2734D1A200E7A28B /* UpdateBuildNumber.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = UpdateBuildNumber.sh; sourceTree = "<group>"; };
@@ -141,19 +141,19 @@
 		3C16D93921E3BB8000BAB9B7 /* Podcast */ = {
 			isa = PBXGroup;
 			children = (
-				04A9A56C273046C500164A82 /* trigger.wav */,
-				3CE7081621E415150007B4BF /* Utils */,
+				3C16D93A21E3BB8000BAB9B7 /* AppDelegate.swift */,
 				3CE7080E21E403EF0007B4BF /* API */,
 				3C16D96D21E3F3E100BAB9B7 /* CellModels */,
-				3C16D95E21E3EA7B00BAB9B7 /* Data Model */,
-				3C16D95D21E3EA1600BAB9B7 /* Views */,
-				3C16D94F21E3BC6800BAB9B7 /* Flow */,
 				3C16D94E21E3BC6000BAB9B7 /* Components */,
-				3C16D93A21E3BB8000BAB9B7 /* AppDelegate.swift */,
+				3C16D95E21E3EA7B00BAB9B7 /* Data Model */,
+				3C16D94F21E3BC6800BAB9B7 /* Flow */,
+				3CE7081621E415150007B4BF /* Utils */,
+				3C16D95D21E3EA1600BAB9B7 /* Views */,
 				3C16D94121E3BB8000BAB9B7 /* Assets.xcassets */,
 				3C16D94621E3BB8000BAB9B7 /* Info.plist */,
 				3C16D94321E3BB8000BAB9B7 /* LaunchScreen.storyboard */,
 				ECB9A22F2735D3F600E7A28B /* Main.storyboard */,
+				04A9A56C273046C500164A82 /* trigger.wav */,
 			);
 			path = Podcast;
 			sourceTree = "<group>";
@@ -172,7 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				3C0793CB21E52DBE00E4F0E1 /* Search */,
-				3C16D94C21E3BC1C00BAB9B7 /* Main.swift */,
+				3C16D94C21E3BC1C00BAB9B7 /* MainViewController.swift */,
 				049CF60C2719F103008BEF52 /* BookmarksViewController.swift */,
 				3C16D95621E3BE2C00BAB9B7 /* DownloadsViewController.swift */,
 				3C16D95221E3BCA800BAB9B7 /* FavoritesViewController.swift */,
@@ -245,7 +245,7 @@
 			children = (
 				3C16D95821E3E9B800BAB9B7 /* Extensions */,
 				3C0F90DC21E78F080082B102 /* GlobalData.swift */,
-				3CE7081721E4152A0007B4BF /* Utillity.swift */,
+				3CE7081721E4152A0007B4BF /* Utility.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -297,7 +297,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1310;
 				ORGANIZATIONNAME = "TuneURL Inc.";
 				TargetAttributes = {
 					3C16D93621E3BB8000BAB9B7 = {
@@ -405,7 +405,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C0F90DF21E796AA0082B102 /* EmptyFavorites.swift in Sources */,
-				3C16D94D21E3BC1C00BAB9B7 /* Main.swift in Sources */,
+				3C16D94D21E3BC1C00BAB9B7 /* MainViewController.swift in Sources */,
 				3C16D97121E3F51B00BAB9B7 /* Podcast.swift in Sources */,
 				3C16D96A21E3F05C00BAB9B7 /* UIColorExtension.swift in Sources */,
 				3C16D95A21E3E9D000BAB9B7 /* UIViewExtension.swift in Sources */,
@@ -418,7 +418,7 @@
 				3C0793D521E544C700E4F0E1 /* StringExtension.swift in Sources */,
 				3C16D96221E3EAC100BAB9B7 /* ErrorMessage.swift in Sources */,
 				3C16D95C21E3EA0F00BAB9B7 /* ConfirmationMessage.swift in Sources */,
-				3CE7081821E4152A0007B4BF /* Utillity.swift in Sources */,
+				3CE7081821E4152A0007B4BF /* Utility.swift in Sources */,
 				3C0793CD21E5343800E4F0E1 /* EpisodesController.swift in Sources */,
 				3CE7081521E410C20007B4BF /* UIImageViewExtension.swift in Sources */,
 				3C16D95721E3BE2C00BAB9B7 /* DownloadsViewController.swift in Sources */,
@@ -491,6 +491,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -552,6 +553,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

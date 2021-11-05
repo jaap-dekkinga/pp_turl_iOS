@@ -1,3 +1,11 @@
+//
+//  AppDelegate.swift
+//  Podcast
+//
+//  Created on 10/14/21.
+//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//
+
 import UIKit
 import AVFoundation
 import TuneURL
