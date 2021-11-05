@@ -8,7 +8,7 @@ import Swift
 @_exported import TuneURL
 import _Concurrency
 @_hasMissingDesignatedInitializers public class Detector {
-  public typealias CompletionHandler = ([TuneURL.MatchResponse]) -> Swift.Void
+  public typealias CompletionHandler = ([TuneURL.Match]) -> Swift.Void
   public static func setTrigger(_ audioFileURL: Foundation.URL)
   public static func processAudio(for audioFileURL: Foundation.URL, completionHandler: @escaping TuneURL.Detector.CompletionHandler)
   public static func privateSetTrigger(_ audioFileURL: Foundation.URL)
@@ -16,7 +16,7 @@ import _Concurrency
 }
 @_hasMissingDesignatedInitializers public class Listener {
   public typealias AudioBufferHandler = (AVFAudio.AVAudioPCMBuffer) -> Swift.Void
-  public typealias MatchHandler = (TuneURL.MatchResponse) -> Swift.Void
+  public typealias MatchHandler = (TuneURL.Match) -> Swift.Void
   public static var isListening: Swift.Bool {
     get
   }
@@ -24,16 +24,17 @@ import _Concurrency
     get
     set
   }
-  public static func startListening(matchHandler: @escaping (TuneURL.MatchResponse) -> Swift.Void)
+  public static func startListening(matchHandler: @escaping (TuneURL.Match) -> Swift.Void)
   public static func stopListening()
   @objc deinit
 }
-public class MatchResponse : Swift.Codable {
+@_hasMissingDesignatedInitializers public class Match : Swift.Codable {
   final public let description: Swift.String
   final public let id: Swift.Int
   final public let info: Swift.String
   final public let matchPercentage: Swift.Int
   final public let name: Swift.String
+  final public let time: Swift.Float
   final public let type: Swift.String
   required public init(from decoder: Swift.Decoder) throws
   public func prettyDescription() -> Swift.String

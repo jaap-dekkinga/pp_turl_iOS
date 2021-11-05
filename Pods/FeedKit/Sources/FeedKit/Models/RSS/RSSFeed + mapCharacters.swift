@@ -119,6 +119,7 @@ extension RSSFeed {
         case .rssChannelItunesSubtitle:                             self.iTunes?.iTunesSubtitle                                     = self.iTunes?.iTunesSubtitle?.appending(string) ?? string
         case .rssChannelItunesSummary:                              self.iTunes?.iTunesSummary                                      = self.iTunes?.iTunesSummary?.appending(string) ?? string
         case .rssChannelItunesKeywords:                             self.iTunes?.iTunesKeywords                                     = self.iTunes?.iTunesKeywords?.appending(string) ?? string
+        case .rssChannelItunesType:                                 self.iTunes?.iTunesType                                         = self.iTunes?.iTunesType?.appending(string) ?? string
         case .rssChannelItemItunesAuthor:                           self.items?.last?.iTunes?.iTunesAuthor                          = self.items?.last?.iTunes?.iTunesAuthor?.appending(string) ?? string
         case .rssChannelItemItunesBlock:                            self.items?.last?.iTunes?.iTunesBlock                           = self.items?.last?.iTunes?.iTunesBlock?.appending(string) ?? string
         case .rssChannelItemItunesDuration:                         self.items?.last?.iTunes?.iTunesDuration                        = string.toDuration()
@@ -128,9 +129,16 @@ extension RSSFeed {
         case .rssChannelItemItunesSubtitle:                         self.items?.last?.iTunes?.iTunesSubtitle                        = self.items?.last?.iTunes?.iTunesSubtitle?.appending(string) ?? string
         case .rssChannelItemItunesSummary:                          self.items?.last?.iTunes?.iTunesSummary                         = self.items?.last?.iTunes?.iTunesSummary?.appending(string) ?? string
         case .rssChannelItemItunesKeywords:                         self.items?.last?.iTunes?.iTunesKeywords                        = self.items?.last?.iTunes?.iTunesKeywords?.appending(string) ?? string
+        case .rssChannelItemItunesEpisodeType:                      self.items?.last?.iTunes?.iTunesEpisodeType                     = self.items?.last?.iTunes?.iTunesEpisodeType?.appending(string) ?? string
+        case .rssChannelItemItunesSeason:                           self.items?.last?.iTunes?.iTunesSeason                          = Int(string)
+        case .rssChannelItemItunesEpisode:                          self.items?.last?.iTunes?.iTunesEpisode                         = Int(string)
         case .rssChannelItemMediaThumbnail:                         self.items?.last?.media?.mediaThumbnails?.last?.value           = self.items?.last?.media?.mediaThumbnails?.last?.value?.appending(string) ?? string
         case .rssChannelItemMediaLicense:                           self.items?.last?.media?.mediaLicense?.value                    = self.items?.last?.media?.mediaLicense?.value?.appending(string) ?? string
         case .rssChannelItemMediaRestriction:                       self.items?.last?.media?.mediaRestriction?.value                = self.items?.last?.media?.mediaRestriction?.value?.appending(string) ?? string
+        case .rssChannelItemMediaContentTitle:                      self.items?.last?.media?.mediaContents?.last?.mediaTitle?.value             = self.items?.last?.media?.mediaContents?.last?.mediaTitle?.value?.appending(string) ?? string
+        case .rssChannelItemMediaContentDescription:                self.items?.last?.media?.mediaContents?.last?.mediaDescription?.value       = self.items?.last?.media?.mediaDescription?.value?.appending(string) ?? string
+        case .rssChannelItemMediaContentPlayer:                     self.items?.last?.media?.mediaContents?.last?.mediaPlayer?.value            = self.items?.last?.media?.mediaContents?.last?.mediaPlayer?.value?.appending(string) ?? string
+        case .rssChannelItemMediaContentThumbnail:                  self.items?.last?.media?.mediaContents?.last?.mediaThumbnails?.last?.value  = self.items?.last?.media?.mediaContents?.last?.mediaThumbnails?.last?.value?.appending(string) ?? string
         case .rssChannelItemMediaCommunityMediaTags:                self.items?.last?.media?.mediaCommunity?.mediaTags              = MediaTag.tagsFrom(string: string)
         case .rssChannelItemMediaCommentsMediaComment:              self.items?.last?.media?.mediaComments?.append(string)
         case .rssChannelItemMediaEmbedMediaParam:                   self.items?.last?.media?.mediaEmbed?.mediaParams?.last?.value   = self.items?.last?.media?.mediaEmbed?.mediaParams?.last?.value?.appending(string) ?? string

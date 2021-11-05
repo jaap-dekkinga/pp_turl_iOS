@@ -1,11 +1,11 @@
 PODS:
-  - Alamofire (4.7.3)
-  - FeedKit (8.0.0)
-  - TuneURL (1.1.0)
+  - Alamofire (4.9.1)
+  - FeedKit (8.1.1)
+  - TuneURL (1.1.1)
 
 DEPENDENCIES:
-  - Alamofire
-  - FeedKit
+  - Alamofire (~> 4.9.0)
+  - FeedKit (~> 8.1.0)
   - TuneURL
 
 SPEC REPOS:
@@ -15,10 +15,10 @@ SPEC REPOS:
     - TuneURL
 
 SPEC CHECKSUMS:
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
-  FeedKit: 4a78f07adf7f0a224b904014678f1de82a7ffc21
-  TuneURL: 1319180b4dee1b77daefa2aebf96582b132fd5fa
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  FeedKit: 3418eed25f0b493b205b4de1b8511ac21d413fa9
+  TuneURL: 80f36c00915401c6286d7bdc1c32658488bf73aa
 
-PODFILE CHECKSUM: 625eeef5d9a87689558be9b307ff26ec0e5289a1
+PODFILE CHECKSUM: 9e265cd2dbf40b9448b558bcce73a690263aaa92
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
