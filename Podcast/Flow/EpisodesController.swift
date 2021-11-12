@@ -130,7 +130,7 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 		if episode.url == nil { return }
 		Player.shared.playList = episodes
 		Player.shared.currentPlaying = indexPath.row
-		Player.shared.epiosdeImage = podcast?.largeArtwork
+		Player.shared.episodeImageURL = podcast?.largeArtwork
 		Player.shared.episode = episode
 		Player.shared.maximizePlayer()
 	}
@@ -138,7 +138,7 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		let episode = self.episodes[indexPath.row]
 		downloadProgress = LoadingView()
-		if DownloadCache.shared.isDownloaded(episode: episode) {
+		if DownloadCache.shared.isUserDownloaded(episode: episode) {
 			let downloadAction =
 			UITableViewRowAction(style: .normal, title: "Download") {
 				(_,_) in
@@ -148,7 +148,10 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 		}
 		let downloadAction = UITableViewRowAction(style: .normal, title: "Download") { [unowned self] (_, _) in
 			UIApplication.shared.addSubview(view: self.downloadProgress)
-			DownloadCache.shared.download(episode: episode, completion: {
+			DownloadCache.shared.download(episode: episode, progress: {
+				(completed) in
+				self.downloadProgress.setPercentage(value: completed * 100)
+			}, completion: {
 				[weak self] (episode, error) in
 
 				if (error == nil) {
@@ -156,8 +159,6 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 				} else {
 					self?.showError(message: .downloadFailed)
 				}
-			}, progress: { (completed) in
-				self.downloadProgress.setPercentage(value: completed * 100)
 			})
 		}
 		downloadAction.backgroundColor = .optionGreen

@@ -10,7 +10,7 @@ import Foundation
 
 struct Download: Codable {
 
-	var cacheFile: URL
+	var cacheFileName: String
 	var episode: Episode
 	var isUserDownload: Bool
 

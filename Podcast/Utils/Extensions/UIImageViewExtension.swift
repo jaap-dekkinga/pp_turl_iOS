@@ -12,7 +12,7 @@ import Alamofire
 let imageCache = NSCache<AnyObject, UIImage>()
 
 extension UIImageView {
-	func downloadImage(url: String, completion: ((UIImage?) -> Void)? = nil ) {
+	func downloadImage(url: String, completion: ((UIImage?) -> Void)? = nil) {
 		if url.isEmpty { return }
 		if let image = imageCache.object(forKey: url as AnyObject) {
 			DispatchQueue.main.async {[weak self] in

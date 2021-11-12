@@ -14,6 +14,7 @@ class DownloadCache {
 	// static
 	static var shared = DownloadCache()
 
+	let maxCachedItems = 5
 	var downloads: [Download] = []
 
 	// private
@@ -32,6 +33,16 @@ class DownloadCache {
 
 	// MARK: -
 
+	var cachedItemCount: Int {
+		var count = 0
+		for download in downloads {
+			if (download.isUserDownload == false) {
+				count += 1
+			}
+		}
+		return count
+	}
+
 	var userDownloads: [Episode] {
 		var userDownloads = [Episode]()
 		for download in downloads {
@@ -44,13 +55,83 @@ class DownloadCache {
 
 	// MARK: -
 
-	func download(episode: Episode, completion: @escaping (Episode, Error?) -> Void, progress progressHandler: ((Double) -> Void)?) {
-		// safety check
-		guard (isDownloaded(episode: episode) == false) else {
-			DispatchQueue.main.async {
-				progressHandler?(1.0)
-				completion(episode, nil)
+	func cachedFile(for episode: Episode, completion: @escaping (URL?) -> Void) {
+
+		// check if items should be removed from the cache first
+		var cachedItemCount = self.cachedItemCount
+		var currentIndex = (downloads.count - 1)
+		while ((cachedItemCount > (maxCachedItems - 1)) && (currentIndex >= 0)) {
+			let download = downloads[currentIndex]
+			if (download.isUserDownload == false) {
+				// remove a cache item
+				removeDownload(index: currentIndex)
+				cachedItemCount -= 1
 			}
+			currentIndex -= 1
+		}
+
+		// download and return the episode
+		download(episode: episode, userDownloaded: false, progress: nil, completion: {
+			(download, error) in
+			DispatchQueue.main.async {
+				var cacheFileURL: URL?
+				if let cacheFileName = download?.cacheFileName {
+					cacheFileURL = self.downloadFolderURL.appendingPathComponent(cacheFileName)
+				}
+				completion(cacheFileURL)
+			}
+		})
+	}
+
+	func download(episode: Episode, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Episode, Error?) -> Void) {
+
+		// check if a cached file already exists
+		if let downloadIndex = downloadIndex(for: episode) {
+			var download = downloads[downloadIndex]
+			if (download.isUserDownload == false) {
+				// convert the download to a user download
+				download.isUserDownload = true
+				downloads.remove(at: downloadIndex)
+				downloads.insert(download, at: 0)
+				_ = saveDownloadIndex()
+			}
+		}
+
+		// download and return the episode
+		download(episode: episode, userDownloaded: true, progress: progressHandler, completion: {
+			(download, error) in
+			DispatchQueue.main.async {
+				completion(episode, error)
+			}
+		})
+	}
+
+	func isUserDownloaded(episode: Episode) -> Bool {
+		if let downloadIndex = downloadIndex(for: episode) {
+			return downloads[downloadIndex].isUserDownload
+		}
+		return false
+	}
+
+	func removeDownload(episode: Episode) {
+		// get the download index
+		guard let downloadIndex = downloadIndex(for: episode) else {
+			return
+		}
+
+		// remove the download
+		removeDownload(index: downloadIndex)
+		_ = saveDownloadIndex()
+	}
+
+	// MARK: - Private
+
+	private func download(episode: Episode, userDownloaded: Bool, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Download?, Error?) -> Void) {
+
+		// safety check
+		if let downloadIndex = downloadIndex(for: episode) {
+			let download = downloads[downloadIndex]
+			completion(download, nil)
 			return
 		}
 
@@ -58,7 +139,7 @@ class DownloadCache {
 		guard let episodeURL = URL(string: episode.url ?? "") else {
 			DispatchQueue.main.async {
 				let error = NSError(domain: "Podcast", code: 100, userInfo: nil)
-				completion(episode, error)
+				completion(nil, error)
 			}
 			return
 		}
@@ -72,6 +153,7 @@ class DownloadCache {
 				progressHandler?(progress.fractionCompleted)
 			}
 		}.response { (response) in
+			var download: Download?
 			var error: Error?
 			// add the download to the downloads
 			if let responseFileURL = response.destinationURL {
@@ -83,43 +165,16 @@ class DownloadCache {
 				let fileURL = self.downloadFolderURL.appendingPathComponent(fileName)
 				_ = try? fileManager.moveItem(at: responseFileURL, to: fileURL)
 				// add the download to the index
-				let download = Download(cacheFile: fileURL, episode: episode, isUserDownload: true)
-				self.downloads.insert(download, at: 0)
+				download = Download(cacheFileName: fileName, episode: episode, isUserDownload: userDownloaded)
+				self.downloads.insert(download!, at: 0)
 				_ = self.saveDownloadIndex()
 			} else {
 				error = NSError(domain: "Podcast", code: 101, userInfo: nil)
 			}
 			// call the completion handler
-			DispatchQueue.main.async {
-				completion(episode, error)
-			}
+			completion(download, error)
 		}
 	}
-
-	func isDownloaded(episode: Episode) -> Bool {
-		return (downloadIndex(for: episode) != nil)
-	}
-
-	func removeDownload(_ episode: Episode) {
-		// get the download index
-		guard let downloadIndex = downloadIndex(for: episode) else {
-			return
-		}
-
-		// remove the cache file
-		let download = downloads[downloadIndex]
-		do {
-			try FileManager.default.removeItem(at: download.cacheFile)
-		} catch {
-			NSLog("Error removing cache file. (\(error.localizedDescription))")
-		}
-
-		// update the downloads index
-		downloads.remove(at: downloadIndex)
-		_ = saveDownloadIndex()
-	}
-
-	// MARK: - Private
 
 	private func downloadIndex(for episode: Episode) -> Int? {
 		for index in 0 ..< downloads.count {
@@ -130,6 +185,22 @@ class DownloadCache {
 		}
 		return nil
 	}
+
+	private func removeDownload(index: Int) {
+		// remove the cache file
+		let download = downloads[index]
+		do {
+			let cacheFileURL = downloadFolderURL.appendingPathComponent(download.cacheFileName)
+			try FileManager.default.removeItem(at: cacheFileURL)
+		} catch {
+			NSLog("Error removing cache file. (\(error.localizedDescription))")
+		}
+
+		// update the downloads index
+		downloads.remove(at: index)
+	}
+
+	// MARK: -
 
 	private func loadDownloadIndex() {
 		if let data = try? Data(contentsOf: downloadIndexURL),
@@ -147,20 +218,6 @@ class DownloadCache {
 			return false
 		}
 		return true
-	}
-
-	// MARK: -
-
-	func generateAudioURL(from: String) -> URL? {
-		if from.contains("file://") {
-			if let url = URL(string: from) {
-				if let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-					let fileName = url.lastPathComponent
-					return path.appendingPathComponent(fileName)
-				}
-			}
-		}
-		return URL(string: from)
 	}
 
 }

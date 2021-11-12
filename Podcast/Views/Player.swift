@@ -29,6 +29,7 @@ class Player: UIView {
 	var delegate: PlayerDelegate!
 	var playList: [Episode] = []
 	var currentPlaying: Int = 0
+
 	var episode: Episode? {
 		didSet {
 			if let episode = episode {
@@ -41,11 +42,12 @@ class Player: UIView {
 			}
 		}
 	}
-	var epiosdeImage: String? {
+
+	var episodeImageURL: String? {
 		didSet {
-			if let epiosdeImage = epiosdeImage {
-				episodeImage.downloadImage(url: epiosdeImage)
-				miniImage.downloadImage(url: epiosdeImage)
+			if let episodeImageURL = episodeImageURL {
+				episodeImage.downloadImage(url: episodeImageURL)
+				miniImage.downloadImage(url: episodeImageURL)
 				episodeImage.transform = CGAffineTransform(scaleX: scaleDown, y: scaleDown)
 			}
 		}
@@ -284,6 +286,8 @@ class Player: UIView {
 		return stack
 	}()
 
+	// MARK: -
+
 	fileprivate func setupMainStack() {
 		stackView.alpha = 0
 		addSubview(stackView)
@@ -344,32 +348,30 @@ class Player: UIView {
 			return
 		}
 
-		guard let url = DownloadCache.shared.generateAudioURL(from: episode.url ?? "") else {
-			return
-		}
+		// get the podcast from the cache
+		DownloadCache.shared.cachedFile(for: episode) { fileURL in
+			guard let fileURL = fileURL else {
+				return
+			}
 
-		let item = AVPlayerItem(url: url)
-		player.replaceCurrentItem(with: item)
-		player.automaticallyWaitsToMinimizeStalling = false
-		player.play()
-		playerBuffered()
-		trackProgress()
+			// start playing the podcast
+			let item = AVPlayerItem(url: fileURL)
+			self.player.replaceCurrentItem(with: item)
+			self.player.play()
+			self.playerBuffered()
+			self.trackProgress()
 
-		// TEMP
-		print("podcast url: \(url)")
-
-		if url.isFileURL {
-			Detector.processAudio(for: url) { response in
-				//				if (response.count > 0) {
-				DispatchQueue.main.async {
-					print("processed podcast: \(response.count)")
-					//						for tuneURL in response {
-					//						}
-				}
-				//				}
+			// process the podcast for tuneurls
+			Detector.processAudio(for: fileURL) { response in
+//				if (response.count > 0) {
+					DispatchQueue.main.async {
+						print("processed podcast: \(response.count)")
+//						for tuneURL in response {
+//						}
+					}
+//				}
 			}
 		}
-		// ----
 	}
 
 	fileprivate func enlargeImage() {
@@ -470,7 +472,7 @@ class Player: UIView {
 
 	fileprivate func playerBuffered() {
 		let time = CMTimeMake(value: 1, timescale: 3)
-		player.addBoundaryTimeObserver(forTimes: [NSValue(time: time)], queue: .main) {[unowned self] in
+		player.addBoundaryTimeObserver(forTimes: [NSValue(time: time)], queue: .main) { [unowned self] in
 
 			self.duration = CMTimeGetSeconds((self.player.currentItem?.duration)!)
 			self.totalTime.text = self.duration.formatDuration()
@@ -595,7 +597,7 @@ class Player: UIView {
 			currentPlaying = 0
 		}
 		episode = playList[currentPlaying]
-		self.epiosdeImage = episode?.artwork
+		self.episodeImageURL = episode?.artwork
 	}
 
 	fileprivate func previousTrack() {
@@ -604,6 +606,7 @@ class Player: UIView {
 			currentPlaying = playList.count - 1
 		}
 		episode = playList[currentPlaying]
-		self.epiosdeImage = episode?.artwork
+		self.episodeImageURL = episode?.artwork
 	}
+
 }

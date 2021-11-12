@@ -72,7 +72,7 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
 		if episode.url == nil { return }
 		Player.shared.playList = DownloadCache.shared.userDownloads
 		Player.shared.currentPlaying = indexPath.row
-		Player.shared.epiosdeImage = episode.artwork
+		Player.shared.episodeImageURL = episode.artwork
 		Player.shared.episode = episode
 		Player.shared.maximizePlayer()
 	}
@@ -84,7 +84,7 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
 			let confirmation = OptionSheet(title: "Remove from Downloads!", message: "Are you sure that you want to remove \"\(episode.title)\" from your downloads library. You will no longer have access to this podcast.")
 			confirmation.addButton(image: #imageLiteral(resourceName: "delete"), title: "Remove Episode", color: .optionRed) {
 				[unowned self] in
-				DownloadCache.shared.removeDownload(episode)
+				DownloadCache.shared.removeDownload(episode: episode)
 				tableView.deleteRows(at: [index], with: .automatic)
 				presentConfirmation(image: #imageLiteral(resourceName: "tick"), message: "Episode Deleted")
 			}
