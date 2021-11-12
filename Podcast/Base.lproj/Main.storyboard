@@ -205,6 +205,9 @@
                                                     <constraint firstAttribute="width" constant="49" id="IU9-4A-Z9A"/>
                                                     <constraint firstAttribute="height" constant="31" id="Pig-Fw-aX5"/>
                                                 </constraints>
+                                                <connections>
+                                                    <action selector="autoDownloadChanged:" destination="IXZ-cm-eyz" eventType="valueChanged" id="WXc-nI-tGB"/>
+                                                </connections>
                                             </switch>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -233,6 +236,9 @@
                                                     <constraint firstAttribute="width" constant="49" id="ANZ-p1-Qd1"/>
                                                     <constraint firstAttribute="height" constant="31" id="JGn-6O-Zqc"/>
                                                 </constraints>
+                                                <connections>
+                                                    <action selector="autoDeleteChanged:" destination="IXZ-cm-eyz" eventType="valueChanged" id="lgO-F7-Fti"/>
+                                                </connections>
                                             </switch>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -291,7 +297,7 @@
                     <connections>
                         <outlet property="autoDeleteSwitch" destination="ixQ-bN-ZY1" id="aAa-aQ-qe3"/>
                         <outlet property="autoDownloadSwitch" destination="46L-BR-HZc" id="m40-4F-QW3"/>
-                        <outlet property="searchSwitch" destination="zCE-0M-P5b" id="b3h-Jr-Pbw"/>
+                        <outlet property="searchCategorySwitch" destination="zCE-0M-P5b" id="68L-UL-th1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vcz-SA-UqM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

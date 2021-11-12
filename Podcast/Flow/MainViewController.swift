@@ -23,7 +23,6 @@ class MainViewController: UITabBarController {
 		super.viewDidLoad()
 		addPlayer()
 		UserDefaults.standard.retrieveFavorites()
-		UserDefaults.standard.retrieveDownloads()
 	}
 
 	// MARK: - Private

@@ -48,6 +48,8 @@
 		3CFBD72421E90209005EEE48 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBD72321E90209005EEE48 /* LoadingView.swift */; };
 		50BA61FD6D4C69B5E78AADC5 /* Pods_Podcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC241C5E1288099CD85C6B20 /* Pods_Podcast.framework */; };
 		ECB9A2312735D3F600E7A28B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECB9A22F2735D3F600E7A28B /* Main.storyboard */; };
+		ECDC2EC4273EFAE900EC70D5 /* DownloadCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDC2EC3273EFAE900EC70D5 /* DownloadCache.swift */; };
+		ECDC2EC6273EFEC100EC70D5 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDC2EC5273EFEC100EC70D5 /* Download.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +98,8 @@
 		D041E43D9EA39502B47908E4 /* Pods-Podcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podcast.release.xcconfig"; path = "Pods/Target Support Files/Pods-Podcast/Pods-Podcast.release.xcconfig"; sourceTree = "<group>"; };
 		ECB9A22E2734D1A200E7A28B /* UpdateBuildNumber.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = UpdateBuildNumber.sh; sourceTree = "<group>"; };
 		ECB9A2302735D3F600E7A28B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		ECDC2EC3273EFAE900EC70D5 /* DownloadCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadCache.swift; sourceTree = "<group>"; };
+		ECDC2EC5273EFEC100EC70D5 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		FC241C5E1288099CD85C6B20 /* Pods_Podcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Podcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -142,6 +146,8 @@
 			isa = PBXGroup;
 			children = (
 				3C16D93A21E3BB8000BAB9B7 /* AppDelegate.swift */,
+				ECDC2EC5273EFEC100EC70D5 /* Download.swift */,
+				ECDC2EC3273EFAE900EC70D5 /* DownloadCache.swift */,
 				3CE7080E21E403EF0007B4BF /* API */,
 				3C16D96D21E3F3E100BAB9B7 /* CellModels */,
 				3C16D94E21E3BC6000BAB9B7 /* Components */,
@@ -404,42 +410,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C0F90DF21E796AA0082B102 /* EmptyFavorites.swift in Sources */,
-				3C16D94D21E3BC1C00BAB9B7 /* MainViewController.swift in Sources */,
-				3C16D97121E3F51B00BAB9B7 /* Podcast.swift in Sources */,
-				3C16D96A21E3F05C00BAB9B7 /* UIColorExtension.swift in Sources */,
-				3C16D95A21E3E9D000BAB9B7 /* UIViewExtension.swift in Sources */,
-				3C0F90E521E7BFD20082B102 /* HighlightingButton.swift in Sources */,
-				043E833627160D160050A7A3 /* SettingsViewController.swift in Sources */,
-				3C1600C421E7F9F0005E38FB /* UIApplicationExtension.swift in Sources */,
-				3C0793D321E53ED700E4F0E1 /* EpisodeCell.swift in Sources */,
-				3C0F90D921E78ACF0082B102 /* TextTableViewHeader.swift in Sources */,
-				3C0793CF21E536A100E4F0E1 /* Episode.swift in Sources */,
-				3C0793D521E544C700E4F0E1 /* StringExtension.swift in Sources */,
-				3C16D96221E3EAC100BAB9B7 /* ErrorMessage.swift in Sources */,
-				3C16D95C21E3EA0F00BAB9B7 /* ConfirmationMessage.swift in Sources */,
-				3CE7081821E4152A0007B4BF /* Utility.swift in Sources */,
-				3C0793CD21E5343800E4F0E1 /* EpisodesController.swift in Sources */,
-				3CE7081521E410C20007B4BF /* UIImageViewExtension.swift in Sources */,
-				3C16D95721E3BE2C00BAB9B7 /* DownloadsViewController.swift in Sources */,
-				3C16D96421E3EF2100BAB9B7 /* BaseTableViewCell.swift in Sources */,
-				3C0F90DD21E78F080082B102 /* GlobalData.swift in Sources */,
-				3C0F90DB21E78BF80082B102 /* SearchLoadingHeader.swift in Sources */,
-				3C0793D121E53D1400E4F0E1 /* DateExtension.swift in Sources */,
-				049CF60E2719F103008BEF52 /* BookmarksViewController.swift in Sources */,
-				3CFBD72421E90209005EEE48 /* LoadingView.swift in Sources */,
-				04D90A1D270CD86800D5DEF7 /* BuzzsproutEpisode.swift in Sources */,
-				3C8411C221E6B5E9007A10E6 /* FavoriteCell.swift in Sources */,
-				3C0F90E121E7B8870082B102 /* UserDefaultExtension.swift in Sources */,
-				3C16D96021E3EA9600BAB9B7 /* UIViewControllerExtension.swift in Sources */,
-				3C0793D721E554E600E4F0E1 /* Player.swift in Sources */,
-				3C8411C021E6B5C7007A10E6 /* BaseCollectionViewCell.swift in Sources */,
-				3C16D96F21E3F3F700BAB9B7 /* PodcastCell.swift in Sources */,
 				3C16D93B21E3BB8000BAB9B7 /* AppDelegate.swift in Sources */,
-				3C16D95521E3BD9F00BAB9B7 /* SearchViewController.swift in Sources */,
+				ECDC2EC6273EFEC100EC70D5 /* Download.swift in Sources */,
+				ECDC2EC4273EFAE900EC70D5 /* DownloadCache.swift in Sources */,
 				3CE7080D21E3FFF00007B4BF /* API.swift in Sources */,
-				3C16D95321E3BCA800BAB9B7 /* FavoritesViewController.swift in Sources */,
+				3C0793D321E53ED700E4F0E1 /* EpisodeCell.swift in Sources */,
+				3C8411C221E6B5E9007A10E6 /* FavoriteCell.swift in Sources */,
+				3C16D96F21E3F3F700BAB9B7 /* PodcastCell.swift in Sources */,
+				3C8411C021E6B5C7007A10E6 /* BaseCollectionViewCell.swift in Sources */,
+				3C16D96421E3EF2100BAB9B7 /* BaseTableViewCell.swift in Sources */,
 				3C0F90E321E7BF9E0082B102 /* OptionSheet.swift in Sources */,
+				04D90A1D270CD86800D5DEF7 /* BuzzsproutEpisode.swift in Sources */,
+				3C0793CF21E536A100E4F0E1 /* Episode.swift in Sources */,
+				3C16D96221E3EAC100BAB9B7 /* ErrorMessage.swift in Sources */,
+				3C16D97121E3F51B00BAB9B7 /* Podcast.swift in Sources */,
+				3C0793CD21E5343800E4F0E1 /* EpisodesController.swift in Sources */,
+				3C16D94D21E3BC1C00BAB9B7 /* MainViewController.swift in Sources */,
+				049CF60E2719F103008BEF52 /* BookmarksViewController.swift in Sources */,
+				3C16D95721E3BE2C00BAB9B7 /* DownloadsViewController.swift in Sources */,
+				3C16D95321E3BCA800BAB9B7 /* FavoritesViewController.swift in Sources */,
+				3C16D95521E3BD9F00BAB9B7 /* SearchViewController.swift in Sources */,
+				043E833627160D160050A7A3 /* SettingsViewController.swift in Sources */,
+				3C0793D121E53D1400E4F0E1 /* DateExtension.swift in Sources */,
+				3C0793D521E544C700E4F0E1 /* StringExtension.swift in Sources */,
+				3C1600C421E7F9F0005E38FB /* UIApplicationExtension.swift in Sources */,
+				3C16D96A21E3F05C00BAB9B7 /* UIColorExtension.swift in Sources */,
+				3CE7081521E410C20007B4BF /* UIImageViewExtension.swift in Sources */,
+				3C16D96021E3EA9600BAB9B7 /* UIViewControllerExtension.swift in Sources */,
+				3C16D95A21E3E9D000BAB9B7 /* UIViewExtension.swift in Sources */,
+				3C0F90E121E7B8870082B102 /* UserDefaultExtension.swift in Sources */,
+				3C0F90DD21E78F080082B102 /* GlobalData.swift in Sources */,
+				3CE7081821E4152A0007B4BF /* Utility.swift in Sources */,
+				3C16D95C21E3EA0F00BAB9B7 /* ConfirmationMessage.swift in Sources */,
+				3C0F90DF21E796AA0082B102 /* EmptyFavorites.swift in Sources */,
+				3C0F90E521E7BFD20082B102 /* HighlightingButton.swift in Sources */,
+				3CFBD72421E90209005EEE48 /* LoadingView.swift in Sources */,
+				3C0793D721E554E600E4F0E1 /* Player.swift in Sources */,
+				3C0F90DB21E78BF80082B102 /* SearchLoadingHeader.swift in Sources */,
+				3C0F90D921E78ACF0082B102 /* TextTableViewHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

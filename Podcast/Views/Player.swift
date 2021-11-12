@@ -339,7 +339,15 @@ class Player: UIView {
 	}
 
 	fileprivate func startPlaying() {
-		guard let url = generateAudioURL(from: episode?.url ?? "") else { return }
+		// safety check
+		guard let episode = episode else {
+			return
+		}
+
+		guard let url = DownloadCache.shared.generateAudioURL(from: episode.url ?? "") else {
+			return
+		}
+
 		let item = AVPlayerItem(url: url)
 		player.replaceCurrentItem(with: item)
 		player.automaticallyWaitsToMinimizeStalling = false

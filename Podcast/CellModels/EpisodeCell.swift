@@ -14,11 +14,10 @@ class EpisodeCell: BaseTableViewCell {
 
 	var episode: Episode? {
 		didSet {
-
 			if let episode = episode {
 				timeLabel.text = episode.date
 				titleLabel.text = episode.title
-				descriptionLabel.text = episode.description.sanatizeHTML()
+				descriptionLabel.text = episode.description.sanitizeHTML()
 				shouldDisable(episode.url == nil)
 			}
 		}

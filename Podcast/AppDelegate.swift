@@ -10,12 +10,25 @@ import UIKit
 import AVFoundation
 import TuneURL
 
-var player: AVAudioPlayer?
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+	// static
+	static var shared: AppDelegate = {
+		UIApplication.shared.delegate as! AppDelegate
+	}()
+
+	static var documentsURL: URL = {
+		// get the documents folder
+		guard let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else {
+			return URL(fileURLWithPath: NSTemporaryDirectory())
+		}
+		return url
+	}()
+
 	var window: UIWindow?
+
+	// MARK: -
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		setupTuneURLTrigger()

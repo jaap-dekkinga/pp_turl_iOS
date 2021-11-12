@@ -9,7 +9,7 @@
 import Foundation
 
 extension String {
-	func sanatizeHTML() -> String{
+	func sanitizeHTML() -> String {
 		return self.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
 	}
 }
@@ -26,4 +26,3 @@ extension Float64 {
 		return String(format: "%02d:%02d:%02d", hrs,min,sec)
 	}
 }
-

@@ -9,7 +9,8 @@
 import UIKit
 import FeedKit
 
-struct Episode: Codable {
+struct Episode: Codable, Equatable {
+
 	var title: String
 	var description: String
 	var date: String
@@ -17,6 +18,8 @@ struct Episode: Codable {
 	var author: String
 	var artwork: String?
 	var artworkSmall: String?
+
+	// MARK: -
 
 	init(feed: RSSFeedItem) {
 		self.title = feed.title ?? "No Title"
@@ -44,4 +47,5 @@ struct Episode: Codable {
 		guard let otherEpisode = object as? Episode else { return false }
 		return otherEpisode.date == date && otherEpisode.title == title
 	}
+
 }

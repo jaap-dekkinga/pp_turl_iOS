@@ -136,9 +136,9 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-		var episode = self.episodes[indexPath.row]
+		let episode = self.episodes[indexPath.row]
 		downloadProgress = LoadingView()
-		if isDownloaded(other: episode) {
+		if DownloadCache.shared.isDownloaded(episode: episode) {
 			let downloadAction =
 			UITableViewRowAction(style: .normal, title: "Download") {
 				(_,_) in
@@ -146,16 +146,17 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 			}
 			return [downloadAction]
 		}
-		let downloadAction = UITableViewRowAction(style: .normal, title: "Download") {[unowned self] (_, _) in
+		let downloadAction = UITableViewRowAction(style: .normal, title: "Download") { [unowned self] (_, _) in
 			UIApplication.shared.addSubview(view: self.downloadProgress)
-			API.shared.downloadEpisode(episode: episode, completion: {[weak self] (file) in
-				episode.url = file
-				if UserDefaults.standard.addToDownloads(episode: episode) {
+			DownloadCache.shared.download(episode: episode, completion: {
+				[weak self] (episode, error) in
+
+				if (error == nil) {
 					self?.addedToDownloads()
 				} else {
 					self?.showError(message: .downloadFailed)
 				}
-			}, progressTracker: { (completed) in
+			}, progress: { (completed) in
 				self.downloadProgress.setPercentage(value: completed * 100)
 			})
 		}

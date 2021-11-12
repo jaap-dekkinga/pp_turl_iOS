@@ -11,9 +11,12 @@ import Alamofire
 import FeedKit
 
 class API {
-	private let dataCache = NSCache<AnyObject, AnyObject>()
-	//Singleton
+
 	static let shared = API()
+
+	private let dataCache = NSCache<AnyObject, AnyObject>()
+
+	// MARK: -
 
 	public func searchPodcasts(searchText: String, completion: @escaping ([Podcast], Int) -> Void) {
 		if let result = dataCache.object(forKey: searchText as AnyObject) as? [String: Any]{
@@ -101,20 +104,6 @@ class API {
 		dataCache.removeAllObjects()
 	}
 
-	public func downloadEpisode(episode: Episode, completion: @escaping (String) -> Void, progressTracker: @escaping (Double) -> Void) {
-		let location = DownloadRequest.suggestedDownloadDestination()
-		Alamofire.download(episode.url ?? "", to: location).downloadProgress { (progress) in
-			DispatchQueue.main.async {
-				progressTracker(progress.fractionCompleted)
-			}
-		}.response { (res) in
-			let fileName = res.destinationURL?.absoluteString
-			DispatchQueue.main.async {
-				completion(fileName ?? episode.url ?? "")
-			}
-		}
-	}
-
 	private func parseItunesResponse(result: [String: Any]) -> ([Podcast], Int){
 		guard let resultCount = result["resultCount"] as? Int else {
 			return ([], 0)
@@ -137,4 +126,5 @@ class API {
 		}
 		return ([], 0)
 	}
+
 }
