@@ -71,7 +71,7 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
 		let episode = DownloadCache.shared.userDownloads[indexPath.row]
 		if episode.url == nil { return }
 		Player.shared.playList = DownloadCache.shared.userDownloads
-		Player.shared.currentPlaying = indexPath.row
+		Player.shared.currentPlaylistIndex = indexPath.row
 		Player.shared.episodeImageURL = episode.artwork
 		Player.shared.episode = episode
 		Player.shared.maximizePlayer()

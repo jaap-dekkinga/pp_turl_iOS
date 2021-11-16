@@ -40,14 +40,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		API.shared.clearCache()
 	}
 
-	fileprivate func setupAppearance() {
+	// MARK: - Private
+
+	private func setupAppearance() {
 		UITabBar.appearance().barTintColor = .white
 		UITabBar.appearance().tintColor = .purple
 		UITabBar.appearance().unselectedItemTintColor = .lightGray
 		UINavigationBar.appearance().prefersLargeTitles = true
 	}
 
-	func setupTuneURLTrigger() {
+	private func setupTuneURLTrigger() {
 		guard let url = Bundle.main.url(forResource: "trigger", withExtension: "wav") else {
 			return
 		}

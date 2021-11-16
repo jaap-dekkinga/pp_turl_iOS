@@ -19,16 +19,12 @@ protocol PlayerDelegate {
 class Player: UIView {
 
 	public static let shared = Player()
-	fileprivate let roundRadius: CGFloat = 5.0
-	fileprivate let outterPadding: CGFloat = 40
-	fileprivate let iconSize: CGFloat = 24
-	fileprivate let scaleDown: CGFloat = 0.75
-	private let player = AVPlayer()
-	private var duration: Float64 = 0.0
-	private var titleHeightConstraint: NSLayoutConstraint!
+
+	var currentFileURL: URL?
+	var currentPlaylistIndex = 0
 	var delegate: PlayerDelegate!
 	var playList: [Episode] = []
-	var currentPlaying: Int = 0
+	var tuneURLs = [TuneURL.Match]()
 
 	var episode: Episode? {
 		didSet {
@@ -53,27 +49,30 @@ class Player: UIView {
 		}
 	}
 
+	// private
+	private let iconSize: CGFloat = 24
+	private let outterPadding: CGFloat = 40
+	private let player = AVPlayer()
+	private let roundRadius: CGFloat = 5.0
+	private let scaleDown: CGFloat = 0.75
 
-	fileprivate func clearView() {
-		episodeImage.image = #imageLiteral(resourceName: "blankPodcast")
-		if titleHeightConstraint != nil {
-			title.removeConstraint(titleHeightConstraint)
+	private var duration: Float64 = 0.0
+	private weak var interestViewController: InterestViewController?
+	private var titleHeightConstraint: NSLayoutConstraint!
+
+	private var activeTuneURL: TuneURL.Match? {
+		didSet {
+			if ((activeTuneURL?.id ?? -1) != (oldValue?.id ?? -1)) {
+				if (activeTuneURL != nil) {
+					beginTuneURL()
+				} else {
+					endTuneURL()
+				}
+			}
 		}
-		playButton.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
-		miniPlay.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
-		currentTime.text = "00:00"
-		totalTime.text = "--:--"
 	}
 
-
-	init() {
-		super.init(frame: UIScreen.main.bounds)
-		setup()
-	}
-
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	// MARK: -
 
 	lazy var dismissButton: UIButton = {
 		let button = UIButton(type: .system)
@@ -288,6 +287,26 @@ class Player: UIView {
 
 	// MARK: -
 
+	init() {
+		super.init(frame: UIScreen.main.bounds)
+		setup()
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	fileprivate func clearView() {
+		episodeImage.image = #imageLiteral(resourceName: "blankPodcast")
+		if titleHeightConstraint != nil {
+			title.removeConstraint(titleHeightConstraint)
+		}
+		playButton.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
+		miniPlay.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
+		currentTime.text = "00:00"
+		totalTime.text = "--:--"
+	}
+
 	fileprivate func setupMainStack() {
 		stackView.alpha = 0
 		addSubview(stackView)
@@ -296,12 +315,43 @@ class Player: UIView {
 		stackView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleMaximizedPan(_:))))
 	}
 
-	fileprivate func setupAudioPlayback() {
+	private func setupAudioPlayback() {
+		// setup the audio session
 		do {
 			try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .allowAirPlay)
 			try AVAudioSession.sharedInstance().setActive(true, options: AVAudioSession.SetActiveOptions.notifyOthersOnDeactivation)
-		} catch let err {
-			print(err)
+		} catch {
+			print("Error setting audio session. (\(error.localizedDescription))")
+		}
+
+		// setup the audio player periodic update
+		let updateInterval = CMTimeMake(value: 1, timescale: 2)
+		player.addPeriodicTimeObserver(forInterval: updateInterval, queue: .main) {
+			[weak self] (current) in
+
+			// safety check
+			guard let self = self else {
+				return
+			}
+
+			// update the interface
+			let seconds = CMTimeGetSeconds(current)
+			self.currentTime.text = seconds.formatDuration()
+			self.updateProgressSlider(current: seconds)
+
+			// update notification center
+			MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = seconds
+
+			// update any active tuneurl
+			let currentTime = Float(seconds)
+			var currentTuneURL: TuneURL.Match?
+			for tuneURL in self.tuneURLs {
+				if (currentTime >= tuneURL.time) && (currentTime < (tuneURL.time + 5.0)) {
+					currentTuneURL = tuneURL
+					break
+				}
+			}
+			self.activeTuneURL = currentTuneURL
 		}
 	}
 
@@ -342,34 +392,45 @@ class Player: UIView {
 		}
 	}
 
-	fileprivate func startPlaying() {
+	private func startPlaying() {
 		// safety check
 		guard let episode = episode else {
 			return
 		}
 
 		// get the podcast from the cache
-		DownloadCache.shared.cachedFile(for: episode) { fileURL in
-			guard let fileURL = fileURL else {
-				return
-			}
+		DownloadCache.shared.cachedFile(for: episode, completion: startPlaying)
+	}
 
-			// start playing the podcast
-			let item = AVPlayerItem(url: fileURL)
-			self.player.replaceCurrentItem(with: item)
-			self.player.play()
-			self.playerBuffered()
-			self.trackProgress()
+	private func startPlaying(_ fileURL: URL?) {
+		// safety check
+		guard let fileURL = fileURL else {
+			return
+		}
 
-			// process the podcast for tuneurls
-			Detector.processAudio(for: fileURL) { response in
-//				if (response.count > 0) {
-					DispatchQueue.main.async {
-						print("processed podcast: \(response.count)")
-//						for tuneURL in response {
-//						}
-					}
-//				}
+		// reset playback
+		tuneURLs.removeAll()
+
+		// set the current item
+		let item = AVPlayerItem(url: fileURL)
+		player.replaceCurrentItem(with: item)
+		currentFileURL = fileURL
+
+		// start playback
+		player.play()
+		playerBuffered()
+
+		// process the podcast for tuneurls
+		Detector.processAudio(for: fileURL) { [weak self] matches in
+			if let self = self, (matches.count > 0),
+			   (self.currentFileURL == fileURL) {
+				DispatchQueue.main.async {
+					// save the discovered tuneurls
+					self.tuneURLs = matches
+#if DEBUG
+					print("Found \(matches.count) tuneurls in the podcast.")
+#endif // DEBUG
+				}
 			}
 		}
 	}
@@ -480,7 +541,7 @@ class Player: UIView {
 
 			var info = MPNowPlayingInfoCenter.default().nowPlayingInfo
 			if info == nil {
-				info = [String: Any]()
+				info = [String : Any]()
 			}
 			info?[MPMediaItemPropertyTitle] = self.episode?.title
 			info?[MPMediaItemPropertyArtist] = self.episode?.author
@@ -499,16 +560,6 @@ class Player: UIView {
 		}
 	}
 
-	fileprivate func trackProgress() {
-		let time = CMTimeMake(value: 1, timescale: 2)
-		player.addPeriodicTimeObserver(forInterval: time, queue: .main) {[weak self] (current) in
-			let seconds = CMTimeGetSeconds(current)
-			self?.currentTime.text = seconds.formatDuration()
-			self?.updateProgressSlider(current: seconds)
-			MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = seconds
-		}
-	}
-
 	fileprivate func updateProgressSlider(current: Float64) {
 		let ratio = current/duration
 		progressSlider.setValue(Float(ratio), animated: true)
@@ -523,7 +574,45 @@ class Player: UIView {
 		contractImage()
 	}
 
-	// MARK: - MINI Player
+	// MARK: - TuneURL support
+
+	private func beginTuneURL() {
+		// safety check
+		guard let tuneURL = activeTuneURL,
+			  (interestViewController == nil) else {
+			return
+		}
+
+#if DEBUG
+		print("TuneURL began: \(activeTuneURL?.name ?? "none")")
+#endif // DEBUG
+
+		// open the interest view controller
+		let viewController = InterestViewController.create(with: tuneURL, wasUserInitiated: false)
+		AppDelegate.shared.window?.rootViewController?.present(viewController, animated: true)
+		interestViewController = viewController
+	}
+
+	private func endTuneURL() {
+#if DEBUG
+		print("TuneURL ended.")
+#endif // DEBUG
+
+		// safety check
+		guard let viewController = interestViewController else {
+			return
+		}
+
+		// check if the user has interacted with the interest card
+		if (viewController.userInteracted == false) {
+			// close the tune url view
+			interestViewController?.dismiss(animated: true, completion: nil)
+			interestViewController = nil
+		}
+	}
+
+	// MARK: - Mini Player
+
 	lazy var miniPlayer: UIView = {
 		let view = UIView()
 		view.translatesAutoresizingMaskIntoConstraints = false
@@ -592,21 +681,21 @@ class Player: UIView {
 	}
 
 	fileprivate func nextTrack() {
-		currentPlaying += 1
-		if currentPlaying >= playList.count {
-			currentPlaying = 0
+		currentPlaylistIndex += 1
+		if currentPlaylistIndex >= playList.count {
+			currentPlaylistIndex = 0
 		}
-		episode = playList[currentPlaying]
-		self.episodeImageURL = episode?.artwork
+		episode = playList[currentPlaylistIndex]
+		episodeImageURL = episode?.artwork
 	}
 
 	fileprivate func previousTrack() {
-		currentPlaying -= 1
-		if currentPlaying < 0 {
-			currentPlaying = playList.count - 1
+		currentPlaylistIndex -= 1
+		if currentPlaylistIndex < 0 {
+			currentPlaylistIndex = playList.count - 1
 		}
-		episode = playList[currentPlaying]
-		self.episodeImageURL = episode?.artwork
+		episode = playList[currentPlaylistIndex]
+		episodeImageURL = episode?.artwork
 	}
 
 }

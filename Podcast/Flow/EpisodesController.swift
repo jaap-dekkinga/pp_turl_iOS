@@ -129,7 +129,7 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 		let episode = episodes[indexPath.row]
 		if episode.url == nil { return }
 		Player.shared.playList = episodes
-		Player.shared.currentPlaying = indexPath.row
+		Player.shared.currentPlaylistIndex = indexPath.row
 		Player.shared.episodeImageURL = podcast?.largeArtwork
 		Player.shared.episode = episode
 		Player.shared.maximizePlayer()
