@@ -21,7 +21,7 @@ class InterestViewController: UIViewController, DMSwipeCardsViewDelegate {
 	// private
 	private var swiped = false
 	private var swipeView: DMSwipeCardsView<String>!
-	private var tuneURL: TuneURL.Match?
+	private let tuneURL: TuneURL.Match
 
 	private let greenYes = UIColor(red: (35.0 / 255.0), green: (188.0 / 255.0), blue: (73.0 / 255.0), alpha: 1.0)
 	private let redNo = UIColor(red: (240.0 / 255.0), green: (83.0 / 255.0), blue: (73.0 / 255.0), alpha: 1.0)
@@ -29,9 +29,19 @@ class InterestViewController: UIViewController, DMSwipeCardsViewDelegate {
 	// MARK: -
 
 	class func create(with tuneURL: TuneURL.Match, wasUserInitiated: Bool) -> InterestViewController {
-		let viewController = InterestViewController(nibName: nil, bundle: nil)
-		viewController.tuneURL = tuneURL
+		let viewController = InterestViewController(tuneURL: tuneURL)
 		return viewController
+	}
+
+	// MARK: -
+
+	init(tuneURL: TuneURL.Match) {
+		self.tuneURL = tuneURL
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
 	}
 
 	// MARK: - UIViewController
@@ -125,26 +135,18 @@ class InterestViewController: UIViewController, DMSwipeCardsViewDelegate {
 	// MARK: - Private
 
 	private func addCard() {
-		swipeView.addCards(["Interested? Swipe left or right"], onTop: true)
-	}
+		var actionMessage = "Interested? Swipe left or right."
 
-	private func addDoneView() {
-//        let doneView = UIView(frame: self.view.frame)
-//        doneView.backgroundColor = UIColor.white
-//        self.view.addSubview(doneView)
-//
-//        let label = UILabel()
-//        label.frame.size = CGSize(width: doneView.frame.width * 0.8, height: 100)
-//        label.center = CGPoint(x: (doneView.frame.width / 2.0), y: (doneView.frame.height / 2.0))
-//        label.clipsToBounds = true
-//        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.thin)
-//        label.adjustsFontSizeToFitWidth = true
-//        label.textAlignment = .center
-//        label.numberOfLines = 0
-//        label.textColor = UIColor.black
-//        doneView.addSubview(label)
-//
-//        label.text = "Your choice has been recorded\nThank you"
+		switch (tuneURL.type) {
+			case "open_page":
+				actionMessage = "Open \(tuneURL.info)?"
+			case "save_page":
+				actionMessage = "Save bookmark for \(tuneURL.info)?"
+			default:
+				break
+		}
+
+		swipeView.addCards([actionMessage], onTop: true)
 	}
 
 	// MARK: - DMSwipeCardsViewDelegate
@@ -158,13 +160,11 @@ class InterestViewController: UIViewController, DMSwipeCardsViewDelegate {
 		swiped = true
 
 		self.view.backgroundColor = UIColor(red: (240.0 / 255.0), green: (83.0 / 255.0), blue: (73.0 / 255.0), alpha: 0.5)
-
-		//self.dismiss(animated: true, completion: nil)
 	}
 
 	func swipedRight(_ object: Any?) {
 		// safety check
-		guard (swiped == false), let tuneURL = self.tuneURL else {
+		guard (swiped == false) else {
 			return
 		}
 
@@ -185,34 +185,34 @@ class InterestViewController: UIViewController, DMSwipeCardsViewDelegate {
 	// MARK: - Private
 
 	private func handleItem(_ tuneURL: TuneURL.Match, wasUserInitiated: Bool = false) {
+
+		switch (tuneURL.type) {
 /*
-		switch (tuneURL.action) {
-			// Immediate action items - phone number, text message, open web page
-			// Save items - coupons, save web page
+			case .coupon:
 			case .phoneNumber:
 				// open the phone number
 				if let phoneURL = tuneURL.phoneURL {
 					UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
-				}
-			case .openWebPage:
-				// open web page
-				if let itemURL = tuneURL.url {
-					UIApplication.shared.open(itemURL, options: [:], completionHandler: nil)
 				}
 			case .poll:
 				// open the poll - this shouldn't happen here because polls are the only action that displays automatically, everything else is controlled with this interested pop-up
 //				if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
 //					appDelegate.openPoll(with: tuneURL, wasUserInitiated: wasUserInitiated)
 //				}
-			case .coupon, .saveWebPage:
-				//print(item)
-//                if let itemURL = item.url {
-//                    UIApplication.shared.open(itemURL, options: [:], completionHandler: nil)
-//                }
-				print("Need to save these items - check if they're saving")
+*/
+			case "open_page":
+				// open web page
+				if let itemURL = URL(string: tuneURL.info) {
+					UIApplication.shared.open(itemURL, options: [:], completionHandler: nil)
+				}
+
+			case "save_page":
+				// add a bookmark
+				BookmarkCollection.shared.addBookmark(for: tuneURL)
+
 			default:
 				break
 		}
-*/	}
+	}
 
 }

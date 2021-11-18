@@ -53,6 +53,8 @@
 		ECB9A2312735D3F600E7A28B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECB9A22F2735D3F600E7A28B /* Main.storyboard */; };
 		ECDC2EC4273EFAE900EC70D5 /* DownloadCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDC2EC3273EFAE900EC70D5 /* DownloadCache.swift */; };
 		ECDC2EC6273EFEC100EC70D5 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDC2EC5273EFEC100EC70D5 /* Download.swift */; };
+		ECF6D5332745FAFA0039E7B9 /* BookmarkCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF6D5322745FAFA0039E7B9 /* BookmarkCollection.swift */; };
+		ECF6D5352745FC270039E7B9 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF6D5342745FC270039E7B9 /* Bookmark.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +108,8 @@
 		ECB9A2302735D3F600E7A28B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ECDC2EC3273EFAE900EC70D5 /* DownloadCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadCache.swift; sourceTree = "<group>"; };
 		ECDC2EC5273EFEC100EC70D5 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
+		ECF6D5322745FAFA0039E7B9 /* BookmarkCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkCollection.swift; sourceTree = "<group>"; };
+		ECF6D5342745FC270039E7B9 /* Bookmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
 		FC241C5E1288099CD85C6B20 /* Pods_Podcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Podcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -152,6 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				3C16D93A21E3BB8000BAB9B7 /* AppDelegate.swift */,
+				ECF6D5342745FC270039E7B9 /* Bookmark.swift */,
+				ECF6D5322745FAFA0039E7B9 /* BookmarkCollection.swift */,
 				ECDC2EC5273EFEC100EC70D5 /* Download.swift */,
 				ECDC2EC3273EFAE900EC70D5 /* DownloadCache.swift */,
 				3CE7080E21E403EF0007B4BF /* API */,
@@ -428,6 +434,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C16D93B21E3BB8000BAB9B7 /* AppDelegate.swift in Sources */,
+				ECF6D5352745FC270039E7B9 /* Bookmark.swift in Sources */,
+				ECF6D5332745FAFA0039E7B9 /* BookmarkCollection.swift in Sources */,
 				ECDC2EC6273EFEC100EC70D5 /* Download.swift in Sources */,
 				ECDC2EC4273EFAE900EC70D5 /* DownloadCache.swift in Sources */,
 				3CE7080D21E3FFF00007B4BF /* API.swift in Sources */,

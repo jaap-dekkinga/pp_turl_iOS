@@ -20,6 +20,7 @@ class Player: UIView {
 
 	public static let shared = Player()
 
+	let timeToPresentTuneURL: Float = 10.0
 	var currentFileURL: URL?
 	var currentPlaylistIndex = 0
 	var delegate: PlayerDelegate!
@@ -51,7 +52,7 @@ class Player: UIView {
 
 	// private
 	private let iconSize: CGFloat = 24
-	private let outterPadding: CGFloat = 40
+	private let outerPadding: CGFloat = 40
 	private let player = AVPlayer()
 	private let roundRadius: CGFloat = 5.0
 	private let scaleDown: CGFloat = 0.75
@@ -78,7 +79,7 @@ class Player: UIView {
 		let button = UIButton(type: .system)
 		button.setTitle("Dismiss", for: .normal)
 
-		button.widthAnchor.constraint(equalToConstant: frame.width - 2*outterPadding).isActive = true
+		button.widthAnchor.constraint(equalToConstant: frame.width - 2*outerPadding).isActive = true
 		button.heightAnchor.constraint(equalToConstant: 40).isActive = true
 		button.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
 		button.setTitleColor(.hotBlack, for: .normal)
@@ -141,7 +142,7 @@ class Player: UIView {
 	}()
 
 	lazy var title: UILabel = {
-		let label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width - 2*outterPadding, height: CGFloat.greatestFiniteMagnitude))
+		let label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width - 2*outerPadding, height: CGFloat.greatestFiniteMagnitude))
 		label.textAlignment = .left
 		label.textColor = .black
 		label.font = .systemFont(ofSize: 16.5, weight: .semibold)
@@ -150,7 +151,7 @@ class Player: UIView {
 	}()
 
 	lazy var author: UILabel = {
-		let label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width - 2*outterPadding, height: CGFloat.greatestFiniteMagnitude))
+		let label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width - 2*outerPadding, height: CGFloat.greatestFiniteMagnitude))
 		label.textAlignment = .left
 		label.textColor = .purple
 		label.font = .systemFont(ofSize: 14, weight: .semibold)
@@ -311,7 +312,7 @@ class Player: UIView {
 		stackView.alpha = 0
 		addSubview(stackView)
 
-		stackView.fillSuperview(padding: outterPadding)
+		stackView.fillSuperview(padding: outerPadding)
 		stackView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleMaximizedPan(_:))))
 	}
 
@@ -346,7 +347,7 @@ class Player: UIView {
 			let currentTime = Float(seconds)
 			var currentTuneURL: TuneURL.Match?
 			for tuneURL in self.tuneURLs {
-				if (currentTime >= tuneURL.time) && (currentTime < (tuneURL.time + 5.0)) {
+				if (currentTime >= tuneURL.time) && (currentTime < (tuneURL.time + self.timeToPresentTuneURL)) {
 					currentTuneURL = tuneURL
 					break
 				}
@@ -584,7 +585,14 @@ class Player: UIView {
 		}
 
 #if DEBUG
-		print("TuneURL began: \(activeTuneURL?.name ?? "none")")
+		print("TuneURL active:")
+		print("\tname: \(activeTuneURL?.name ?? "")")
+		print("\tdescription: \(activeTuneURL?.description ?? "")")
+		print("\tid: \(activeTuneURL?.id ?? -1)")
+		print("\tinfo: \(activeTuneURL?.info ?? "")")
+		print("\tmatchPercentage: \(activeTuneURL?.matchPercentage ?? -1)")
+		print("\ttime: \(activeTuneURL?.time ?? -1)")
+		print("\ttype: \(activeTuneURL?.type ?? "")")
 #endif // DEBUG
 
 		// open the interest view controller
@@ -594,10 +602,6 @@ class Player: UIView {
 	}
 
 	private func endTuneURL() {
-#if DEBUG
-		print("TuneURL ended.")
-#endif // DEBUG
-
 		// safety check
 		guard let viewController = interestViewController else {
 			return
