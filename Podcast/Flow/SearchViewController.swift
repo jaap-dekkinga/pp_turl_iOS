@@ -12,10 +12,9 @@ class SearchViewController: UIViewController {
 
 	fileprivate let cellId = "podcastsCell"
 
-	private var podcasts:[Podcast] = []
-	var headerString: String = "Search the largest library of podcasts by title or artist's name."
+	var headerString: String = "Search podcasts by title or artist name."
 	private var isSearching = false
-	private var rssFeedUrl: String = "https://media.rss.com/tuneurl/feed.xml"
+	private var podcasts = [Podcast]()
 
 	lazy var tableView: UITableView = {
 		let table = UITableView()
@@ -53,6 +52,7 @@ class SearchViewController: UIViewController {
 // MARK: - Search Table DataSource and Delegate
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return podcasts.count
 	}
@@ -64,7 +64,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
 		return isSearching ? SearchLoadingHeader() : TextTableViewHeader(text: headerString)
 	}
 
@@ -78,6 +77,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 		controller.podcast = podcasts[indexPath.row]
 		navigationController?.pushViewController(controller, animated: true)
 	}
+
 }
 
 // MARK: - Search Bar Delegate
@@ -89,39 +89,24 @@ extension SearchViewController: UISearchBarDelegate {
 		isSearching = true
 		tableView.reloadData()
 
-		if (isApplePodcast) {
-			let searchText = searchBar.text!
-			if searchText.isEmpty { return }
+		// get the search text
+		guard let searchText = searchBar.text,
+			  (searchText.isEmpty == false) else {
+			return
+		}
 
-			API.shared.searchPodcasts(searchText: searchText) {[unowned self] (searchedPodcasts, count) in
-				self.podcasts = searchedPodcasts
-				self.isSearching = false
-				self.headerString = "We couldn't find any results for\n\n\"\(searchText)\"\n\nPlease try again."
-				self.tableView.reloadData()
+		API.shared.searchPodcasts(searchText: searchText) {
+			[weak self] (searchedPodcasts) in
+
+			// safety check
+			guard let self = self else {
+				return
 			}
-		} else {
-			API.shared.fetchEpisodesFeed(urlString: self.rssFeedUrl) { [weak self] (feed) in
-				guard let feed = feed else { return }
 
-				var episodes = [] as! [Episode]
-				for item in feed.items ?? [] {
-					let newEpisode = Episode(feed: item)
-					episodes.append(newEpisode)
-				}
-
-				DispatchQueue.main.async {[weak self] in
-					let controller = EpisodesController()
-					controller.episodes = episodes
-					self!.searchController.dismiss(animated: true, completion: nil)
-					self?.navigationController?.pushViewController(controller, animated: true)
-				}
-			}
-//			API.shared.fetchEpisodesBuzz { fetchedEpisodes, count in
-//				self.searchController.dismiss(animated: true, completion: nil)
-//				let controller = EpisodesController()
-//				controller.episodes = fetchedEpisodes
-//				self.navigationController?.pushViewController(controller, animated: true)
-//			}
+			self.podcasts = searchedPodcasts
+			self.isSearching = false
+			self.headerString = "We couldn't find any results for\n\n\"\(searchText)\"\n\nPlease try again."
+			self.tableView.reloadData()
 		}
 
 		searchController.dismiss(animated: true, completion: nil)

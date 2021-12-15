@@ -6,18 +6,17 @@
 //  Copyright © 2021 TuneURL Inc. All rights reserved.
 //
 
-import UIKit
 import FeedKit
+import UIKit
 
 struct Episode: Codable, Equatable {
 
-	var title: String
-	var description: String
 	var date: String
-	var url: String?
-	var author: String
+	var description: String
 	var artwork: String?
-	var artworkSmall: String?
+	var author: String
+	var title: String
+	var url: String?
 
 	// MARK: -
 
@@ -30,7 +29,7 @@ struct Episode: Codable, Equatable {
 		self.artwork = feed.iTunes?.iTunesImage?.attributes?.href ?? ""
 	}
 
-	init(data: [String: Any]) {
+	init(data: [String : Any]) {
 		self.title = data["title"] as? String ?? "No Title"
 		self.description = data["description"] as? String ?? ""
 
@@ -45,7 +44,7 @@ struct Episode: Codable, Equatable {
 
 	func isEqual(_ object: Any?) -> Bool {
 		guard let otherEpisode = object as? Episode else { return false }
-		return otherEpisode.date == date && otherEpisode.title == title
+		return (otherEpisode.date == date) && (otherEpisode.title == title)
 	}
 
 }

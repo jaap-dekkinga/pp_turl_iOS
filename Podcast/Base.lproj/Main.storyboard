@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VyI-x9-XIZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VyI-x9-XIZ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -201,7 +201,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bgv-6q-hdN">
-                                <rect key="frame" x="87" y="328" width="240" height="240"/>
+                                <rect key="frame" x="87" y="368" width="240" height="160"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VOP-fm-T4s">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="80"/>
@@ -265,37 +265,6 @@
                                             <constraint firstItem="KQE-AG-vBd" firstAttribute="centerY" secondItem="eRh-Mj-pYc" secondAttribute="centerY" id="mME-3l-ltA"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sJs-Ag-G4E">
-                                        <rect key="frame" x="0.0" y="160" width="240" height="80"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apple/Buzzsprout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mer-LH-0gX">
-                                                <rect key="frame" x="8" y="31" width="175" height="18"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <color key="textColor" systemColor="systemPurpleColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" title="Automatic Download" translatesAutoresizingMaskIntoConstraints="NO" id="Bv9-8K-OdK">
-                                                <rect key="frame" x="191" y="24.5" width="51" height="31"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="31" id="DMi-3b-yR6"/>
-                                                    <constraint firstAttribute="width" constant="49" id="LZ4-2x-x2Y"/>
-                                                </constraints>
-                                                <connections>
-                                                    <action selector="searchCategoryChanged:" destination="UPQ-Gs-vEU" eventType="valueChanged" id="qxa-qW-sml"/>
-                                                </connections>
-                                            </switch>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstItem="mer-LH-0gX" firstAttribute="centerY" secondItem="sJs-Ag-G4E" secondAttribute="centerY" id="Di3-i3-36o"/>
-                                            <constraint firstItem="mer-LH-0gX" firstAttribute="leading" secondItem="sJs-Ag-G4E" secondAttribute="leading" constant="8" id="GC6-Sn-cc1"/>
-                                            <constraint firstItem="Bv9-8K-OdK" firstAttribute="leading" secondItem="mer-LH-0gX" secondAttribute="trailing" constant="8" symbolic="YES" id="Ozb-VJ-yEM"/>
-                                            <constraint firstItem="Bv9-8K-OdK" firstAttribute="centerY" secondItem="sJs-Ag-G4E" secondAttribute="centerY" id="SfM-Ab-muQ"/>
-                                            <constraint firstAttribute="trailing" secondItem="Bv9-8K-OdK" secondAttribute="trailing" id="TYE-dM-1Y5"/>
-                                            <constraint firstAttribute="width" constant="240" id="tbA-jI-0te"/>
-                                            <constraint firstAttribute="height" constant="80" id="xg0-5l-qfB"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -310,7 +279,6 @@
                     <connections>
                         <outlet property="autoDeleteSwitch" destination="KQE-AG-vBd" id="FnC-N3-a8b"/>
                         <outlet property="autoDownloadSwitch" destination="IbS-bN-RVH" id="Y2Z-e7-Kff"/>
-                        <outlet property="searchCategorySwitch" destination="Bv9-8K-OdK" id="GP0-Ug-e2C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HyC-k5-SEk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

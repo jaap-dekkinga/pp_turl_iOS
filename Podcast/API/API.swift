@@ -6,125 +6,194 @@
 //  Copyright © 2021 TuneURL Inc. All rights reserved.
 //
 
-import Foundation
 import Alamofire
 import FeedKit
+import Foundation
 
 class API {
 
 	static let shared = API()
 
+	// Digital Podcast directory
+	static let digitalPodcastAppID = "42753bb3eb6a7fcd4cb622f484acc0da"
+    static let digitalPodcastBaseURL = "http://api.digitalpodcast.com/v2r"
+
+	// private
 	private let dataCache = NSCache<AnyObject, AnyObject>()
 
-	// MARK: -
+	// MARK: - Public
 
-	public func searchPodcasts(searchText: String, completion: @escaping ([Podcast], Int) -> Void) {
-		if let result = dataCache.object(forKey: searchText as AnyObject) as? [String: Any]{
-			let (resultList, resultCount) = parseItunesResponse(result: result)
-			completion(resultList, resultCount)
-			return
-		}
-
-		let url = "https://itunes.apple.com/search"
-		Alamofire.request(url, method: .get, parameters: ["term": searchText], encoding: URLEncoding.queryString, headers: nil).responseJSON {[unowned self] (response) in
-			guard let result = response.value as? [String: Any] else {
-				completion([], 0)
-				return
-			}
-			self.dataCache.setObject(result as AnyObject, forKey: searchText as AnyObject)
-			let (resultList, resultCount) = self.parseItunesResponse(result: result)
-			completion(resultList, resultCount)
-		}
-	}
-
-	public func getEpisodes(completion: @escaping ([BuzzsproutEpisode], Int) -> Void) {
-
-		let url = "https://www.buzzsprout.com/api/1865534/episodes.json"
-		let headers = [
-			"Authorization": "Token token=135e81a09c9db21a3893046af8b3d080",
-			"Accept": "application/json",
-			"Content-Type": "application/json" ]
-		Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.queryString, headers: headers).responseJSON {(response) in
-			guard let results = response.value as? [[String: Any]] else {
-				completion([], 0)
-				return
-			}
-
-			var episodes: [BuzzsproutEpisode] = []
-			var count = 0
-			results.forEach { (item) in
-				count += 1
-				episodes.append(BuzzsproutEpisode(data: item))
-			}
-
-			completion(episodes, count)
-		}
-	}
-
-	public func fetchEpisodesBuzz(completion: @escaping ([Episode], Int) -> Void) {
-
-		let url = "https://www.buzzsprout.com/api/1865534/episodes.json"
-		let headers = [
-			"Authorization": "Token token=135e81a09c9db21a3893046af8b3d080",
-			"Accept": "application/json",
-			"Content-Type": "application/json" ]
-		Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.queryString, headers: headers).responseJSON {(response) in
-			guard let results = response.value as? [[String: Any]] else {
-				completion([], 0)
-				return
-			}
-
-			var episodes: [Episode] = []
-			var count = 0
-			results.forEach { (item) in
-				count += 1
-				episodes.append(Episode(data: item))
-			}
-
-			completion(episodes, count)
-		}
-	}
-
-	public func fetchEpisodesFeed(urlString: String, completions: @escaping (RSSFeed?) -> Void) {
-		if let result = dataCache.object(forKey: urlString as AnyObject) as? RSSFeed{
-			completions(result)
-			return
-		}
-		guard let url = URL(string: urlString) else { return }
-		let parser = FeedParser(URL: url)
-		parser.parseAsync {[unowned self] (res) in
-			completions(res.rssFeed)
-			if let feed = res.rssFeed {
-				self.dataCache.setObject(feed as AnyObject, forKey: urlString as AnyObject)
-			}
-		}
-	}
-
-	public func clearCache() {
+	func clearCache() {
 		dataCache.removeAllObjects()
 	}
 
-	private func parseItunesResponse(result: [String: Any]) -> ([Podcast], Int){
-		guard let resultCount = result["resultCount"] as? Int else {
-			return ([], 0)
+	func getEpisodes(podcast: Podcast, completion: @escaping ([Episode]) -> Void) {
+		// safety check
+		guard (podcast.feedURL.isEmpty == false),
+			  let feedURL = URL(string: podcast.feedURL) else {
+			DispatchQueue.main.async {
+				completion([])
+			}
+			return
 		}
 
-		if resultCount > 0 {
-			if let results = result["results"] as? [[String: Any]] {
-				var podcasts: [Podcast] = []
-				var count = 0
-				results.forEach { (item) in
-					if let kind = item["kind"] as? String {
-						if kind == "podcast" {
-							count += 1
-							podcasts.append(Podcast(data: item))
+		// get the episodes from the cache
+		if let result = dataCache.object(forKey: podcast.feedURL as AnyObject) as? RSSFeed {
+			let episodes = parseEpisodes(feed: result, podcast: podcast)
+			DispatchQueue.main.async {
+				completion(episodes)
+			}
+			return
+		}
+
+		// parse the feed
+		let parser = FeedParser(URL: feedURL)
+		parser.parseAsync { [weak self] (result) in
+			// safety check
+			guard let self = self else {
+				return
+			}
+
+			var episodes = [Episode]()
+
+			switch result {
+				case .success(let feed):
+					if let rssFeed = feed.rssFeed {
+						// save the feed in the cache
+						self.dataCache.setObject(rssFeed as AnyObject, forKey: feedURL as AnyObject)
+						// parse the episodes
+						episodes = self.parseEpisodes(feed: rssFeed, podcast: podcast)
+					}
+				case .failure(let error):
+					NSLog("Error parsing rss feed. (\(error.localizedDescription))")
+			}
+
+			DispatchQueue.main.async {
+				completion(episodes)
+			}
+		}
+	}
+
+	func searchPodcasts(searchText: String, completion: @escaping ([Podcast]) -> Void) {
+		return searchDigitalPodcast(searchText: searchText, completion: completion)
+	}
+
+	// MARK: - Private
+
+	private func parseEpisodes(feed: RSSFeed, podcast: Podcast) -> [Episode] {
+		// get the feed items
+		guard let items = feed.items else {
+			return []
+		}
+
+		var episodes = [Episode]()
+
+		for item in items {
+			var episode = Episode(feed: item)
+			if (episode.artwork == nil) {
+				episode.artwork = podcast.artwork
+			}
+			episodes.append(episode)
+		}
+
+		return episodes
+	}
+
+	private func searchDigitalPodcast(searchText: String, completion: @escaping ([Podcast]) -> Void) {
+		// create the search url
+		guard let searchString = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+			  let searchURL = URL(string: "\(API.digitalPodcastBaseURL)/search/?appid=\(API.digitalPodcastAppID)&format=rss&result=50&keywords=\(searchString)") else {
+			NSLog("Error creating podcast search url.")
+			return
+		}
+
+		// parse the rss feed
+		let parser = FeedParser(URL: searchURL)
+		parser.parseAsync { [weak self] (result) in
+			// safety check
+			guard (self != nil) else {
+				return
+			}
+
+			var podcasts = [Podcast]()
+
+			// get the results
+			switch result {
+				case .success(let feed):
+					if let items = feed.rssFeed?.items {
+						for item in items {
+							if let podcast = Podcast(item: item) {
+								podcasts.append(podcast)
+							}
+						}
+					}
+				case .failure(let error):
+					NSLog("Error parsing rss feed. (\(error.localizedDescription))")
+			}
+
+			// call the completion handler
+			DispatchQueue.main.async {
+				completion(podcasts)
+			}
+		}
+	}
+
+	private func searchITunes(searchText: String, completion: @escaping ([Podcast]) -> Void) {
+		let searchURL = "https://itunes.apple.com/search"
+
+		Alamofire.request(searchURL, method: .get, parameters: ["term" : searchText], encoding: URLEncoding.queryString, headers: nil).responseJSON { (response) in
+
+			// get the results
+			guard let result = response.value as? [String : Any],
+				  let resultCount = result["resultCount"] as? Int else {
+				completion([])
+				return
+			}
+
+			// parse the podcasts
+			var podcasts = [Podcast]()
+
+			if (resultCount > 0) {
+				if let results = result["results"] as? [[String : Any]] {
+					for item in results {
+						if let kind = item["kind"] as? String {
+							if (kind.lowercased() == "podcast") {
+								podcasts.append(Podcast(json: item))
+							}
 						}
 					}
 				}
-				return (podcasts, count)
+			}
+
+			// call the completion handler
+			DispatchQueue.main.async {
+				completion(podcasts)
 			}
 		}
-		return ([], 0)
+	}
+
+	// MARK: -
+
+	private func getEpisodesBuzzsprout(podcast: Podcast, completion: @escaping ([Episode]) -> Void) {
+		let url = "https://www.buzzsprout.com/api/1865534/episodes.json"
+		let headers = [
+			"Authorization" : "Token token=135e81a09c9db21a3893046af8b3d080",
+			"Accept" : "application/json",
+			"Content-Type" : "application/json" ]
+
+		Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.queryString, headers: headers).responseJSON { (response) in
+			guard let results = response.value as? [[String : Any]] else {
+				completion([])
+				return
+			}
+
+			var episodes = [Episode]()
+			results.forEach { (item) in
+				episodes.append(Episode(data: item))
+			}
+
+			completion(episodes)
+		}
 	}
 
 }

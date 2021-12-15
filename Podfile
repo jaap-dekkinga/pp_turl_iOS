@@ -7,7 +7,7 @@ target 'Podcast' do
 
   # Pods for Podcast
   pod 'Alamofire', '~> 4.9.0'
-  pod 'FeedKit', '~> 8.1.0'
+  pod 'FeedKit', '~> 9.1.0'
   pod 'TuneURL'
 
 end

@@ -11,7 +11,6 @@ import Foundation
 // MARK: - Lists
 
 var favorites: [Podcast] = []
-var isApplePodcast: Bool = true
 
 // MARK: -
 

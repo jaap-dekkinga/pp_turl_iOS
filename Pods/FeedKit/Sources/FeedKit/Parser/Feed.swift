@@ -1,5 +1,5 @@
 //
-//  JSONFeedParser.swift
+//  Feed.swift
 //
 //  Copyright (c) 2016 - 2018 Nuno Manuel Dias
 //
@@ -24,28 +24,38 @@
 
 import Foundation
 
-/// The actual engine behind the `FeedKit` framework. `JSONFeedParser` handles
-/// the parsing of JSON Feeds.
-///
-/// See: https://jsonfeed.org/version/1
-class JSONFeedParser: FeedParserProtocol {
+public enum Feed {
+    case atom(AtomFeed)
+    case rss(RSSFeed)
+    case json(JSONFeed)
+}
+
+// MARK: - Convenience properties
+
+extension Feed {
     
-    let data: Data
-    
-    required public init(data: Data) {
-        self.data = data
-    }
-    
-    func parse() -> Result<Feed, ParserError> {
-        do {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .formatted(RFC3339DateFormatter())
-            let decoded = try decoder.decode(JSONFeed.self, from: data)
-            return .success(.json(decoded))
-        } catch {
-            return .failure(.internalError(reason: error.localizedDescription))
+    public var rssFeed: RSSFeed? {
+        switch self {
+        case .rss(let rssFeed): return rssFeed
+        case .atom(_): return nil
+        case .json(_): return nil
         }
-        
     }
-    
+
+    public var atomFeed: AtomFeed? {
+        switch self {
+        case .rss(_): return nil
+        case .atom(let atomFeed): return atomFeed
+        case .json(_): return nil
+        }
+    }
+
+    public var jsonFeed: JSONFeed? {
+        switch self {
+        case .rss(_): return nil
+        case .atom(_): return nil
+        case .json(let jsonFeed): return jsonFeed
+        }
+    }
+
 }

@@ -9,6 +9,7 @@
 import UIKit
 
 class EpisodeCell: BaseTableViewCell {
+
 	fileprivate let imageSize: CGFloat = 100
 	fileprivate let roundRadius: CGFloat = 5.0
 
@@ -19,14 +20,9 @@ class EpisodeCell: BaseTableViewCell {
 				titleLabel.text = episode.title
 				descriptionLabel.text = episode.description.sanitizeHTML()
 				shouldDisable(episode.url == nil)
-			}
-		}
-	}
-
-	var imageUrl: String? {
-		didSet {
-			if let imageUrl = imageUrl {
-				episodeImage.downloadImage(url: imageUrl)
+				if let imageURL = episode.artwork {
+					episodeImage.downloadImage(url: imageURL)
+				}
 			}
 		}
 	}

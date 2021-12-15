@@ -10,22 +10,17 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
-	@IBOutlet var autoDownloadSwitch: UISwitch!
 	@IBOutlet var autoDeleteSwitch: UISwitch!
-	@IBOutlet var searchCategorySwitch: UISwitch!
+	@IBOutlet var autoDownloadSwitch: UISwitch!
 
 	// MARK: - Actions
 
 	@IBAction func autoDeleteChanged(_ sender: UISwitch) {
-		// TODO: ...
+		// TODO: implement this
 	}
 
 	@IBAction func autoDownloadChanged(_ sender: UISwitch) {
-		// TODO: ...
-	}
-
-	@IBAction func searchCategoryChanged(_ sender: UISwitch) {
-		isApplePodcast = sender.isOn
+		// TODO: implement this
 	}
 
 }

@@ -54,7 +54,6 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
 		let episode = DownloadCache.shared.userDownloads[indexPath.row]
 		cell.episode = episode
-		cell.imageUrl = episode.artworkSmall
 		return cell
 	}
 

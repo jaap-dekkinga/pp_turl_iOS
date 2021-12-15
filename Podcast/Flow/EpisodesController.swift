@@ -7,28 +7,23 @@
 //
 
 import UIKit
-import FeedKit
 
 class EpisodesController: UIViewController {
 
+	var episodes: [Episode] = []
+
 	fileprivate let cellId = "episodesCell"
-	private var downloadProgress:LoadingView!
+	private let activity = UIActivityIndicatorView(style: .medium)
+	private var downloadProgress: LoadingView!
 
 	var podcast: Podcast? {
 		didSet {
 			if let podcast = podcast {
-				navigationItem.title = podcast.trackName
+				navigationItem.title = podcast.title
 				setupNavigationBarButtons(isFavorite: isFavorited(other: podcast))
-				API.shared.fetchEpisodesFeed(urlString: podcast.feedUrl) {[weak self] (feed) in
-					guard let feed = feed else { return }
-					self?.episodes = []
-					for item in feed.items ?? [] {
-						var newEpisode = Episode(feed: item)
-						newEpisode.artwork = podcast.largeArtwork
-						newEpisode.artworkSmall = podcast.artwork
-						self?.episodes.append(newEpisode)
-					}
-					DispatchQueue.main.async {[weak self] in
+				API.shared.getEpisodes(podcast: podcast) { [weak self] episodes in
+					self?.episodes = episodes
+					DispatchQueue.main.async { [weak self] in
 						self?.tableView.reloadData()
 						self?.removeLoader()
 					}
@@ -36,9 +31,6 @@ class EpisodesController: UIViewController {
 			}
 		}
 	}
-
-	var episodes: [Episode] = []
-	private let activity = UIActivityIndicatorView(style: .medium)
 
 	lazy var tableView: UITableView = {
 		let table = UITableView()
@@ -82,10 +74,7 @@ class EpisodesController: UIViewController {
 		super.viewDidLoad()
 
 		setupTable()
-
-		if (isApplePodcast) {
-			addLoader()
-		}
+		addLoader()
 	}
 
 	@objc fileprivate func favoritePodcast() {
@@ -110,17 +99,19 @@ class EpisodesController: UIViewController {
 		main.viewControllers?[2].tabBarItem.badgeValue = "new"
 		presentConfirmation(image: #imageLiteral(resourceName: "downloadAction"), message: "Episode Downloaded")
 	}
+
 }
 
 // MARK: - Search Table DataSource and Delegate
+
 extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
+
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return episodes.count
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
-		cell.imageUrl = podcast?.artwork
 		cell.episode = episodes[indexPath.row]
 		return cell
 	}
@@ -130,7 +121,7 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 		if episode.url == nil { return }
 		Player.shared.playList = episodes
 		Player.shared.currentPlaylistIndex = indexPath.row
-		Player.shared.episodeImageURL = podcast?.largeArtwork
+		Player.shared.episodeImageURL = episode.artwork
 		Player.shared.episode = episode
 		Player.shared.maximizePlayer()
 	}

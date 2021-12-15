@@ -7,28 +7,54 @@
 //
 
 import Foundation
+import FeedKit
 
 struct Podcast: Codable {
 
-	let trackName: String
-	let artistName: String
-	let trackCount: Int
-	let artwork: String
-	let feedUrl: String
-	let largeArtwork: String
+	let author: String
+	let description: String
+	let feedURL: String
+	let title: String
 
-	init(data: [String: Any]) {
-		self.artistName = data["artistName"] as? String ?? "Unknown"
-		self.trackName = data["trackName"] as? String ?? "No Title"
-		self.trackCount = data["trackCount"] as? Int ?? 0
-		self.artwork = data["artworkUrl100"] as? String ?? ""
-		self.feedUrl = data["feedUrl"] as? String ?? ""
-		self.largeArtwork = data["artworkUrl600"] as? String ?? ""
+	// Note: These are not loaded initially.
+	let artwork: String
+	let largeArtwork: String
+	let trackCount: Int
+
+	// MARK: -
+
+	init(json: [String : Any]) {
+		self.author = json["artistName"] as? String ?? "Unknown"
+		self.title = json["trackName"] as? String ?? "No Title"
+		self.trackCount = json["trackCount"] as? Int ?? 0
+		self.artwork = json["artworkUrl100"] as? String ?? ""
+		self.feedURL = json["feedUrl"] as? String ?? ""
+		self.largeArtwork = json["artworkUrl600"] as? String ?? ""
+		self.description = ""
+	}
+
+	init?(item: RSSFeedItem) {
+		// safety check the item properties
+		guard let title = item.title,
+			  let sourceURL = item.source?.value else {
+			return nil
+		}
+
+		self.author = item.author ?? ""
+		self.description = item.description ?? ""
+		self.feedURL = sourceURL
+		self.title = title
+
+		// TODO: load these from the feed source
+		self.artwork = ""
+		self.largeArtwork = ""
+		self.trackCount = 0
+		// ----
 	}
 
 	func isEqual(_ object: Any?) -> Bool {
 		guard let otherPodcast = object as? Podcast else { return false }
-		return otherPodcast.trackName == trackName && otherPodcast.artistName == artistName
+		return (otherPodcast.author == author) && (otherPodcast.title == title)
 	}
-}
 
+}

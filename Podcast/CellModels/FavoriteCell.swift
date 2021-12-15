@@ -13,8 +13,8 @@ class FavoriteCell: BaseCollectionViewCell {
 	var podcast: Podcast? {
 		didSet {
 			if let podcast = podcast {
-				titleLabel.text = podcast.trackName
-				artistLabel.text = podcast.artistName
+				titleLabel.text = podcast.title
+				artistLabel.text = podcast.author
 				favImage.downloadImage(url: podcast.largeArtwork)
 			}
 		}
