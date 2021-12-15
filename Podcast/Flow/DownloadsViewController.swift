@@ -81,7 +81,7 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
 		let downloadAction = UITableViewRowAction(style: .normal, title: "Delete") {[unowned self] (_, index) in
 
 			let confirmation = OptionSheet(title: "Remove from Downloads!", message: "Are you sure that you want to remove \"\(episode.title)\" from your downloads library. You will no longer have access to this podcast.")
-			confirmation.addButton(image: #imageLiteral(resourceName: "delete"), title: "Remove Episode", color: .optionRed) {
+			confirmation.addButton(image: #imageLiteral(resourceName: "delete"), title: "Remove Episode", color: UIColor(named: "optionRed")!) {
 				[unowned self] in
 				DownloadCache.shared.removeDownload(episode: episode)
 				tableView.deleteRows(at: [index], with: .automatic)
@@ -89,7 +89,7 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
 			}
 			confirmation.show()
 		}
-		downloadAction.backgroundColor = .optionRed
+		downloadAction.backgroundColor = UIColor(named: "optionRed")
 		return [downloadAction]
 	}
 

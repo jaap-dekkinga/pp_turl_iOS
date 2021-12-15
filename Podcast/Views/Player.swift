@@ -82,7 +82,7 @@ class Player: UIView {
 		button.widthAnchor.constraint(equalToConstant: frame.width - 2*outerPadding).isActive = true
 		button.heightAnchor.constraint(equalToConstant: 40).isActive = true
 		button.addTarget(self, action: #selector(dismiss), for: .touchUpInside)
-		button.setTitleColor(.hotBlack, for: .normal)
+		button.setTitleColor(UIColor(named: "hotBlack"), for: .normal)
 		button.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
 		return button
 	}()
@@ -153,7 +153,7 @@ class Player: UIView {
 	lazy var author: UILabel = {
 		let label = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width - 2*outerPadding, height: CGFloat.greatestFiniteMagnitude))
 		label.textAlignment = .left
-		label.textColor = .purple
+		label.textColor = UIColor(named: "hotPurple")
 		label.font = .systemFont(ofSize: 14, weight: .semibold)
 		return label
 	}()
@@ -246,7 +246,7 @@ class Player: UIView {
 		let image = UIImageView(image: #imageLiteral(resourceName: "volumeDown").withRenderingMode(.alwaysTemplate))
 		image.widthAnchor.constraint(equalToConstant: iconSize).isActive = true
 		image.heightAnchor.constraint(equalToConstant: iconSize).isActive = true
-		image.tintColor = UIColor.hotBlack.withAlphaComponent(0.75)
+		image.tintColor = UIColor(named: "hotBlack")?.withAlphaComponent(0.75)
 		image.contentMode = .scaleAspectFit
 		return image
 	}()
@@ -254,7 +254,7 @@ class Player: UIView {
 	lazy var volumeUp: UIImageView = {
 		let image = UIImageView(image: #imageLiteral(resourceName: "volumeUp").withRenderingMode(.alwaysTemplate))
 		image.widthAnchor.constraint(equalToConstant: iconSize).isActive = true
-		image.tintColor = UIColor.hotBlack.withAlphaComponent(0.75)
+		image.tintColor = UIColor(named: "hotBlack")?.withAlphaComponent(0.75)
 		image.heightAnchor.constraint(equalToConstant: iconSize).isActive = true
 		image.contentMode = .scaleAspectFit
 		return image

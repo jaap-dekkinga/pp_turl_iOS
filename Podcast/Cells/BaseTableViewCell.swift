@@ -29,7 +29,6 @@ class BaseTableViewCell: UITableViewCell {
 	}
 
 	func setup() {
-		fatalError("setup() not implemented")
 	}
 
 }

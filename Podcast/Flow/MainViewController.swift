@@ -12,10 +12,10 @@ class MainViewController: UITabBarController {
 
 	public let player = Player.shared
 
-	private var maximizedConstraint: NSLayoutConstraint!
-	private var minimizedConstraint: NSLayoutConstraint!
 	private var collapsedConstraint: NSLayoutConstraint!
 	private var coverHeight: NSLayoutConstraint!
+	private var maximizedConstraint: NSLayoutConstraint!
+	private var minimizedConstraint: NSLayoutConstraint!
 
 	// MARK: - UIViewController
 

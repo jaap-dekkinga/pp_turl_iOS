@@ -39,7 +39,7 @@ class EpisodeCell: BaseTableViewCell {
 	let titleLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.textColor = .hotBlack
+		label.textColor = UIColor(named: "hotBlack")
 		label.numberOfLines = 2
 		label.lineBreakMode = .byTruncatingTail
 		label.font = .systemFont(ofSize: 14, weight: .bold)
@@ -49,7 +49,7 @@ class EpisodeCell: BaseTableViewCell {
 	let timeLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.textColor = .purple
+		label.textColor = UIColor(named: "hotPurple")
 		label.font = .systemFont(ofSize: 13.5, weight: .semibold)
 		return label
 	}()
@@ -59,7 +59,7 @@ class EpisodeCell: BaseTableViewCell {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.numberOfLines = 3
 		label.lineBreakMode = .byTruncatingTail
-		label.textColor = UIColor.hotBlack.withAlphaComponent(0.75)
+		label.textColor = UIColor(named: "hotBlack")?.withAlphaComponent(0.75)
 		label.font = .systemFont(ofSize: 12.75)
 		return label
 	}()
@@ -88,6 +88,8 @@ class EpisodeCell: BaseTableViewCell {
 		stackView.leftAnchor.constraint(equalTo: episodeImage.rightAnchor, constant: 15).isActive = true
 		stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -15).isActive = true
 	}
+
+	// MARK: -
 
 	override func setup() {
 		setupImageView()

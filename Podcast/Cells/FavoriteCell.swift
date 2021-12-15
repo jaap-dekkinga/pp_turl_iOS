@@ -23,6 +23,8 @@ class FavoriteCell: BaseCollectionViewCell {
 	lazy var favImage: UIImageView = {
 		let imageView = UIImageView(image: #imageLiteral(resourceName: "blankPodcast"))
 		imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.0).isActive = true
+		imageView.clipsToBounds = true
+		imageView.layer.cornerRadius = 5.0
 		return imageView
 	}()
 
@@ -30,7 +32,7 @@ class FavoriteCell: BaseCollectionViewCell {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.lineBreakMode = .byTruncatingTail
-		label.textColor = .black
+		label.textColor = UIColor(named: "hotBlack")
 		label.font = .systemFont(ofSize: 15, weight: .semibold)
 		return label
 	}()
@@ -40,7 +42,7 @@ class FavoriteCell: BaseCollectionViewCell {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.numberOfLines = 2
 		label.lineBreakMode = .byTruncatingTail
-		label.textColor = UIColor.hotBlack.withAlphaComponent(0.75)
+		label.textColor = UIColor(named: "hotGray")?.withAlphaComponent(0.75)
 		label.font = .systemFont(ofSize: 12.25)
 		return label
 	}()
@@ -53,7 +55,9 @@ class FavoriteCell: BaseCollectionViewCell {
 		stack.translatesAutoresizingMaskIntoConstraints = false
 		return stack
 	}()
-	
+
+	// MARK: -
+
 	override func setup() {
 		addSubview(stackView)
 		stackView.fillSuperview()

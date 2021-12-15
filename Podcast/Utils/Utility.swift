@@ -10,5 +10,4 @@ import UIKit
 
 func getString(text: String, font: CGFloat, weight: UIFont.Weight, color: UIColor) -> NSAttributedString {
 	return NSAttributedString(string: text, attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: font, weight: weight), NSAttributedString.Key.foregroundColor: color])
-
 }

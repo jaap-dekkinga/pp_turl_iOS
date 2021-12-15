@@ -9,6 +9,7 @@
 import UIKit
 
 class HighlightingButton: UIButton {
+
 	private var color: UIColor!
 	private var background: UIColor!
 
@@ -37,4 +38,5 @@ class HighlightingButton: UIButton {
 		titleEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
 		contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
 	}
+
 }

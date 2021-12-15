@@ -48,7 +48,7 @@ class LoadingView: UIView {
 	}
 
 	fileprivate func setup() {
-		backgroundColor = .overlayDark
+		backgroundColor = UIColor(named: "overlayDark")
 		setupActivityIndicatorView()
 		setupLabel()
 	}

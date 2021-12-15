@@ -63,10 +63,10 @@ class EpisodesController: UIViewController {
 	fileprivate func setupNavigationBarButtons(isFavorite: Bool) {
 		//Get Fav Button
 		let fav = UIBarButtonItem(title: "Favorite", style: .plain, target: self, action: #selector(favoritePodcast))
-		fav.tintColor = .purple
+		fav.tintColor = UIColor(named: "hotPurple")
 		//Get Heart Icon
 		let heartIcon = UIBarButtonItem(image: #imageLiteral(resourceName: "heart").withRenderingMode(.alwaysTemplate), style: .plain, target: nil, action: nil)
-		heartIcon.tintColor = .purple
+		heartIcon.tintColor = UIColor(named: "hotPurple")
 		navigationItem.rightBarButtonItem = isFavorite ? heartIcon: fav
 	}
 
@@ -152,7 +152,7 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 				}
 			})
 		}
-		downloadAction.backgroundColor = .optionGreen
+		downloadAction.backgroundColor = UIColor(named: "optionGreen")
 		return [downloadAction]
 	}
 

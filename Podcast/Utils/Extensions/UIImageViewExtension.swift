@@ -12,25 +12,42 @@ import Alamofire
 let imageCache = NSCache<AnyObject, UIImage>()
 
 extension UIImageView {
+
 	func downloadImage(url: String, completion: ((UIImage?) -> Void)? = nil) {
-		if url.isEmpty { return }
-		if let image = imageCache.object(forKey: url as AnyObject) {
-			DispatchQueue.main.async {[weak self] in
-				self?.image = image
-				completion?(image)
+		// safety check
+		guard (url.isEmpty == false) else {
+			return
+		}
+
+		// look for the image in the image cache
+		if let cachedImage = imageCache.object(forKey: url as AnyObject) {
+			DispatchQueue.main.async { [weak self] in
+				// show the image immediately
+				self?.image = cachedImage
+				completion?(cachedImage)
 			}
 			return
 		}
 
+		// download the image
 		Alamofire.request(url).responseData { (response) in
-			guard let data = response.value else { return }
+			guard let data = response.value else {
+				return
+			}
+
 			if let image = UIImage(data: data) {
+				// save the image in the image cache
 				imageCache.setObject(image, forKey: url as AnyObject)
-				DispatchQueue.main.async {[weak self] in
-					self?.image = image
-					completion?(image)
+				DispatchQueue.main.async { [weak self] in
+					if let imageView = self {
+						UIView.transition(with: imageView, duration: 0.3, options: .transitionCrossDissolve, animations: {
+							imageView.image = image
+						}, completion: nil)
+						completion?(image)
+					}
 				}
 			}
 		}
 	}
+
 }

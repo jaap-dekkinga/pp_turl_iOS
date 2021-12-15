@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -73,7 +74,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="uG1-n1-cNe" kind="relationship" relationship="rootViewController" id="BvU-dU-YMT"/>
+                        <segue destination="xux-5h-f3d" kind="relationship" relationship="rootViewController" id="RrU-k6-eHt"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="haJ-zt-WQj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -81,20 +82,62 @@
             <point key="canvasLocation" x="1041" y="-42"/>
         </scene>
         <!--Search-->
-        <scene sceneID="6Ec-zX-woE">
+        <scene sceneID="KHL-Wd-XrI">
             <objects>
-                <viewController id="uG1-n1-cNe" customClass="SearchViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="MvX-XY-sRr">
+                <tableViewController id="xux-5h-f3d" customClass="SearchViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="fkR-NN-Fbu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="O5R-N0-iQs"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Search" id="aI5-y1-Y6b"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wI9-gW-KUr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PodcastCell" id="wXD-TQ-6QU" customClass="PodcastCell" customModule="Podcast" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="130"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wXD-TQ-6QU" id="8b2-aP-REt">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blankPodcast" translatesAutoresizingMaskIntoConstraints="NO" id="CpB-nF-XTC">
+                                            <rect key="frame" x="35" y="15" width="100" height="100"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="7dt-tc-xXs"/>
+                                                <constraint firstAttribute="height" constant="100" id="DtZ-Se-aWt"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Podcast Info" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DR3-cP-mVg">
+                                            <rect key="frame" x="150" y="55" width="229" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" name="hotBlack"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="DR3-cP-mVg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="8b2-aP-REt" secondAttribute="topMargin" constant="15" id="2NR-NH-L1T"/>
+                                        <constraint firstItem="CpB-nF-XTC" firstAttribute="leading" secondItem="8b2-aP-REt" secondAttribute="leadingMargin" constant="15" id="4Y2-EA-iiH"/>
+                                        <constraint firstItem="CpB-nF-XTC" firstAttribute="top" secondItem="8b2-aP-REt" secondAttribute="top" constant="15" id="6Mw-qu-G5d"/>
+                                        <constraint firstItem="DR3-cP-mVg" firstAttribute="leading" secondItem="CpB-nF-XTC" secondAttribute="trailing" constant="15" id="AmD-o1-vkg"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="DR3-cP-mVg" secondAttribute="trailing" constant="15" id="Z3W-hM-S7j"/>
+                                        <constraint firstAttribute="bottom" secondItem="CpB-nF-XTC" secondAttribute="bottom" constant="15" id="gob-JZ-mPA"/>
+                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="DR3-cP-mVg" secondAttribute="bottom" constant="15" id="mq8-bs-O19"/>
+                                        <constraint firstItem="DR3-cP-mVg" firstAttribute="centerY" secondItem="8b2-aP-REt" secondAttribute="centerY" id="nk5-0N-aKr"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="artworkImageView" destination="CpB-nF-XTC" id="eFl-xG-gBS"/>
+                                    <outlet property="infoLabel" destination="DR3-cP-mVg" id="rQZ-7x-3iH"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xux-5h-f3d" id="vXg-h6-HTz"/>
+                            <outlet property="delegate" destination="xux-5h-f3d" id="Vk2-xM-eCw"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Search" id="Hiu-z9-JZg"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TMy-pB-qsi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1042" y="-727"/>
+            <point key="canvasLocation" x="1041" y="-727"/>
         </scene>
         <!--Downloads-->
         <scene sceneID="MVQ-xY-Dbg">
@@ -287,6 +330,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="blankPodcast" width="90" height="90"/>
         <image name="bookmark" width="24" height="24"/>
         <image name="bookmark_sel" width="24" height="24"/>
         <image name="download" width="25" height="25"/>
@@ -296,6 +340,9 @@
         <image name="searchSelected" width="25" height="25"/>
         <image name="setting" width="24" height="24"/>
         <image name="setting_sel" width="24" height="24"/>
+        <namedColor name="hotBlack">
+            <color red="0.25098039215686274" green="0.25882352941176473" blue="0.27058823529411763" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

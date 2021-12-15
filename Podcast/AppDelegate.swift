@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return url
 	}()
 
+	// public
 	var window: UIWindow?
 
 	// MARK: -
@@ -43,8 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - Private
 
 	private func setupAppearance() {
-		UITabBar.appearance().barTintColor = .white
-		UITabBar.appearance().tintColor = .purple
+		UITabBar.appearance().tintColor = UIColor(named: "hotPurple")
 		UITabBar.appearance().unselectedItemTintColor = .lightGray
 		UINavigationBar.appearance().prefersLargeTitles = true
 	}

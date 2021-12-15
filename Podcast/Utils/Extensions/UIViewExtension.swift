@@ -16,6 +16,7 @@ enum LinePosition {
 }
 
 extension UIView {
+
 	func addConstraintsWithFormat(format: String, views: UIView...) {
 		var viewsDictionary = [String: UIView]()
 		for (index, view) in views.enumerated(){
@@ -52,10 +53,10 @@ extension UIView {
 		fillSuperview(padding: 0)
 	}
 
-	func addLine(position: LinePosition, padding: CGFloat = 0.0, color: UIColor = .hotBlack, width: CGFloat = 0.75) {
+	func addLine(position: LinePosition, padding: CGFloat = 0.0, color: UIColor? = nil, width: CGFloat = 0.75) {
 		let blackLine: UIView = {
 			let view = UIView()
-			view.backgroundColor = color
+			view.backgroundColor = color ?? UIColor(named: "hotBlack")!
 			view.alpha = 0.35
 			return view
 		}()

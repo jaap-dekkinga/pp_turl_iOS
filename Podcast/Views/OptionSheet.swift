@@ -16,6 +16,7 @@ struct OptionButton {
 }
 
 class OptionSheet: UIViewController {
+
 	fileprivate let tag = 2345
 	fileprivate let titleHeight: CGFloat = 50.0
 	fileprivate let messagePadding: CGFloat = 20
@@ -28,13 +29,14 @@ class OptionSheet: UIViewController {
 	private var heightOfContainer: CGFloat = 0
 	private var activeViewController: UIViewController?
 	private var buttons: [OptionButton] = []
+
 	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
 
 	init(title: String?, message: String?, firstResponder: UIView? = nil) {
 		super.init(nibName: nil, bundle: nil)
-		view.backgroundColor = .overlay
+		view.backgroundColor = UIColor(named: "overlay")
 		self.firstResponder = firstResponder
 		titleText = title
 		messageText = message
@@ -57,7 +59,7 @@ class OptionSheet: UIViewController {
 
 	lazy var messageLabel: UILabel = {
 		let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - messagePadding, height: .greatestFiniteMagnitude))
-		label.textColor = .hotBlack
+		label.textColor = UIColor(named: "hotBlack")
 		label.font = UIFont(name: "Avenir Next", size: 13)
 		label.textAlignment = .left
 		label.numberOfLines = 0
@@ -73,7 +75,7 @@ class OptionSheet: UIViewController {
 
 	private lazy var cancel: UIButton = {
 		let button = UIButton(type: .system)
-		button.backgroundColor = .purple
+		button.backgroundColor = UIColor(named: "hotPurple")
 		button.setTitle("Dismiss", for: .normal)
 		button.setTitleColor(.white, for: .normal)
 		button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
@@ -110,7 +112,7 @@ class OptionSheet: UIViewController {
 		if buttons.count == 0 {
 			fatalError("The Options View is comletely empty, which is not allowed. Add alteast 1 button, or title, or message.")
 		}
-		view.backgroundColor = .overlay
+		view.backgroundColor = UIColor(named: "overlay")
 		addToViewHeirarchy()
 		activeViewController?.addChild(self)
 		let activeView = activeViewController?.view

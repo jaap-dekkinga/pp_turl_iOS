@@ -11,6 +11,7 @@ import Foundation
 extension UserDefaults {
 
 	// MARK: - Keys
+
 	static let favoritesKey = "favoritesPodcastsKey"
 
 	// MARK: - Remove element functions

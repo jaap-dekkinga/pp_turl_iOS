@@ -19,7 +19,13 @@ class BaseCollectionViewCell: UICollectionViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		setup()
+	}
+
 	func setup() {
 		fatalError("setup() has not been implemented")
 	}
+
 }

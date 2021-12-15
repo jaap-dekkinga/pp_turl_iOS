@@ -8,8 +8,6 @@
 
 import Foundation
 
-// MARK: - Lists
-
 var favorites: [Podcast] = []
 
 // MARK: -
