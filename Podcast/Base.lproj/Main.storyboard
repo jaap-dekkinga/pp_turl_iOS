@@ -18,13 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" name="hotPurple"/>
                     </tabBar>
                     <connections>
                         <segue destination="znn-2Z-7Qd" kind="relationship" relationship="viewControllers" id="Eth-qJ-ek5"/>
                         <segue destination="Yxp-yx-a5t" kind="relationship" relationship="viewControllers" id="O1M-DP-uXK"/>
                         <segue destination="7EN-yS-huI" kind="relationship" relationship="viewControllers" id="WK6-an-grm"/>
                         <segue destination="Jac-da-VYD" kind="relationship" relationship="viewControllers" id="tbV-4u-TXx"/>
-                        <segue destination="joO-ZF-m3w" kind="relationship" relationship="viewControllers" id="Q6o-eA-R34"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RqZ-A8-i1c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -143,7 +143,7 @@
         <scene sceneID="MVQ-xY-Dbg">
             <objects>
                 <navigationController id="7EN-yS-huI" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Downloads" image="download" selectedImage="bookmark_sel" id="oWJ-0i-xjP"/>
+                    <tabBarItem key="tabBarItem" title="Downloads" image="download" selectedImage="downloadSelected" id="oWJ-0i-xjP"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="7xW-NG-LiC">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -334,6 +334,7 @@
         <image name="bookmark" width="24" height="24"/>
         <image name="bookmark_sel" width="24" height="24"/>
         <image name="download" width="25" height="25"/>
+        <image name="downloadSelected" width="25" height="25"/>
         <image name="play" width="25" height="25"/>
         <image name="playSelected" width="25" height="25"/>
         <image name="search" width="25" height="25"/>
@@ -342,6 +343,9 @@
         <image name="setting_sel" width="24" height="24"/>
         <namedColor name="hotBlack">
             <color red="0.25098039215686274" green="0.25882352941176473" blue="0.27058823529411763" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="hotPurple">
+            <color red="0.39215686274509803" green="0.0" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

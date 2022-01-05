@@ -44,8 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - Private
 
 	private func setupAppearance() {
-		UITabBar.appearance().tintColor = UIColor(named: "hotPurple")
-		UITabBar.appearance().unselectedItemTintColor = .lightGray
 		UINavigationBar.appearance().prefersLargeTitles = true
 	}
 

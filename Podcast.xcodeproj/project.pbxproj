@@ -48,6 +48,7 @@
 		EC9C72D627437C8800933D6F /* InterestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C72D527437C8800933D6F /* InterestViewController.swift */; };
 		EC9C72D927437F5E00933D6F /* DMSwipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C72D827437F5E00933D6F /* DMSwipeCard.swift */; };
 		EC9C72DB27437F7800933D6F /* DMSwipeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C72DA27437F7800933D6F /* DMSwipeCardView.swift */; };
+		ECB2B9F5277AB23100D85E98 /* Player.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB2B9F3277AB23100D85E98 /* Player.xib */; };
 		ECB9A2312735D3F600E7A28B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECB9A22F2735D3F600E7A28B /* Main.storyboard */; };
 		ECDC2EC4273EFAE900EC70D5 /* DownloadCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDC2EC3273EFAE900EC70D5 /* DownloadCache.swift */; };
 		ECDC2EC6273EFEC100EC70D5 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDC2EC5273EFEC100EC70D5 /* Download.swift */; };
@@ -100,6 +101,7 @@
 		EC9C72D527437C8800933D6F /* InterestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestViewController.swift; sourceTree = "<group>"; };
 		EC9C72D827437F5E00933D6F /* DMSwipeCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMSwipeCard.swift; sourceTree = "<group>"; };
 		EC9C72DA27437F7800933D6F /* DMSwipeCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMSwipeCardView.swift; sourceTree = "<group>"; };
+		ECB2B9F4277AB23100D85E98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Player.xib; sourceTree = "<group>"; };
 		ECB9A22E2734D1A200E7A28B /* UpdateBuildNumber.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = UpdateBuildNumber.sh; sourceTree = "<group>"; };
 		ECB9A2302735D3F600E7A28B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ECDC2EC3273EFAE900EC70D5 /* DownloadCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadCache.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				3C16D94621E3BB8000BAB9B7 /* Info.plist */,
 				3C16D94321E3BB8000BAB9B7 /* LaunchScreen.storyboard */,
 				ECB9A22F2735D3F600E7A28B /* Main.storyboard */,
+				ECB2B9F3277AB23100D85E98 /* Player.xib */,
 				04A9A56C273046C500164A82 /* trigger.wav */,
 			);
 			path = Podcast;
@@ -341,10 +344,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ECB9A2312735D3F600E7A28B /* Main.storyboard in Resources */,
-				04A9A56D273046C600164A82 /* trigger.wav in Resources */,
-				3C16D94521E3BB8000BAB9B7 /* LaunchScreen.storyboard in Resources */,
 				3C16D94221E3BB8000BAB9B7 /* Assets.xcassets in Resources */,
+				3C16D94521E3BB8000BAB9B7 /* LaunchScreen.storyboard in Resources */,
+				ECB9A2312735D3F600E7A28B /* Main.storyboard in Resources */,
+				ECB2B9F5277AB23100D85E98 /* Player.xib in Resources */,
+				04A9A56D273046C600164A82 /* trigger.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +468,14 @@
 				3C16D94421E3BB8000BAB9B7 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		ECB2B9F3277AB23100D85E98 /* Player.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ECB2B9F4277AB23100D85E98 /* Base */,
+			);
+			name = Player.xib;
 			sourceTree = "<group>";
 		};
 		ECB9A22F2735D3F600E7A28B /* Main.storyboard */ = {
