@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	// MARK: -
 
-	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
 		setupTuneURLTrigger()
 		setupAppearance()
 		return true
@@ -44,7 +44,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	// MARK: - Private
 
 	private func setupAppearance() {
+		// setup the navigation bar appearance
 		UINavigationBar.appearance().prefersLargeTitles = true
+		// setup the tab bar appearance
+		let tabBarAppearance = UITabBarAppearance()
+		tabBarAppearance.configureWithTransparentBackground()
+		tabBarAppearance.backgroundColor = .clear
+		tabBarAppearance.backgroundEffect = nil
+		UITabBar.appearance().standardAppearance = tabBarAppearance
+		if #available(iOS 15.0, *) {
+			UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+		}
 	}
 
 	private func setupTuneURLTrigger() {

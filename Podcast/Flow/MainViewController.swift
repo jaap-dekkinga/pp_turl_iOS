@@ -49,7 +49,7 @@ class MainViewController: UITabBarController {
 		playerMinimizedConstraint = playerContainer.topAnchor.constraint(equalTo: self.tabBar.topAnchor, constant: -64)
 
 		// create the collapsed player constraints
-		playerCollapsedConstraint = playerContainer.topAnchor.constraint(equalTo: self.tabBar.topAnchor, constant: 0)
+		playerCollapsedConstraint = playerContainer.topAnchor.constraint(equalTo: self.tabBar.topAnchor, constant: -1)
 
 		// initially collapsed
 		playerCollapsedConstraint.isActive = true
@@ -71,12 +71,11 @@ extension MainViewController: PlayerDelegate {
 			playerMinimizedConstraint.isActive = false
 			player.showFullPlayer()
 
-			self.tabBar.alpha = 0
+			self.tabBar.isHidden = true
 		})
 	}
 
 	func playerMinimize() {
-
 		UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
 			[unowned self] in
 
@@ -86,7 +85,7 @@ extension MainViewController: PlayerDelegate {
 			playerMinimizedConstraint.isActive = true
 			player.showMiniPlayer(above: self.tabBar)
 
-			self.tabBar.alpha = 1
+			self.tabBar.isHidden = false
 		})
 	}
 

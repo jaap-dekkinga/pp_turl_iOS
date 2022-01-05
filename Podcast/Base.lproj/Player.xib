@@ -40,6 +40,20 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="w3k-ii-LZv">
                 <rect key="frame" x="0.0" y="0.0" width="400" height="540"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <view alpha="0.33300000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YSY-AY-u39">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="0.5"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="xjR-cL-9vM"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="YSY-AY-u39" secondAttribute="trailing" id="hN5-0x-FHJ"/>
+                    <constraint firstItem="YSY-AY-u39" firstAttribute="top" secondItem="w3k-ii-LZv" secondAttribute="top" id="ls3-LF-nSk"/>
+                    <constraint firstItem="YSY-AY-u39" firstAttribute="leading" secondItem="w3k-ii-LZv" secondAttribute="leading" id="u5d-Jr-EwL"/>
+                </constraints>
             </view>
             <blurEffect style="systemMaterial"/>
             <point key="canvasLocation" x="-625" y="-145"/>
@@ -352,13 +366,6 @@
             <rect key="frame" x="0.0" y="0.0" width="400" height="65"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view alpha="0.34999999403953552" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOT-Xl-Dg9">
-                    <rect key="frame" x="0.0" y="0.0" width="400" height="0.5"/>
-                    <color key="backgroundColor" systemColor="labelColor"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="0.5" id="VL5-KZ-b9x"/>
-                    </constraints>
-                </view>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blankPodcast" translatesAutoresizingMaskIntoConstraints="NO" id="SaY-TS-aqb">
                     <rect key="frame" x="8" y="8" width="49" height="49"/>
                 </imageView>
@@ -377,6 +384,14 @@
                         <action selector="play" destination="-1" eventType="touchUpInside" id="gyF-24-r7S"/>
                     </connections>
                 </button>
+                <view alpha="0.222" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OMQ-z4-JH3">
+                    <rect key="frame" x="0.0" y="64.5" width="400" height="0.5"/>
+                    <viewLayoutGuide key="safeArea" id="67V-ZD-dRk"/>
+                    <color key="backgroundColor" systemColor="labelColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="jN3-dA-HW0"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="1I9-xe-iaR"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -385,15 +400,15 @@
                 <constraint firstItem="SaY-TS-aqb" firstAttribute="width" secondItem="SaY-TS-aqb" secondAttribute="height" multiplier="1:1" id="1uB-KN-8wh"/>
                 <constraint firstAttribute="bottom" secondItem="SaY-TS-aqb" secondAttribute="bottom" constant="8" id="2pJ-eg-mw0"/>
                 <constraint firstItem="iez-AO-tRh" firstAttribute="centerY" secondItem="iRA-hn-olQ" secondAttribute="centerY" id="A7y-Ot-jzg"/>
-                <constraint firstAttribute="trailing" secondItem="gOT-Xl-Dg9" secondAttribute="trailing" id="JMo-vW-Uhn"/>
                 <constraint firstAttribute="bottom" secondItem="ps6-Ou-T8f" secondAttribute="bottom" constant="8" id="MJB-jT-lPT"/>
-                <constraint firstItem="gOT-Xl-Dg9" firstAttribute="leading" secondItem="iRA-hn-olQ" secondAttribute="leading" id="MtG-ix-6mk"/>
                 <constraint firstItem="ps6-Ou-T8f" firstAttribute="top" secondItem="iRA-hn-olQ" secondAttribute="top" constant="8" id="NGo-PF-bv8"/>
+                <constraint firstAttribute="bottom" secondItem="OMQ-z4-JH3" secondAttribute="bottom" id="Pkd-iK-jU1"/>
                 <constraint firstItem="SaY-TS-aqb" firstAttribute="top" secondItem="iRA-hn-olQ" secondAttribute="top" constant="8" id="U1o-ak-gso"/>
                 <constraint firstItem="iez-AO-tRh" firstAttribute="leading" secondItem="SaY-TS-aqb" secondAttribute="trailing" constant="8" id="Vb7-DT-ZJU"/>
-                <constraint firstItem="gOT-Xl-Dg9" firstAttribute="top" secondItem="iRA-hn-olQ" secondAttribute="top" id="Z4x-ud-dnF"/>
+                <constraint firstAttribute="trailing" secondItem="OMQ-z4-JH3" secondAttribute="trailing" id="VwP-oB-Zdx"/>
                 <constraint firstItem="1I9-xe-iaR" firstAttribute="trailing" secondItem="ps6-Ou-T8f" secondAttribute="trailing" constant="8" id="dXu-Wy-xiv"/>
                 <constraint firstItem="SaY-TS-aqb" firstAttribute="leading" secondItem="1I9-xe-iaR" secondAttribute="leading" constant="8" id="hud-ZA-Msp"/>
+                <constraint firstItem="OMQ-z4-JH3" firstAttribute="leading" secondItem="iRA-hn-olQ" secondAttribute="leading" id="s7c-32-F9y"/>
                 <constraint firstItem="ps6-Ou-T8f" firstAttribute="width" secondItem="ps6-Ou-T8f" secondAttribute="height" multiplier="1:1" id="sje-yb-VcT"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
