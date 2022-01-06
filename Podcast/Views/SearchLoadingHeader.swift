@@ -13,7 +13,7 @@ class SearchLoadingHeader: UIView {
 	let label: UILabel = {
 		let label = UILabel()
 		label.font = .systemFont(ofSize: 15.50, weight: .semibold)
-		label.textColor = UIColor(named: "hotPurple")
+		label.textColor = UIColor(named: "Item-Tertiary")
 		label.textAlignment = .center
 		label.numberOfLines = 0
 		label.text = "Currently searching, please wait."
@@ -23,7 +23,6 @@ class SearchLoadingHeader: UIView {
 
 	let activity: UIActivityIndicatorView = {
 		let activity = UIActivityIndicatorView(style: .large)
-		activity.color = UIColor(named: "hotBlack")
 		activity.startAnimating()
 		activity.translatesAutoresizingMaskIntoConstraints = false
 		return activity

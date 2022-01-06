@@ -12,9 +12,9 @@ var favorites: [Podcast] = []
 
 // MARK: -
 
-func isFavorited(other: Podcast) -> Bool{
+func isFavorited(other: Podcast) -> Bool {
 	for podcast in favorites {
-		if podcast.isEqual(other) {
+		if (podcast == other) {
 			return true
 		}
 	}

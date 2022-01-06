@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="selectedImageTintColor" name="hotPurple"/>
+                        <color key="selectedImageTintColor" name="Item-Active"/>
                     </tabBar>
                     <connections>
                         <segue destination="znn-2Z-7Qd" kind="relationship" relationship="viewControllers" id="Eth-qJ-ek5"/>
@@ -107,7 +107,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Podcast Info" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DR3-cP-mVg">
                                             <rect key="frame" x="150" y="55" width="229" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" name="hotBlack"/>
+                                            <color key="textColor" name="Item-Primary"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -341,11 +341,11 @@
         <image name="searchSelected" width="25" height="25"/>
         <image name="setting" width="24" height="24"/>
         <image name="setting_sel" width="24" height="24"/>
-        <namedColor name="hotBlack">
-            <color red="0.25098039215686274" green="0.25882352941176473" blue="0.27058823529411763" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Item-Active">
+            <color red="0.3843137254901961" green="0.32941176470588235" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="hotPurple">
-            <color red="0.39215686274509803" green="0.0" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Item-Primary">
+            <color red="0.094117647058823528" green="0.062745098039215685" blue="0.20784313725490197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

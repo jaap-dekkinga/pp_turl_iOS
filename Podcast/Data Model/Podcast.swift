@@ -9,7 +9,7 @@
 import Foundation
 import FeedKit
 
-struct Podcast: Codable {
+struct Podcast: Codable, Equatable {
 
 	let author: String
 	let description: String
@@ -52,9 +52,10 @@ struct Podcast: Codable {
 		// ----
 	}
 
-	func isEqual(_ object: Any?) -> Bool {
-		guard let otherPodcast = object as? Podcast else { return false }
-		return (otherPodcast.author == author) && (otherPodcast.title == title)
+	// MARK: - Equatable
+
+	static func == (lhs: Self, rhs: Self) -> Bool {
+		return (lhs.feedURL == rhs.feedURL) && (lhs.author == rhs.author) && (lhs.title == rhs.title)
 	}
 
 }

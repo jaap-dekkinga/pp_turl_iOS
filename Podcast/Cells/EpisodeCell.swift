@@ -39,7 +39,7 @@ class EpisodeCell: BaseTableViewCell {
 	let titleLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.textColor = UIColor(named: "hotBlack")
+		label.textColor = UIColor(named: "Item-Primary")
 		label.numberOfLines = 2
 		label.lineBreakMode = .byTruncatingTail
 		label.font = .systemFont(ofSize: 14, weight: .bold)
@@ -49,7 +49,7 @@ class EpisodeCell: BaseTableViewCell {
 	let timeLabel: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.textColor = UIColor(named: "hotPurple")
+		label.textColor = UIColor(named: "Item-Secondary")
 		label.font = .systemFont(ofSize: 13.5, weight: .semibold)
 		return label
 	}()
@@ -59,13 +59,13 @@ class EpisodeCell: BaseTableViewCell {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.numberOfLines = 3
 		label.lineBreakMode = .byTruncatingTail
-		label.textColor = UIColor(named: "hotBlack")?.withAlphaComponent(0.75)
+		label.textColor = UIColor(named: "Item-Tertiary")
 		label.font = .systemFont(ofSize: 12.75)
 		return label
 	}()
 
 	lazy var stackView: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [timeLabel, titleLabel, descriptionLabel])
+		let stack = UIStackView(arrangedSubviews: [titleLabel, timeLabel, descriptionLabel])
 		stack.axis = .vertical
 		stack.distribution = .fill
 		stack.spacing = 4

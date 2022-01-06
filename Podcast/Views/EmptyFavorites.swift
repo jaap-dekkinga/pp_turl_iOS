@@ -9,10 +9,11 @@
 import UIKit
 
 class EmptyFavorites: UICollectionReusableView {
+
 	let label: UILabel = {
 		let label = UILabel()
 		label.font = .systemFont(ofSize: 15.50, weight: .semibold)
-		label.textColor = UIColor(named: "hotPurple")
+		label.textColor = UIColor(named: "Item-Active")
 		label.textAlignment = .center
 		label.numberOfLines = 0
 		label.text = "You have not favorited any podcasts."

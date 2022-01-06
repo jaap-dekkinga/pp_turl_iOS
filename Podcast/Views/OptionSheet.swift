@@ -50,16 +50,15 @@ class OptionSheet: UIViewController {
 
 	let titleLabel: UILabel = {
 		let label = UILabel()
-		label.textColor = UIColor.black.withAlphaComponent(0.9)
+		label.textColor = UIColor(named: "Item-Primary")
 		label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
 		label.textAlignment = .center
-		label.addLine(position: .Bottom)
 		return label
 	}()
 
 	lazy var messageLabel: UILabel = {
 		let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - messagePadding, height: .greatestFiniteMagnitude))
-		label.textColor = UIColor(named: "hotBlack")
+		label.textColor = UIColor(named: "Item-Tertiary")
 		label.font = UIFont(name: "Avenir Next", size: 13)
 		label.textAlignment = .left
 		label.numberOfLines = 0
@@ -75,7 +74,7 @@ class OptionSheet: UIViewController {
 
 	private lazy var cancel: UIButton = {
 		let button = UIButton(type: .system)
-		button.backgroundColor = UIColor(named: "hotPurple")
+		button.backgroundColor = UIColor(named: "Button-Active")
 		button.setTitle("Dismiss", for: .normal)
 		button.setTitleColor(.white, for: .normal)
 		button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
@@ -133,7 +132,6 @@ class OptionSheet: UIViewController {
 		button.setTitle(item.title, for: .normal)
 		button.setImage(item.image.withRenderingMode(.alwaysTemplate), for: .normal)
 		button.addTarget(self, action: #selector(performAction(_:)), for: .touchUpInside)
-		button.addLine(position: .Bottom)
 		return button
 	}
 
@@ -174,7 +172,6 @@ class OptionSheet: UIViewController {
 			let stack = UIStackView(arrangedSubviews: actionButtons)
 			stack.axis = .vertical
 			stack.distribution = .fillEqually
-			stack.addLine(position: .Top, width: 0.50)
 			return stack
 		}()
 		let buttonsContainerHeight = CGFloat(actionButtons.count) * buttonHeight

@@ -33,9 +33,11 @@ class Player: UIViewController {
 	@IBOutlet weak var backButton: UIButton!
 	@IBOutlet weak var bookmarkButton: UIButton!
 	@IBOutlet weak var currentTime: UILabel!
+	@IBOutlet weak var dateLabel: UILabel!
 	@IBOutlet weak var dislikeButton: UIButton!
 	@IBOutlet weak var dismissButton: UIButton!
 	@IBOutlet weak var episodeImage: UIImageView!
+	@IBOutlet weak var episodeView: UIView!
 	@IBOutlet weak var forwardButton: UIButton!
 	@IBOutlet weak var likeButton: UIButton!
 	@IBOutlet weak var loveButton: UIButton!
@@ -45,7 +47,9 @@ class Player: UIViewController {
 	@IBOutlet weak var totalTime: UILabel!
 
 	// mini player
+	@IBOutlet weak var miniAuthorLabel: UILabel!
 	@IBOutlet weak var miniEpisodeImage: UIImageView!
+	@IBOutlet weak var miniForwardButton: UIButton!
 	@IBOutlet weak var miniPlayButton: UIButton!
 	@IBOutlet weak var miniTitleLabel: UILabel!
 
@@ -65,7 +69,9 @@ class Player: UIViewController {
 				player.pause()
 				titleLabel.text = episode.title
 				authorLabel.text = episode.author
+				dateLabel.text = episode.date
 				miniTitleLabel.text = episode.title
+				miniAuthorLabel.text = episode.author
 				startPlaying()
 			}
 		}
@@ -74,9 +80,9 @@ class Player: UIViewController {
 	var episodeImageURL: String? {
 		didSet {
 			if let episodeImageURL = episodeImageURL {
-				episodeImage.downloadImage(url: episodeImageURL)
 				miniEpisodeImage.downloadImage(url: episodeImageURL)
-				episodeImage.transform = CGAffineTransform(scaleX: imageScaleDown, y: imageScaleDown)
+				episodeImage.downloadImage(url: episodeImageURL)
+				episodeView.transform = CGAffineTransform(scaleX: imageScaleDown, y: imageScaleDown)
 			}
 		}
 	}
@@ -280,14 +286,14 @@ class Player: UIViewController {
 	fileprivate func enlargeImage() {
 		UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
 			[unowned self] in
-			self.episodeImage.transform = .identity
+			self.episodeView.transform = .identity
 		})
 	}
 
 	fileprivate func contractImage() {
 		UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
 			[unowned self] in
-			self.episodeImage.transform = CGAffineTransform(scaleX: self.imageScaleDown, y: self.imageScaleDown)
+			self.episodeView.transform = CGAffineTransform(scaleX: self.imageScaleDown, y: self.imageScaleDown)
 		})
 	}
 
@@ -347,6 +353,7 @@ class Player: UIViewController {
 
 	@IBAction func dislike(_ sender: AnyObject?) {
 		dislikeButton.setImage(#imageLiteral(resourceName: "dislike_sel").withRenderingMode(.alwaysTemplate), for: .normal)
+		dislikeButton.tintColor = UIColor(named: "Item-Active")
 	}
 
 	@IBAction func forward(_ sender: AnyObject?) {
@@ -355,10 +362,12 @@ class Player: UIViewController {
 
 	@IBAction func like(_ sender: AnyObject?) {
 		likeButton.setImage(#imageLiteral(resourceName: "like_sel").withRenderingMode(.alwaysTemplate), for: .normal)
+		likeButton.tintColor = UIColor(named: "Item-Active")
 	}
 
 	@IBAction func love(_ sender: AnyObject?) {
 		loveButton.setImage(#imageLiteral(resourceName: "love_sel").withRenderingMode(.alwaysTemplate), for: .normal)
+		loveButton.tintColor = UIColor(named: "Item-Favorite")
 	}
 
 	// MARK: -

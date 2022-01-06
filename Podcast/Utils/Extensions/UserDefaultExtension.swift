@@ -14,9 +14,24 @@ extension UserDefaults {
 
 	static let favoritesKey = "favoritesPodcastsKey"
 
-	// MARK: - Remove element functions
+	// MARK: -
 
-	func removeFavoriteAt(index: Int) -> Bool {
+	func addFavorite(podcast: Podcast) -> Bool {
+		// safety check
+		guard favorites.contains(where: { $0 == podcast }) == false else {
+			return true
+		}
+
+		favorites.append(podcast)
+		if !saveFavorites() {
+			_ = favorites.dropLast()
+			return false
+		}
+
+		return true
+	}
+
+	func removeFavorite(at index: Int) -> Bool {
 		let removedPodcast = favorites.remove(at: index)
 		if !saveFavorites() {
 			favorites.insert(removedPodcast, at: index)
@@ -25,15 +40,9 @@ extension UserDefaults {
 		return true
 	}
 
-	// MARK: - Add element functions
-
-	func addToFavorites(podcast: Podcast) -> Bool{
-		favorites.append(podcast)
-		if !saveFavorites() {
-			_ = favorites.dropLast()
-			return false
-		}
-		return true
+	func removeFavorite(podcast: Podcast) -> Bool {
+		favorites.removeAll(where: { $0 == podcast })
+		return saveFavorites()
 	}
 
 	// MARK: -

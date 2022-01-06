@@ -45,7 +45,7 @@ class FavoritesViewController: UIViewController {
 			let confirmation = OptionSheet(title: "Remove from Favorites!", message: "Are you sure that you want to remove \"\(item.title)\" from your favorites library. You will no longer have access to this podcast.")
 			confirmation.addButton(image: #imageLiteral(resourceName: "delete"), title: "Remove Podcast", color: UIColor(named: "optionRed")!) {
 				[unowned self] in
-				if UserDefaults.standard.removeFavoriteAt(index: index.item) {
+				if UserDefaults.standard.removeFavorite(at: index.item) {
 					self.collectionView.deleteItems(at: [index])
 
 				} else {

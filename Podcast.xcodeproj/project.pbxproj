@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -322,7 +322,7 @@
 				};
 			};
 			buildConfigurationList = 3C16D93221E3BB8000BAB9B7 /* Build configuration list for PBXProject "Podcast" */;
-			compatibilityVersion = "Xcode 11.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -622,7 +622,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dekidea.Podcast;
 				PRODUCT_NAME = Podcast;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -641,7 +641,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dekidea.Podcast;
 				PRODUCT_NAME = Podcast;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

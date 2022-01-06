@@ -61,14 +61,14 @@ class EpisodesController: UIViewController {
 	}
 
 	fileprivate func setupNavigationBarButtons(isFavorite: Bool) {
-		//Get Fav Button
-		let fav = UIBarButtonItem(title: "Favorite", style: .plain, target: self, action: #selector(favoritePodcast))
-		fav.tintColor = UIColor(named: "hotPurple")
-		//Get Heart Icon
-		let heartIcon = UIBarButtonItem(image: #imageLiteral(resourceName: "heart").withRenderingMode(.alwaysTemplate), style: .plain, target: nil, action: nil)
-		heartIcon.tintColor = UIColor(named: "hotPurple")
-		navigationItem.rightBarButtonItem = isFavorite ? heartIcon: fav
+		let emptyHeart = UIBarButtonItem(image: #imageLiteral(resourceName: "love"), style: .plain, target: self, action: #selector(addFavorite(_:)))
+		emptyHeart.tintColor = UIColor(named: "Item-Primary")
+		let filledHeart = UIBarButtonItem(image: #imageLiteral(resourceName: "love_sel"), style: .plain, target: self, action: #selector(removeFavorite(_:)))
+		filledHeart.tintColor = UIColor(named: "Item-Favorite")
+		navigationItem.rightBarButtonItem = isFavorite ? filledHeart : emptyHeart
 	}
+
+	// MARK: - UIViewController
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -77,21 +77,21 @@ class EpisodesController: UIViewController {
 		addLoader()
 	}
 
-	@objc fileprivate func favoritePodcast() {
-		if UserDefaults.standard.addToFavorites(podcast: podcast!) {
-			addedToFavorites()
-		} else {
-			showError(message: .favoriteFailed)
+	// MARK: - Actions
+
+	@objc func addFavorite(_ sender: AnyObject?) {
+		if UserDefaults.standard.addFavorite(podcast: podcast!) {
+			setupNavigationBarButtons(isFavorite: true)
 		}
-
 	}
 
-	fileprivate func addedToFavorites() {
-		setupNavigationBarButtons(isFavorite: true)
-		let main = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
-		main.viewControllers?[0].tabBarItem.badgeValue = "new"
-		presentConfirmation(image: #imageLiteral(resourceName: "tick"), message: "Podcast Favorited")
+	@objc func removeFavorite(_ sender: AnyObject?) {
+		if UserDefaults.standard.removeFavorite(podcast: podcast!) {
+			setupNavigationBarButtons(isFavorite: false)
+		}
 	}
+
+	// MARK: - Private
 
 	fileprivate func addedToDownloads() {
 		downloadProgress.removeFromSuperview()

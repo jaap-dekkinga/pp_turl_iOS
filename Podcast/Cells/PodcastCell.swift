@@ -21,9 +21,9 @@ class PodcastCell: UITableViewCell {
 		didSet {
 			if let podcast = podcast {
 				artworkImageView.downloadImage(url: podcast.artwork)
-				let attributedText = NSMutableAttributedString(attributedString: getString(text: podcast.title, font: 16.5, weight: .semibold, color: UIColor(named: "hotBlack")!))
-//				attributedText.append(getString(text: podcast.author + "\n", font: 14.25, weight: .regular, color: .hotGray))
-//				attributedText.append(getString(text: "\n", font: 5, weight: .regular, color: .hotBlack))
+				let attributedText = NSMutableAttributedString(attributedString: getString(text: podcast.title, font: 16.5, weight: .semibold, color: UIColor(named: "Item-Primary")!))
+//				attributedText.append(getString(text: podcast.author + "\n", font: 14.25, weight: .regular, color: UIColor(named: "Item-Tertiary")!))
+//				attributedText.append(getString(text: "\n", font: 5, weight: .regular, color: UIColor(named: "Item-Primary")!))
 //				attributedText.append(getString(text: String(podcast.trackCount) + " Episode" + (podcast.trackCount == 1 ? "" : "s"), font: 13.25, weight: .regular, color: UIColor(named: "hotPurple")!))
 				infoLabel.attributedText = attributedText
 			}

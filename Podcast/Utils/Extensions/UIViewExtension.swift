@@ -53,24 +53,4 @@ extension UIView {
 		fillSuperview(padding: 0)
 	}
 
-	func addLine(position: LinePosition, padding: CGFloat = 0.0, color: UIColor? = nil, width: CGFloat = 0.75) {
-		let blackLine: UIView = {
-			let view = UIView()
-			view.backgroundColor = color ?? UIColor(named: "hotBlack")!
-			view.alpha = 0.35
-			return view
-		}()
-		addSubview(blackLine)
-		addConstraintsWithFormat(format: "H:|-\(padding)-[v0]-\(padding)-|", views: blackLine)
-		if position == .Top {
-			addConstraintsWithFormat(format: "V:|[v0(\(width))]", views: blackLine)
-		} else if position == .Bottom {
-			addConstraintsWithFormat(format: "V:[v0(\(width))]|", views: blackLine)
-		} else if position == .Left {
-			addConstraintsWithFormat(format: "H:|[v0(\(width))]", views: blackLine)
-		} else {
-			addConstraintsWithFormat(format: "H:[v0(\(width))]|", views: blackLine)
-		}
-	}
-
 }

@@ -32,7 +32,7 @@ class FavoriteCell: BaseCollectionViewCell {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.lineBreakMode = .byTruncatingTail
-		label.textColor = UIColor(named: "hotBlack")
+		label.textColor = UIColor(named: "Item-Primary")
 		label.font = .systemFont(ofSize: 15, weight: .semibold)
 		return label
 	}()
@@ -42,7 +42,7 @@ class FavoriteCell: BaseCollectionViewCell {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.numberOfLines = 2
 		label.lineBreakMode = .byTruncatingTail
-		label.textColor = UIColor(named: "hotGray")?.withAlphaComponent(0.75)
+		label.textColor = UIColor(named: "Item-Secondary")
 		label.font = .systemFont(ofSize: 12.25)
 		return label
 	}()
