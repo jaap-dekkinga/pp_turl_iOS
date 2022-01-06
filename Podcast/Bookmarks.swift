@@ -3,17 +3,16 @@
 //  Podcast
 //
 //  Created by Gerrit Goossen <developer@gerrit.email> on 11/17/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import Foundation
-import TuneURL
 
-class BookmarkCollection {
+class Bookmarks {
 
 	// static
-	static let changedNotification = NSNotification.Name("BookmarkCollectionChanged")
-	static var shared = BookmarkCollection()
+	static let changedNotification = NSNotification.Name("BookmarksChanged")
+	static var shared = Bookmarks()
 
 	// public
 	var bookmarks = [Bookmark]()
@@ -32,16 +31,21 @@ class BookmarkCollection {
 
 	// MARK: - Public
 
-	func addBookmark(for tuneURL: TuneURL.Match) {
+	func addBookmark(podcast: Podcast, episode: Episode, time: Double) {
+		// safety check
+		guard podcast.isValid else {
+			return
+		}
+
 		// create the new bookmark
-		let bookmark = Bookmark(id: tuneURL.id, name: tuneURL.name, url: tuneURL.info)
+		let bookmark = Bookmark(episode: episode, podcast: podcast, time: time)
 		bookmarks.append(bookmark)
 
 		// save the bookmarks file
 		saveBookmarks()
 
 		// post the update notification
-		NotificationCenter.default.post(name: BookmarkCollection.changedNotification, object: nil)
+		NotificationCenter.default.post(name: Bookmarks.changedNotification, object: nil)
 	}
 
 	func removeBookmark(at index: Int) {
@@ -57,7 +61,7 @@ class BookmarkCollection {
 		saveBookmarks()
 
 		// post the update notification
-		NotificationCenter.default.post(name: BookmarkCollection.changedNotification, object: nil)
+		NotificationCenter.default.post(name: Bookmarks.changedNotification, object: nil)
 	}
 
 	// MARK: - Private

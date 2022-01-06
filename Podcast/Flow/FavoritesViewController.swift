@@ -3,7 +3,7 @@
 //  Podcast
 //
 //  Created on 10/14/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import UIKit
@@ -41,16 +41,12 @@ class FavoritesViewController: UIViewController {
 	@objc fileprivate func deleteFavorite(_ gesture: UILongPressGestureRecognizer) {
 		let location = gesture.location(in: collectionView)
 		if let index = collectionView.indexPathForItem(at: location) {
-			let item = favorites[index.item]
-			let confirmation = OptionSheet(title: "Remove from Favorites!", message: "Are you sure that you want to remove \"\(item.title)\" from your favorites library. You will no longer have access to this podcast.")
+			let item = Favorites.shared.favorites[index.item]
+			let confirmation = OptionSheet(title: "Remove from Favorites!", message: "Are you sure that you want to remove \"\(item.podcast.title)\" from your favorites library. You will no longer have access to this podcast.")
 			confirmation.addButton(image: #imageLiteral(resourceName: "delete"), title: "Remove Podcast", color: UIColor(named: "optionRed")!) {
 				[unowned self] in
-				if UserDefaults.standard.removeFavorite(at: index.item) {
-					self.collectionView.deleteItems(at: [index])
-
-				} else {
-					self.showError(message: .removeFavoriteFailed)
-				}
+				Favorites.shared.removeFavorite(at: index.item)
+				self.collectionView.deleteItems(at: [index])
 			}
 			confirmation.show()
 		}
@@ -67,12 +63,12 @@ class FavoritesViewController: UIViewController {
 extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return favorites.count
+		return Favorites.shared.favorites.count
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FavoriteCell
-		cell.podcast = favorites[indexPath.row]
+		cell.podcast = Favorites.shared.favorites[indexPath.row].podcast
 		return cell
 	}
 
@@ -95,12 +91,12 @@ extension FavoritesViewController: UICollectionViewDelegate, UICollectionViewDat
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-		return favorites.count == 0 ? CGSize(width: collectionView.frame.width, height: 400) : CGSize(width: 0, height: 0)
+		return Favorites.shared.favorites.count == 0 ? CGSize(width: collectionView.frame.width, height: 400) : CGSize(width: 0, height: 0)
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let controller = EpisodesController()
-		controller.podcast = favorites[indexPath.row]
+		controller.podcast = Favorites.shared.favorites[indexPath.row].podcast
 		navigationController?.pushViewController(controller, animated: true)
 	}
 

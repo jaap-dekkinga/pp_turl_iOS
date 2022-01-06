@@ -3,7 +3,7 @@
 //  Podcast
 //
 //  Created on 10/14/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import AVKit
@@ -22,6 +22,7 @@ class Player: UIViewController {
 	static let shared = Player(nibName: "Player", bundle: nil)
 
 	// constants
+	let bookmarkRewindTime: Float64 = 10.0
 	let timeToPresentTuneURL: Float = 10.0
 
 	// interface
@@ -59,39 +60,15 @@ class Player: UIViewController {
 	var delegate: PlayerDelegate!
 	var fullPlayerConstraints = [NSLayoutConstraint]()
 	var miniPlayerConstraints = [NSLayoutConstraint]()
-	var playList = [Episode]()
+	var playList = [PlayerItem]()
 	var tuneURLs = [TuneURL.Match]()
-
-	var episode: Episode? {
-		didSet {
-			if let episode = episode {
-				clearView()
-				player.pause()
-				titleLabel.text = episode.title
-				authorLabel.text = episode.author
-				dateLabel.text = episode.date
-				miniTitleLabel.text = episode.title
-				miniAuthorLabel.text = episode.author
-				startPlaying()
-			}
-		}
-	}
-
-	var episodeImageURL: String? {
-		didSet {
-			if let episodeImageURL = episodeImageURL {
-				miniEpisodeImage.downloadImage(url: episodeImageURL)
-				episodeImage.downloadImage(url: episodeImageURL)
-				episodeView.transform = CGAffineTransform(scaleX: imageScaleDown, y: imageScaleDown)
-			}
-		}
-	}
 
 	// private
 	private var duration: Float64 = 0.0
 	private let imageScaleDown: CGFloat = 0.75
 	private weak var interestViewController: InterestViewController?
 	private let player = AVPlayer()
+	private var playerItem: PlayerItem?
 	private let roundRadius: CGFloat = 5.0
 
 	private var activeTuneURL: TuneURL.Match? {
@@ -157,16 +134,17 @@ class Player: UIViewController {
 
 	// MARK: - Private
 
-	private func clearView() {
+	private func resetView() {
 		episodeImage.image = #imageLiteral(resourceName: "blankPodcast")
 		playButton.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
 		miniPlayButton.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
 		currentTime.text = "00:00"
 		totalTime.text = "--:--"
+		progressSlider.setValue(0, animated: false)
 	}
 
 	private func setupFullPlayer() {
-		episodeImage.layer.cornerRadius = roundRadius
+		episodeImage.layer.cornerRadius = 12
 		fullPlayer.alpha = 0
 		fullPlayer.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handleMaximizedPan(_:))))
 	}
@@ -242,12 +220,12 @@ class Player: UIViewController {
 
 	private func startPlaying() {
 		// safety check
-		guard let episode = episode else {
+		guard let playerItem = self.playerItem else {
 			return
 		}
 
-		// get the podcast from the cache
-		DownloadCache.shared.cachedFile(for: episode, completion: startPlaying)
+		// get the podcast episode from the cache
+		DownloadCache.shared.cachedFile(for: playerItem, completion: startPlaying)
 	}
 
 	private func startPlaying(_ fileURL: URL?) {
@@ -346,9 +324,14 @@ class Player: UIViewController {
 	}
 
 	@IBAction func bookmarkTapped(_ sender: AnyObject?) {
-		// TODO: implement bookmarks
-		let bookmarkTime = player.currentTime().seconds
-		print("bookmark: \(bookmarkTime)")
+		// safety check
+		guard let playerItem = self.playerItem else {
+			return
+		}
+
+		// add the bookmark
+		let time = (player.currentTime().seconds - bookmarkRewindTime)
+		Bookmarks.shared.addBookmark(podcast: playerItem.podcast, episode: playerItem.episode, time: time)
 	}
 
 	@IBAction func dislike(_ sender: AnyObject?) {
@@ -397,12 +380,12 @@ class Player: UIViewController {
 			if info == nil {
 				info = [String : Any]()
 			}
-			info?[MPMediaItemPropertyTitle] = self.episode?.title
-			info?[MPMediaItemPropertyArtist] = self.episode?.author
-			info?[MPMediaItemPropertyAlbumArtist] = self.episode?.author
+			info?[MPMediaItemPropertyTitle] = self.playerItem?.episode.title
+			info?[MPMediaItemPropertyArtist] = self.playerItem?.episode.author
+			info?[MPMediaItemPropertyAlbumArtist] = self.playerItem?.episode.author
 			info?[MPMediaItemPropertyPlaybackDuration] = self.duration
 			let tempIv = UIImageView()
-			tempIv.downloadImage(url: self.episode?.artwork ?? "") { (image) in
+			tempIv.downloadImage(url: self.playerItem?.episode.artwork ?? "") { (image) in
 				if let image = image {
 					let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (_) -> UIImage in
 						return image
@@ -426,6 +409,39 @@ class Player: UIViewController {
 	@objc fileprivate func playerStalled() {
 		playButton.setImage(#imageLiteral(resourceName: "playButton").withRenderingMode(.alwaysTemplate), for: .normal)
 		contractImage()
+	}
+
+	// MARK: -
+
+	func setPlayerItem(_ playerItem: PlayerItem) {
+		// reset
+		resetView()
+		player.pause()
+
+		// save the player item
+		self.playerItem = playerItem
+
+		// update the item details
+		titleLabel.text = playerItem.episode.title
+		authorLabel.text = playerItem.episode.author
+		dateLabel.text = playerItem.episode.date
+		miniTitleLabel.text = playerItem.episode.title
+		miniAuthorLabel.text = playerItem.episode.author
+
+		// update the episode artwork
+		if let episodeImageURL = playerItem.episode.artwork {
+			miniEpisodeImage.downloadImage(url: episodeImageURL)
+			episodeImage.downloadImage(url: episodeImageURL)
+		} else {
+			miniEpisodeImage.image = UIImage(named: "blankPodcast")
+			episodeImage.image = UIImage(named: "blankPodcast")
+		}
+
+		// reset the episode view animation
+		episodeView.transform = CGAffineTransform(scaleX: imageScaleDown, y: imageScaleDown)
+
+		// start playing
+		startPlaying()
 	}
 
 	// MARK: - Mini Player
@@ -472,7 +488,7 @@ class Player: UIViewController {
 	// MARK: -
 
 	fileprivate func setupMiniPlayer() {
-		miniEpisodeImage.layer.cornerRadius = roundRadius
+		miniEpisodeImage.layer.cornerRadius = 8
 
 		// add the gesture recognizers
 		miniPlayer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(maximizePlayer)))
@@ -490,21 +506,23 @@ class Player: UIViewController {
 	}
 
 	fileprivate func nextTrack() {
+		// get the next player item
 		currentPlaylistIndex += 1
 		if currentPlaylistIndex >= playList.count {
 			currentPlaylistIndex = 0
 		}
-		episode = playList[currentPlaylistIndex]
-		episodeImageURL = episode?.artwork
+		// set the new player item
+		setPlayerItem(playList[currentPlaylistIndex])
 	}
 
 	fileprivate func previousTrack() {
+		// get the previous player item
 		currentPlaylistIndex -= 1
 		if currentPlaylistIndex < 0 {
 			currentPlaylistIndex = playList.count - 1
 		}
-		episode = playList[currentPlaylistIndex]
-		episodeImageURL = episode?.artwork
+		// set the new player item
+		setPlayerItem(playList[currentPlaylistIndex])
 	}
 
 	// MARK: - TuneURL support

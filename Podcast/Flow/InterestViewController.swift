@@ -3,7 +3,7 @@
 //  Podcast
 //
 //  Created on 11/16/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import TuneURL
@@ -207,8 +207,8 @@ class InterestViewController: UIViewController, DMSwipeCardsViewDelegate {
 				}
 
 			case "save_page":
-				// add a bookmark
-				BookmarkCollection.shared.addBookmark(for: tuneURL)
+				// TODO: find out how this should work
+				break
 
 			default:
 				break

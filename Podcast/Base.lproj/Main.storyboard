@@ -105,8 +105,8 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Podcast Info" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DR3-cP-mVg">
-                                            <rect key="frame" x="150" y="55" width="229" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <rect key="frame" x="150" y="55.5" width="229" height="19.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                             <color key="textColor" name="Item-Primary"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -193,18 +193,101 @@
         <scene sceneID="AJL-Gs-5kt">
             <objects>
                 <tableViewController id="NEN-Yl-cYu" customClass="BookmarksViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="4Is-8q-u0E">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="4Is-8q-u0E">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" id="qEL-0d-fb4">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" id="qEL-0d-fb4" customClass="BookmarkCell" customModule="Podcast" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="104.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qEL-0d-fb4" id="jNV-GA-DdI">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="104.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blankPodcast" translatesAutoresizingMaskIntoConstraints="NO" id="QJh-r2-CBV">
+                                            <rect key="frame" x="16" y="16" width="72" height="72.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="72" id="eG8-F6-aEn"/>
+                                                <constraint firstAttribute="width" constant="72" id="m5U-Z4-Axk"/>
+                                            </constraints>
+                                        </imageView>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Bookmark-Background" translatesAutoresizingMaskIntoConstraints="NO" id="Zvk-Uk-tGo">
+                                            <rect key="frame" x="38" y="38.5" width="28" height="28"/>
+                                            <color key="tintColor" name="Button-Background"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="28" id="YFy-7x-QwN"/>
+                                                <constraint firstAttribute="height" constant="28" id="Z97-rH-9bC"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntw-o8-0kG">
+                                            <rect key="frame" x="16" y="16" width="72" height="72.5"/>
+                                            <color key="tintColor" name="Button-Active"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="Bookmark-Play">
+                                                <color key="titleColor" name="Button-Active"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="play:" destination="qEL-0d-fb4" eventType="touchUpInside" id="W4U-TT-Iql"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fff-xk-whx">
+                                            <rect key="frame" x="96" y="18" width="314" height="19.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                            <color key="textColor" name="Item-Primary"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="puA-Vn-ocx">
+                                            <rect key="frame" x="96" y="45.5" width="314" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                            <color key="textColor" name="Item-Secondary"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Bookmark-Time" translatesAutoresizingMaskIntoConstraints="NO" id="qKP-UN-tjg">
+                                            <rect key="frame" x="95" y="70" width="16" height="16"/>
+                                            <color key="tintColor" name="Item-Tertiary"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="16" id="Hdo-Dd-KQt"/>
+                                                <constraint firstAttribute="width" constant="16" id="tkS-Tl-oHL"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t3N-hn-Iku">
+                                            <rect key="frame" x="113" y="70.5" width="285" height="14.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                            <color key="textColor" name="Item-Tertiary"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ntw-o8-0kG" firstAttribute="trailing" secondItem="QJh-r2-CBV" secondAttribute="trailing" id="0wA-SH-UU8"/>
+                                        <constraint firstItem="Zvk-Uk-tGo" firstAttribute="centerX" secondItem="QJh-r2-CBV" secondAttribute="centerX" id="0yR-G9-Dci"/>
+                                        <constraint firstItem="puA-Vn-ocx" firstAttribute="trailing" secondItem="jNV-GA-DdI" secondAttribute="trailingMargin" constant="16" id="5R9-3b-ghB"/>
+                                        <constraint firstItem="fff-xk-whx" firstAttribute="trailing" secondItem="jNV-GA-DdI" secondAttribute="trailingMargin" constant="16" id="5jJ-WE-ThC"/>
+                                        <constraint firstItem="ntw-o8-0kG" firstAttribute="leading" secondItem="QJh-r2-CBV" secondAttribute="leading" id="6Yi-JS-x9Y"/>
+                                        <constraint firstItem="QJh-r2-CBV" firstAttribute="leading" secondItem="jNV-GA-DdI" secondAttribute="leading" constant="16" id="Ba3-ss-KP3"/>
+                                        <constraint firstItem="qKP-UN-tjg" firstAttribute="leading" secondItem="QJh-r2-CBV" secondAttribute="trailing" constant="7" id="Co7-qR-Gia"/>
+                                        <constraint firstItem="ntw-o8-0kG" firstAttribute="bottom" secondItem="QJh-r2-CBV" secondAttribute="bottom" id="K1m-Lz-at3"/>
+                                        <constraint firstItem="ntw-o8-0kG" firstAttribute="top" secondItem="QJh-r2-CBV" secondAttribute="top" id="MK9-BC-GQP"/>
+                                        <constraint firstItem="puA-Vn-ocx" firstAttribute="leading" secondItem="QJh-r2-CBV" secondAttribute="trailing" constant="8" id="OBr-DB-qA4"/>
+                                        <constraint firstItem="QJh-r2-CBV" firstAttribute="top" secondItem="jNV-GA-DdI" secondAttribute="top" constant="16" id="QcE-U4-uKI"/>
+                                        <constraint firstAttribute="bottom" secondItem="QJh-r2-CBV" secondAttribute="bottom" constant="16" id="e5G-0Q-jUd"/>
+                                        <constraint firstItem="t3N-hn-Iku" firstAttribute="top" secondItem="puA-Vn-ocx" secondAttribute="bottom" constant="8" id="hZe-oJ-PXN"/>
+                                        <constraint firstItem="fff-xk-whx" firstAttribute="top" secondItem="QJh-r2-CBV" secondAttribute="top" constant="2" id="ju4-EO-HpT"/>
+                                        <constraint firstItem="qKP-UN-tjg" firstAttribute="centerY" secondItem="t3N-hn-Iku" secondAttribute="centerY" id="oBG-SO-ot5"/>
+                                        <constraint firstAttribute="trailing" secondItem="t3N-hn-Iku" secondAttribute="trailing" constant="16" id="psk-aX-ZSW"/>
+                                        <constraint firstItem="Zvk-Uk-tGo" firstAttribute="centerY" secondItem="QJh-r2-CBV" secondAttribute="centerY" id="s75-1j-7Yu"/>
+                                        <constraint firstItem="puA-Vn-ocx" firstAttribute="top" secondItem="fff-xk-whx" secondAttribute="bottom" constant="8" id="vzi-iy-JLL"/>
+                                        <constraint firstItem="fff-xk-whx" firstAttribute="leading" secondItem="QJh-r2-CBV" secondAttribute="trailing" constant="8" id="wQ7-Ku-Pli"/>
+                                        <constraint firstItem="t3N-hn-Iku" firstAttribute="leading" secondItem="qKP-UN-tjg" secondAttribute="trailing" constant="2" id="zTV-xU-Wqn"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="episodeLabel" destination="puA-Vn-ocx" id="wMm-n9-VAY"/>
+                                    <outlet property="playButton" destination="ntw-o8-0kG" id="Ew6-Mu-I71"/>
+                                    <outlet property="podcastImage" destination="QJh-r2-CBV" id="PRo-QW-TP5"/>
+                                    <outlet property="timeLabel" destination="t3N-hn-Iku" id="yY2-Fm-h6J"/>
+                                    <outlet property="titleLabel" destination="fff-xk-whx" id="tj3-Yi-rtj"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -216,7 +299,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mh9-Ll-gIc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2499" y="-727"/>
+            <point key="canvasLocation" x="2498.5507246376815" y="-727.23214285714278"/>
         </scene>
         <!--Settings-->
         <scene sceneID="ch4-dc-nng">
@@ -330,6 +413,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Bookmark-Background" width="64" height="64"/>
+        <image name="Bookmark-Play" width="20" height="20"/>
+        <image name="Bookmark-Time" width="16" height="16"/>
         <image name="blankPodcast" width="90" height="90"/>
         <image name="bookmark" width="24" height="24"/>
         <image name="bookmark_sel" width="24" height="24"/>
@@ -341,11 +427,23 @@
         <image name="searchSelected" width="25" height="25"/>
         <image name="setting" width="24" height="24"/>
         <image name="setting_sel" width="24" height="24"/>
+        <namedColor name="Button-Active">
+            <color red="0.3843137254901961" green="0.32941176470588235" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Button-Background">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="Item-Active">
             <color red="0.3843137254901961" green="0.32941176470588235" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Item-Primary">
             <color red="0.094117647058823528" green="0.062745098039215685" blue="0.20784313725490197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Item-Secondary">
+            <color red="0.99215686274509807" green="0.57647058823529407" blue="0.63137254901960782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Item-Tertiary">
+            <color red="0.66274509803921566" green="0.65490196078431373" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -3,7 +3,7 @@
 //  Podcast
 //
 //  Created on 10/14/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import UIKit
@@ -52,8 +52,8 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
-		let episode = DownloadCache.shared.userDownloads[indexPath.row]
-		cell.episode = episode
+		let playerItem = DownloadCache.shared.userDownloads[indexPath.row]
+		cell.episode = playerItem.episode
 		return cell
 	}
 
@@ -67,23 +67,21 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let episode = DownloadCache.shared.userDownloads[indexPath.row]
-		if episode.url == nil { return }
+		let playerItem = DownloadCache.shared.userDownloads[indexPath.row]
 		Player.shared.playList = DownloadCache.shared.userDownloads
 		Player.shared.currentPlaylistIndex = indexPath.row
-		Player.shared.episodeImageURL = episode.artwork
-		Player.shared.episode = episode
+		Player.shared.setPlayerItem(playerItem)
 		Player.shared.maximizePlayer()
 	}
 
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-		let episode = DownloadCache.shared.userDownloads[indexPath.row]
+		let playerItem = DownloadCache.shared.userDownloads[indexPath.row]
 		let downloadAction = UITableViewRowAction(style: .normal, title: "Delete") {[unowned self] (_, index) in
 
-			let confirmation = OptionSheet(title: "Remove from Downloads!", message: "Are you sure that you want to remove \"\(episode.title)\" from your downloads library. You will no longer have access to this podcast.")
+			let confirmation = OptionSheet(title: "Remove from Downloads!", message: "Are you sure that you want to remove \"\(playerItem.episode.title)\" from your downloads library. You will no longer have access to this podcast.")
 			confirmation.addButton(image: #imageLiteral(resourceName: "delete"), title: "Remove Episode", color: UIColor(named: "optionRed")!) {
 				[unowned self] in
-				DownloadCache.shared.removeDownload(episode: episode)
+				DownloadCache.shared.removeDownload(for: playerItem)
 				tableView.deleteRows(at: [index], with: .automatic)
 				presentConfirmation(image: #imageLiteral(resourceName: "tick"), message: "Episode Deleted")
 			}

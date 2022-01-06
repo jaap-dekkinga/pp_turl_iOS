@@ -3,7 +3,7 @@
 //  Podcast
 //
 //  Created by Gerrit Goossen <developer@gerrit.email> on 11/12/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import Alamofire
@@ -15,7 +15,7 @@ class DownloadCache {
 	static var shared = DownloadCache()
 
 	let maxCachedItems = 5
-	var downloads: [Download] = []
+	var downloads = [Download]()
 
 	// private
 	private let downloadFolderURL: URL
@@ -43,11 +43,11 @@ class DownloadCache {
 		return count
 	}
 
-	var userDownloads: [Episode] {
-		var userDownloads = [Episode]()
+	var userDownloads: [PlayerItem] {
+		var userDownloads = [PlayerItem]()
 		for download in downloads {
 			if download.isUserDownload {
-				userDownloads.append(download.episode)
+				userDownloads.append(download.playerItem)
 			}
 		}
 		return userDownloads
@@ -55,7 +55,7 @@ class DownloadCache {
 
 	// MARK: -
 
-	func cachedFile(for episode: Episode, completion: @escaping (URL?) -> Void) {
+	func cachedFile(for playerItem: PlayerItem, completion: @escaping (URL?) -> Void) {
 
 		// check if items should be removed from the cache first
 		var cachedItemCount = self.cachedItemCount
@@ -70,8 +70,8 @@ class DownloadCache {
 			currentIndex -= 1
 		}
 
-		// download and return the episode
-		download(episode: episode, userDownloaded: false, progress: nil, completion: {
+		// download and return the player item
+		download(playerItem: playerItem, userDownloaded: false, progress: nil, completion: {
 			(download, error) in
 			DispatchQueue.main.async {
 				var cacheFileURL: URL?
@@ -83,10 +83,10 @@ class DownloadCache {
 		})
 	}
 
-	func download(episode: Episode, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Episode, Error?) -> Void) {
+	func download(playerItem: PlayerItem, progress progressHandler: ((Double) -> Void)?, completion: @escaping (PlayerItem, Error?) -> Void) {
 
 		// check if a cached file already exists
-		if let downloadIndex = downloadIndex(for: episode) {
+		if let downloadIndex = downloadIndex(for: playerItem) {
 			var download = downloads[downloadIndex]
 			if (download.isUserDownload == false) {
 				// convert the download to a user download
@@ -97,25 +97,25 @@ class DownloadCache {
 			}
 		}
 
-		// download and return the episode
-		download(episode: episode, userDownloaded: true, progress: progressHandler, completion: {
+		// download and return the player item
+		download(playerItem: playerItem, userDownloaded: true, progress: progressHandler, completion: {
 			(download, error) in
 			DispatchQueue.main.async {
-				completion(episode, error)
+				completion(playerItem, error)
 			}
 		})
 	}
 
-	func isUserDownloaded(episode: Episode) -> Bool {
-		if let downloadIndex = downloadIndex(for: episode) {
+	func isUserDownloaded(playerItem: PlayerItem) -> Bool {
+		if let downloadIndex = downloadIndex(for: playerItem) {
 			return downloads[downloadIndex].isUserDownload
 		}
 		return false
 	}
 
-	func removeDownload(episode: Episode) {
+	func removeDownload(for playerItem: PlayerItem) {
 		// get the download index
-		guard let downloadIndex = downloadIndex(for: episode) else {
+		guard let downloadIndex = downloadIndex(for: playerItem) else {
 			return
 		}
 
@@ -126,17 +126,17 @@ class DownloadCache {
 
 	// MARK: - Private
 
-	private func download(episode: Episode, userDownloaded: Bool, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Download?, Error?) -> Void) {
+	private func download(playerItem: PlayerItem, userDownloaded: Bool, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Download?, Error?) -> Void) {
 
 		// safety check
-		if let downloadIndex = downloadIndex(for: episode) {
+		if let downloadIndex = downloadIndex(for: playerItem) {
 			let download = downloads[downloadIndex]
 			completion(download, nil)
 			return
 		}
 
 		// get the episode url
-		guard let episodeURL = URL(string: episode.url ?? "") else {
+		guard let episodeURL = URL(string: playerItem.episode.url ?? "") else {
 			DispatchQueue.main.async {
 				let error = NSError(domain: "Podcast", code: 100, userInfo: nil)
 				completion(nil, error)
@@ -165,7 +165,7 @@ class DownloadCache {
 				let fileURL = self.downloadFolderURL.appendingPathComponent(fileName)
 				_ = try? fileManager.moveItem(at: responseFileURL, to: fileURL)
 				// add the download to the index
-				download = Download(cacheFileName: fileName, episode: episode, isUserDownload: userDownloaded)
+				download = Download(cacheFileName: fileName, isUserDownload: userDownloaded, playerItem: playerItem)
 				self.downloads.insert(download!, at: 0)
 				_ = self.saveDownloadIndex()
 			} else {
@@ -176,10 +176,10 @@ class DownloadCache {
 		}
 	}
 
-	private func downloadIndex(for episode: Episode) -> Int? {
+	private func downloadIndex(for playerItem: PlayerItem) -> Int? {
 		for index in 0 ..< downloads.count {
 			let download = downloads[index]
-			if (download.episode == episode) {
+			if (download.playerItem == playerItem) {
 				return index
 			}
 		}

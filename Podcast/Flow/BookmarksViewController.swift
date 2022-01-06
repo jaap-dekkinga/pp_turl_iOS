@@ -3,7 +3,7 @@
 //  Podcast
 //
 //  Created by Gerrit Goossen <developer@gerrit.email> on 11/17/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import UIKit
@@ -15,7 +15,7 @@ class BookmarksViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.tableView.reloadData()
-		NotificationCenter.default.addObserver(forName: BookmarkCollection.changedNotification, object: nil, queue: nil) { notification in
+		NotificationCenter.default.addObserver(forName: Bookmarks.changedNotification, object: nil, queue: nil) { notification in
 			self.tableView.reloadData()
 		}
 	}
@@ -32,37 +32,29 @@ class BookmarksViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "BookmarkCell", for: indexPath)
-		var bookmark: Bookmark?
-		if (indexPath.row < BookmarkCollection.shared.bookmarks.count) {
-			bookmark = BookmarkCollection.shared.bookmarks[indexPath.row]
+		let cell = tableView.dequeueReusableCell(withIdentifier: "BookmarkCell", for: indexPath) as! BookmarkCell
+		if (indexPath.row < Bookmarks.shared.bookmarks.count) {
+			let bookmark = Bookmarks.shared.bookmarks[indexPath.row]
+			cell.setBookmark(bookmark)
+		} else {
+			cell.setBookmark(nil)
 		}
-		cell.textLabel?.text = bookmark?.name ?? ""
+
 		return cell
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return BookmarkCollection.shared.bookmarks.count
+		return Bookmarks.shared.bookmarks.count
 	}
 
 	// MARK: - UITableViewDelegate
-
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard (indexPath.row < BookmarkCollection.shared.bookmarks.count),
-			  let bookmarkURL = URL(string: BookmarkCollection.shared.bookmarks[indexPath.row].url) else {
-			return
-		}
-		// open web page
-		UIApplication.shared.open(bookmarkURL, options: [:], completionHandler: nil)
-		self.tableView.deselectRow(at: indexPath, animated: true)
-	}
 
 	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 		// setup the delete action
 		let deleteAction = UIContextualAction(style: .destructive, title: nil) {
 			action, sourceView, completionHandler in
 			// delete the bookmark
-			BookmarkCollection.shared.removeBookmark(at: indexPath.row)
+			Bookmarks.shared.removeBookmark(at: indexPath.row)
 //			self.tableView.deleteRows(at: [indexPath], with: .left)
 			completionHandler(true)
 		}

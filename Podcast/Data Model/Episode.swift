@@ -3,7 +3,7 @@
 //  Podcast
 //
 //  Created on 10/14/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import FeedKit
@@ -42,9 +42,10 @@ struct Episode: Codable, Equatable {
 		self.artwork = data["artwork_url"] as? String ?? ""
 	}
 
-	func isEqual(_ object: Any?) -> Bool {
-		guard let otherEpisode = object as? Episode else { return false }
-		return (otherEpisode.date == date) && (otherEpisode.title == title)
+	// MARK: - Equatable
+
+	static func == (lhs: Self, rhs: Self) -> Bool {
+		return (lhs.url == rhs.url)
 	}
 
 }

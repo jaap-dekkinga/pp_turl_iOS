@@ -3,7 +3,7 @@
 //  Podcast
 //
 //  Created on 10/14/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import UIKit
@@ -74,7 +74,7 @@ class EpisodeCell: BaseTableViewCell {
 	}()
 
 	fileprivate func setupImageView() {
-		addSubview(episodeImage)
+		self.addSubview(episodeImage)
 		episodeImage.widthAnchor.constraint(equalToConstant: imageSize).isActive = true
 		episodeImage.heightAnchor.constraint(equalToConstant: imageSize).isActive = true
 		episodeImage.topAnchor.constraint(equalTo: topAnchor, constant: 15).isActive = true
@@ -83,7 +83,7 @@ class EpisodeCell: BaseTableViewCell {
 	}
 
 	fileprivate func setupStackView() {
-		addSubview(stackView)
+		self.addSubview(stackView)
 		centerY(item: stackView)
 		stackView.leftAnchor.constraint(equalTo: episodeImage.rightAnchor, constant: 15).isActive = true
 		stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -15).isActive = true

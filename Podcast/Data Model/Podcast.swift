@@ -3,7 +3,7 @@
 //  Podcast
 //
 //  Created on 10/14/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import Foundation
@@ -50,6 +50,10 @@ struct Podcast: Codable, Equatable {
 		self.largeArtwork = ""
 		self.trackCount = 0
 		// ----
+	}
+
+	var isValid: Bool {
+		return (feedURL.isEmpty == false)
 	}
 
 	// MARK: - Equatable

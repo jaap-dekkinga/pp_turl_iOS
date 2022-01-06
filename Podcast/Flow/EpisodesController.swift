@@ -3,7 +3,7 @@
 //  Podcast
 //
 //  Created on 10/14/21.
-//  Copyright © 2021 TuneURL Inc. All rights reserved.
+//  Copyright © 2021-2022 TuneURL Inc. All rights reserved.
 //
 
 import UIKit
@@ -20,7 +20,7 @@ class EpisodesController: UIViewController {
 		didSet {
 			if let podcast = podcast {
 				navigationItem.title = podcast.title
-				setupNavigationBarButtons(isFavorite: isFavorited(other: podcast))
+				setupNavigationBarButtons(isFavorite: Favorites.shared.isFavorite(podcast))
 				API.shared.getEpisodes(podcast: podcast) { [weak self] episodes in
 					self?.episodes = episodes
 					DispatchQueue.main.async { [weak self] in
@@ -80,15 +80,24 @@ class EpisodesController: UIViewController {
 	// MARK: - Actions
 
 	@objc func addFavorite(_ sender: AnyObject?) {
-		if UserDefaults.standard.addFavorite(podcast: podcast!) {
-			setupNavigationBarButtons(isFavorite: true)
+		// safety check
+		guard let podcast = self.podcast else {
+			return
 		}
+
+		Favorites.shared.addFavorite(for: podcast)
+		setupNavigationBarButtons(isFavorite: true)
 	}
 
 	@objc func removeFavorite(_ sender: AnyObject?) {
-		if UserDefaults.standard.removeFavorite(podcast: podcast!) {
-			setupNavigationBarButtons(isFavorite: false)
+		// safety check
+		guard let podcast = self.podcast else {
+			return
 		}
+
+		// remove the favorite
+		Favorites.shared.removeFavorite(for: podcast)
+		setupNavigationBarButtons(isFavorite: false)
 	}
 
 	// MARK: - Private
@@ -117,29 +126,46 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let episode = episodes[indexPath.row]
-		if episode.url == nil { return }
-		Player.shared.playList = episodes
+		// safety check
+		guard let podcast = self.podcast, (indexPath.row < episodes.count) else {
+			return
+		}
+
+		// create the player items
+		var playerItems = [PlayerItem]()
+		for episode in episodes {
+			playerItems.append(PlayerItem(episode: episode, podcast: podcast))
+		}
+
+		// start playing the selected item
+		Player.shared.playList = playerItems
 		Player.shared.currentPlaylistIndex = indexPath.row
-		Player.shared.episodeImageURL = episode.artwork
-		Player.shared.episode = episode
+		Player.shared.setPlayerItem(playerItems[indexPath.row])
 		Player.shared.maximizePlayer()
 	}
 
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-		let episode = self.episodes[indexPath.row]
+		// safety check
+		guard let podcast = self.podcast, (indexPath.row < episodes.count) else {
+			return nil
+		}
+
+		// create the player item
+		let playerItem = PlayerItem(episode: episodes[indexPath.row], podcast: podcast)
+
 		downloadProgress = LoadingView()
-		if DownloadCache.shared.isUserDownloaded(episode: episode) {
+
+		if DownloadCache.shared.isUserDownloaded(playerItem: playerItem) {
 			let downloadAction =
 			UITableViewRowAction(style: .normal, title: "Download") {
 				(_,_) in
-				//Do Nothing Already Downloaded
+				// Do Nothing Already Downloaded
 			}
 			return [downloadAction]
 		}
 		let downloadAction = UITableViewRowAction(style: .normal, title: "Download") { [unowned self] (_, _) in
 			UIApplication.shared.addSubview(view: self.downloadProgress)
-			DownloadCache.shared.download(episode: episode, progress: {
+			DownloadCache.shared.download(playerItem: playerItem, progress: {
 				(completed) in
 				self.downloadProgress.setPercentage(value: completed * 100)
 			}, completion: {
