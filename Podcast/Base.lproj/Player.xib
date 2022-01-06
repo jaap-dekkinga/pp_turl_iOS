@@ -84,7 +84,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lPp-am-NDV">
                             <rect key="frame" x="141" y="60" width="78" height="78"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blankPodcast" translatesAutoresizingMaskIntoConstraints="NO" id="yhs-LU-9v5">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" image="blankPodcast" translatesAutoresizingMaskIntoConstraints="NO" id="yhs-LU-9v5">
                                     <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="yhs-LU-9v5" secondAttribute="height" multiplier="1:1" id="pr8-sK-lft"/>
@@ -100,7 +100,7 @@
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" image="bookmark" backgroundImage="Bookmark-Background"/>
                                     <connections>
-                                        <action selector="bookmarkTapped:" destination="-1" eventType="touchUpInside" id="TCC-hk-Taz"/>
+                                        <action selector="bookmark:" destination="-1" eventType="touchUpInside" id="Uga-J7-c9g"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -156,7 +156,7 @@
                                             </constraints>
                                             <color key="tintColor" name="Button-Disabled"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" image="dislike"/>
+                                            <state key="normal" image="Player-Dislike-Inactive"/>
                                             <connections>
                                                 <action selector="dislike:" destination="-1" eventType="touchUpInside" id="yAx-TL-9mK"/>
                                             </connections>
@@ -178,7 +178,7 @@
                                             </constraints>
                                             <color key="tintColor" name="Button-Disabled"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" image="like"/>
+                                            <state key="normal" image="Player-Like-Inactive"/>
                                             <connections>
                                                 <action selector="like:" destination="-1" eventType="touchUpInside" id="eB2-mS-Uby"/>
                                             </connections>
@@ -200,7 +200,7 @@
                                             </constraints>
                                             <color key="tintColor" name="Button-Disabled"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" image="love"/>
+                                            <state key="normal" image="Player-Love-Inactive"/>
                                             <connections>
                                                 <action selector="love:" destination="-1" eventType="touchUpInside" id="HXm-mf-OrZ"/>
                                             </connections>
@@ -232,11 +232,14 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qDK-ME-W55">
                             <rect key="frame" x="0.0" y="330" width="360" height="56"/>
                             <subviews>
-                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZSg-bb-heA">
+                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZSg-bb-heA">
                                     <rect key="frame" x="-2" y="0.0" width="364" height="37"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="36" id="tcE-mp-v3v"/>
                                     </constraints>
+                                    <color key="minimumTrackTintColor" name="Button-Active"/>
+                                    <color key="maximumTrackTintColor" name="Button-Disabled"/>
+                                    <color key="thumbTintColor" name="Button-Active"/>
                                     <connections>
                                         <action selector="changeTime:" destination="-1" eventType="valueChanged" id="BuR-yH-ZYe"/>
                                     </connections>
@@ -289,9 +292,9 @@
                                             </constraints>
                                             <color key="tintColor" name="Item-Primary"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" image="backward"/>
+                                            <state key="normal" image="Player-Rewind"/>
                                             <connections>
-                                                <action selector="backward:" destination="-1" eventType="touchUpInside" id="hAb-ca-vG0"/>
+                                                <action selector="rewind:" destination="-1" eventType="touchUpInside" id="V70-XE-xHy"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -311,7 +314,7 @@
                                             </constraints>
                                             <color key="tintColor" name="Item-Primary"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" image="playButton"/>
+                                            <state key="normal" image="Player-Play"/>
                                             <connections>
                                                 <action selector="play" destination="-1" eventType="touchUpInside" id="hXm-Pt-mmS"/>
                                             </connections>
@@ -333,9 +336,9 @@
                                             </constraints>
                                             <color key="tintColor" name="Item-Primary"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" image="forward"/>
+                                            <state key="normal" image="Player-Fast-Forward"/>
                                             <connections>
-                                                <action selector="forward:" destination="-1" eventType="touchUpInside" id="ror-Da-z6s"/>
+                                                <action selector="fastForward:" destination="-1" eventType="touchUpInside" id="lF2-pU-YAf"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -412,16 +415,16 @@
                     <rect key="frame" x="8" y="8" width="49" height="49"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Na5-cR-KUq">
-                    <rect key="frame" x="65" y="12.5" width="219" height="40.5"/>
+                    <rect key="frame" x="69" y="11.5" width="215" height="42.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iez-AO-tRh">
-                            <rect key="frame" x="0.0" y="0.0" width="219" height="19.5"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                            <rect key="frame" x="0.0" y="0.0" width="215" height="19.5"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                             <color key="textColor" name="Item-Primary"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Un7-PS-wnl">
-                            <rect key="frame" x="0.0" y="23.5" width="219" height="17"/>
+                            <rect key="frame" x="0.0" y="25.5" width="215" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" name="Item-Tertiary"/>
                             <nil key="highlightedColor"/>
@@ -430,7 +433,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Un7-PS-wnl" secondAttribute="bottom" id="77y-Kd-1uY"/>
-                        <constraint firstItem="Un7-PS-wnl" firstAttribute="top" secondItem="iez-AO-tRh" secondAttribute="bottom" constant="4" id="FwH-aU-Rvm"/>
+                        <constraint firstItem="Un7-PS-wnl" firstAttribute="top" secondItem="iez-AO-tRh" secondAttribute="bottom" constant="6" id="FwH-aU-Rvm"/>
                         <constraint firstAttribute="trailing" secondItem="iez-AO-tRh" secondAttribute="trailing" id="cky-D7-55b"/>
                         <constraint firstItem="iez-AO-tRh" firstAttribute="top" secondItem="Na5-cR-KUq" secondAttribute="top" id="h95-Zv-Cul"/>
                         <constraint firstItem="Un7-PS-wnl" firstAttribute="leading" secondItem="Na5-cR-KUq" secondAttribute="leading" id="idi-Nm-QYb"/>
@@ -442,7 +445,7 @@
                     <rect key="frame" x="286.5" y="8" width="49" height="49"/>
                     <color key="tintColor" name="Item-Primary"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="pause"/>
+                    <state key="normal" image="Mini-Player-Play"/>
                     <connections>
                         <action selector="play" destination="-1" eventType="touchUpInside" id="gyF-24-r7S"/>
                     </connections>
@@ -451,9 +454,9 @@
                     <rect key="frame" x="343.5" y="8" width="48.5" height="48.5"/>
                     <color key="tintColor" name="Item-Primary"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="forward"/>
+                    <state key="normal" image="Player-Fast-Forward"/>
                     <connections>
-                        <action selector="forward:" destination="-1" eventType="touchUpInside" id="mrA-fd-mlH"/>
+                        <action selector="fastForward:" destination="-1" eventType="touchUpInside" id="wpf-iV-Qxj"/>
                     </connections>
                 </button>
                 <view alpha="0.222" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OMQ-z4-JH3">
@@ -478,7 +481,7 @@
                 <constraint firstItem="SaY-TS-aqb" firstAttribute="top" secondItem="iRA-hn-olQ" secondAttribute="top" constant="8" id="U1o-ak-gso"/>
                 <constraint firstAttribute="trailing" secondItem="OMQ-z4-JH3" secondAttribute="trailing" id="VwP-oB-Zdx"/>
                 <constraint firstItem="0M1-E3-V7b" firstAttribute="leading" secondItem="ps6-Ou-T8f" secondAttribute="trailing" constant="8" id="YLa-sw-Iia"/>
-                <constraint firstItem="Na5-cR-KUq" firstAttribute="leading" secondItem="SaY-TS-aqb" secondAttribute="trailing" constant="8" symbolic="YES" id="cRc-Pj-pbo"/>
+                <constraint firstItem="Na5-cR-KUq" firstAttribute="leading" secondItem="SaY-TS-aqb" secondAttribute="trailing" constant="12" id="cRc-Pj-pbo"/>
                 <constraint firstItem="0M1-E3-V7b" firstAttribute="top" secondItem="iRA-hn-olQ" secondAttribute="top" constant="8" id="fyS-ex-flf"/>
                 <constraint firstItem="Na5-cR-KUq" firstAttribute="centerY" secondItem="iRA-hn-olQ" secondAttribute="centerY" id="gFJ-fC-S9s"/>
                 <constraint firstItem="SaY-TS-aqb" firstAttribute="leading" secondItem="1I9-xe-iaR" secondAttribute="leading" constant="8" id="hud-ZA-Msp"/>
@@ -495,16 +498,19 @@
     </objects>
     <resources>
         <image name="Bookmark-Background" width="64" height="64"/>
+        <image name="Mini-Player-Play" width="23" height="23"/>
         <image name="Panel-Handle" width="50" height="20"/>
-        <image name="backward" width="40" height="40"/>
+        <image name="Player-Dislike-Inactive" width="26.666666030883789" height="26.666666030883789"/>
+        <image name="Player-Fast-Forward" width="23" height="22"/>
+        <image name="Player-Like-Inactive" width="26.666666030883789" height="26.666666030883789"/>
+        <image name="Player-Love-Inactive" width="26.666666030883789" height="26.666666030883789"/>
+        <image name="Player-Play" width="56" height="56"/>
+        <image name="Player-Rewind" width="23" height="22"/>
         <image name="blankPodcast" width="90" height="90"/>
         <image name="bookmark" width="24" height="24"/>
-        <image name="dislike" width="48" height="48"/>
-        <image name="forward" width="40" height="40"/>
-        <image name="like" width="48" height="48"/>
-        <image name="love" width="48" height="48"/>
-        <image name="pause" width="50" height="50"/>
-        <image name="playButton" width="50" height="50"/>
+        <namedColor name="Button-Active">
+            <color red="0.3843137254901961" green="0.32941176470588235" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="Button-Disabled">
             <color red="0.66274509803921566" green="0.65490196078431373" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

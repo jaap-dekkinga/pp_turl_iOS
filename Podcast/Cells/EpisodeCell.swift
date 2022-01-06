@@ -28,7 +28,7 @@ class EpisodeCell: BaseTableViewCell {
 	}
 
 	lazy var episodeImage: UIImageView = {
-		let imageView = UIImageView(image: #imageLiteral(resourceName: "blankPodcast"))
+		let imageView = UIImageView(image: UIImage(named: "blankPodcast"))
 		imageView.contentMode = .scaleAspectFill
 		imageView.clipsToBounds = true
 		imageView.layer.cornerRadius = roundRadius

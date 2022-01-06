@@ -139,7 +139,7 @@ class InterestViewController: UIViewController, DMSwipeCardsViewDelegate {
 
 		switch (tuneURL.type) {
 			case "open_page":
-				actionMessage = "Open \(tuneURL.info)?"
+				actionMessage = "Open website?"
 			case "save_page":
 				actionMessage = "Save bookmark for \(tuneURL.info)?"
 			default:

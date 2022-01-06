@@ -76,14 +76,15 @@ extension DownloadsViewController: UITableViewDelegate, UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		let playerItem = DownloadCache.shared.userDownloads[indexPath.row]
-		let downloadAction = UITableViewRowAction(style: .normal, title: "Delete") {[unowned self] (_, index) in
+		let downloadAction = UITableViewRowAction(style: .normal, title: "Delete") {
+			[unowned self] (_, index) in
 
 			let confirmation = OptionSheet(title: "Remove from Downloads!", message: "Are you sure that you want to remove \"\(playerItem.episode.title)\" from your downloads library. You will no longer have access to this podcast.")
-			confirmation.addButton(image: #imageLiteral(resourceName: "delete"), title: "Remove Episode", color: UIColor(named: "optionRed")!) {
+			confirmation.addButton(image: UIImage(named: "delete")!, title: "Remove Episode", color: UIColor(named: "optionRed")!) {
 				[unowned self] in
 				DownloadCache.shared.removeDownload(for: playerItem)
 				tableView.deleteRows(at: [index], with: .automatic)
-				presentConfirmation(image: #imageLiteral(resourceName: "tick"), message: "Episode Deleted")
+				presentConfirmation(image: UIImage(named: "tick")!, message: "Episode Deleted")
 			}
 			confirmation.show()
 		}

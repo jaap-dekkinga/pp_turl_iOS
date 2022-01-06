@@ -18,11 +18,18 @@ protocol PlayerDelegate {
 
 class Player: UIViewController {
 
+	enum Reaction {
+		case dislike
+		case like
+		case love
+	}
+
 	// static
 	static let shared = Player(nibName: "Player", bundle: nil)
 
 	// constants
 	let bookmarkRewindTime: Float64 = 10.0
+	let reactionTime = 3.0	// seconds
 	let timeToPresentTuneURL: Float = 10.0
 
 	// interface
@@ -57,10 +64,12 @@ class Player: UIViewController {
 	// public
 	var currentFileURL: URL?
 	var currentPlaylistIndex = 0
+	var currentStartTime = 0.0
 	var delegate: PlayerDelegate!
 	var fullPlayerConstraints = [NSLayoutConstraint]()
 	var miniPlayerConstraints = [NSLayoutConstraint]()
 	var playList = [PlayerItem]()
+	var reactionResetTimer: Timer?
 	var tuneURLs = [TuneURL.Match]()
 
 	// private
@@ -89,6 +98,11 @@ class Player: UIViewController {
 		super.viewDidLoad()
 		self.view.translatesAutoresizingMaskIntoConstraints = false
 		setup()
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		resetReactions()
 	}
 
 	// MARK: - Full Player
@@ -135,12 +149,29 @@ class Player: UIViewController {
 	// MARK: - Private
 
 	private func resetView() {
-		episodeImage.image = #imageLiteral(resourceName: "blankPodcast")
-		playButton.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
-		miniPlayButton.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
+		episodeImage.image = UIImage(named: "blankPodcast")
+		playButton.setImage(UIImage(named: "Player-Pause"), for: .normal)
+		miniPlayButton.setImage(UIImage(named: "Mini-Player-Pause"), for: .normal)
 		currentTime.text = "00:00"
 		totalTime.text = "--:--"
 		progressSlider.setValue(0, animated: false)
+	}
+
+	private func setup() {
+		fullPlayer.alpha = 0
+		miniPlayer.alpha = 0
+
+		setupFullPlayer()
+		setupMiniPlayer()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(playerStalled), name: NSNotification.Name.AVPlayerItemPlaybackStalled, object: nil)
+		setupAudioPlayback()
+		let commandCenter = MPRemoteCommandCenter.shared()
+		enableCommandCenter(commands: [
+			commandCenter.togglePlayPauseCommand: play,
+			commandCenter.nextTrackCommand: nextTrack,
+			commandCenter.previousTrackCommand: previousTrack
+		])
 	}
 
 	private func setupFullPlayer() {
@@ -169,7 +200,7 @@ class Player: UIViewController {
 			}
 
 			// update the interface
-			let seconds = CMTimeGetSeconds(current)
+			let seconds = current.seconds
 			self.currentTime.text = seconds.formatDuration()
 			self.updateProgressSlider(current: seconds)
 
@@ -187,23 +218,6 @@ class Player: UIViewController {
 			}
 			self.activeTuneURL = currentTuneURL
 		}
-	}
-
-	private func setup() {
-		fullPlayer.alpha = 0
-		miniPlayer.alpha = 0
-
-		setupFullPlayer()
-		setupMiniPlayer()
-
-		NotificationCenter.default.addObserver(self, selector: #selector(playerStalled), name: NSNotification.Name.AVPlayerItemPlaybackStalled, object: nil)
-		setupAudioPlayback()
-		let commandCenter = MPRemoteCommandCenter.shared()
-		enableCommandCenter(commands: [
-			commandCenter.togglePlayPauseCommand: play,
-			commandCenter.nextTrackCommand: nextTrack,
-			commandCenter.previousTrackCommand: previousTrack
-		])
 	}
 
 	private func enableCommandCenter(commands: [MPRemoteCommand: () -> Void]) {
@@ -241,6 +255,11 @@ class Player: UIViewController {
 		let item = AVPlayerItem(url: fileURL)
 		player.replaceCurrentItem(with: item)
 		currentFileURL = fileURL
+
+		// skip to the start time
+		if (currentStartTime != 0.0) {
+			player.seek(to: CMTime(seconds: currentStartTime, preferredTimescale: Int32(NSEC_PER_SEC)))
+		}
 
 		// start playback
 		player.play()
@@ -281,15 +300,15 @@ class Player: UIViewController {
 
 	@IBAction func play() {
 		if player.timeControlStatus == .paused {
-			playButton.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
+			playButton.setImage(UIImage(named: "Player-Pause"), for: .normal)
 			enlargeImage()
 			player.play()
-			miniPlayButton.setImage(#imageLiteral(resourceName: "pause").withRenderingMode(.alwaysTemplate), for: .normal)
+			miniPlayButton.setImage(UIImage(named: "Mini-Player-Pause"), for: .normal)
 		} else {
-			playButton.setImage(#imageLiteral(resourceName: "playButton").withRenderingMode(.alwaysTemplate), for: .normal)
+			playButton.setImage(UIImage(named: "Player-Play"), for: .normal)
 			player.pause()
 			contractImage()
-			miniPlayButton.setImage(#imageLiteral(resourceName: "playButton").withRenderingMode(.alwaysTemplate), for: .normal)
+			miniPlayButton.setImage(UIImage(named: "Mini-Player-Play"), for: .normal)
 		}
 	}
 
@@ -319,38 +338,39 @@ class Player: UIViewController {
 
 	// MARK: -
 
-	@IBAction func backward(_ sender: AnyObject?) {
+	@IBAction func rewind(_ sender: AnyObject?) {
 		seekTo(delta: -10)
 	}
 
-	@IBAction func bookmarkTapped(_ sender: AnyObject?) {
+	@IBAction func bookmark(_ sender: AnyObject?) {
 		// safety check
 		guard let playerItem = self.playerItem else {
 			return
 		}
 
 		// add the bookmark
-		let time = (player.currentTime().seconds - bookmarkRewindTime)
-		Bookmarks.shared.addBookmark(podcast: playerItem.podcast, episode: playerItem.episode, time: time)
+		var time = (player.currentTime().seconds - bookmarkRewindTime)
+		time = max(time, 0.0)
+		Bookmarks.shared.addBookmark(playerItem: playerItem, time: time)
+
+		// report the bookmark was created
+		Reporting.report(playerItem: playerItem, action: .bookmarked, time: time)
 	}
 
 	@IBAction func dislike(_ sender: AnyObject?) {
-		dislikeButton.setImage(#imageLiteral(resourceName: "dislike_sel").withRenderingMode(.alwaysTemplate), for: .normal)
-		dislikeButton.tintColor = UIColor(named: "Item-Active")
+		reaction(.dislike)
 	}
 
-	@IBAction func forward(_ sender: AnyObject?) {
+	@IBAction func fastForward(_ sender: AnyObject?) {
 		seekTo(delta: 10)
 	}
 
 	@IBAction func like(_ sender: AnyObject?) {
-		likeButton.setImage(#imageLiteral(resourceName: "like_sel").withRenderingMode(.alwaysTemplate), for: .normal)
-		likeButton.tintColor = UIColor(named: "Item-Active")
+		reaction(.like)
 	}
 
 	@IBAction func love(_ sender: AnyObject?) {
-		loveButton.setImage(#imageLiteral(resourceName: "love_sel").withRenderingMode(.alwaysTemplate), for: .normal)
-		loveButton.tintColor = UIColor(named: "Item-Favorite")
+		reaction(.love)
 	}
 
 	// MARK: -
@@ -358,7 +378,7 @@ class Player: UIViewController {
 	@IBAction func changeTime(_ slider: UISlider) {
 		let newProgress = slider.value
 		let newValue = Float64(newProgress) * duration
-		let newTime = CMTimeMakeWithSeconds(newValue, preferredTimescale: Int32(NSEC_PER_SEC))
+		let newTime = CMTime(seconds: newValue, preferredTimescale: Int32(NSEC_PER_SEC))
 		player.seek(to: newTime)
 	}
 
@@ -398,8 +418,8 @@ class Player: UIViewController {
 	}
 
 	fileprivate func updateProgressSlider(current: Float64) {
-		let ratio = current/duration
-		progressSlider.setValue(Float(ratio), animated: true)
+		let ratio = Float(current / duration)
+		progressSlider.setValue(ratio, animated: true)
 	}
 
 	@objc func maximizePlayer() {
@@ -407,19 +427,20 @@ class Player: UIViewController {
 	}
 
 	@objc fileprivate func playerStalled() {
-		playButton.setImage(#imageLiteral(resourceName: "playButton").withRenderingMode(.alwaysTemplate), for: .normal)
+		playButton.setImage(UIImage(named: "Player-Play"), for: .normal)
 		contractImage()
 	}
 
 	// MARK: -
 
-	func setPlayerItem(_ playerItem: PlayerItem) {
+	func setPlayerItem(_ playerItem: PlayerItem, startTime: Double = 0.0) {
 		// reset
 		resetView()
 		player.pause()
 
 		// save the player item
 		self.playerItem = playerItem
+		self.currentStartTime = startTime
 
 		// update the item details
 		titleLabel.text = playerItem.episode.title
@@ -523,6 +544,63 @@ class Player: UIViewController {
 		}
 		// set the new player item
 		setPlayerItem(playList[currentPlaylistIndex])
+	}
+
+	// MARK: - Reactions
+
+	private func reaction(_ type: Reaction) {
+		// safety check
+		guard let playerItem = self.playerItem,
+			  reactionResetTimer == nil else {
+			return
+		}
+
+		var action: Reporting.Action
+		let time = player.currentTime().seconds
+
+		// update the reaction buttons
+		switch type {
+			case .dislike:
+				dislikeButton.setImage(UIImage(named: "Player-Dislike-Active"), for: .normal)
+				dislikeButton.tintColor = UIColor(named: "Item-Active")
+				dislikeButton.isUserInteractionEnabled = false
+				action = .disliked
+			case .like:
+				likeButton.setImage(UIImage(named: "Player-Like-Active"), for: .normal)
+				likeButton.tintColor = UIColor(named: "Item-Active")
+				likeButton.isUserInteractionEnabled = false
+				action = .liked
+			case .love:
+				loveButton.setImage(UIImage(named: "Player-Love-Active"), for: .normal)
+				loveButton.tintColor = UIColor(named: "Item-Favorite")
+				loveButton.isUserInteractionEnabled = false
+				action = .loved
+		}
+
+		// report the reaction
+		Reporting.report(playerItem: playerItem, action: action, time: time)
+
+		// start the reaction reset timer
+		reactionResetTimer = Timer.scheduledTimer(withTimeInterval: reactionTime, repeats: false) {
+			[weak self] _ in
+			self?.resetReactions()
+		}
+	}
+
+	private func resetReactions() {
+		// clear the react timer
+		reactionResetTimer?.invalidate()
+		reactionResetTimer = nil
+		// reset the reaction buttons
+		dislikeButton.setImage(UIImage(named: "Player-Dislike-Inactive"), for: .normal)
+		dislikeButton.tintColor = UIColor(named: "Button-Disabled")
+		dislikeButton.isUserInteractionEnabled = true
+		likeButton.setImage(UIImage(named: "Player-Like-Inactive"), for: .normal)
+		likeButton.tintColor = UIColor(named: "Button-Disabled")
+		likeButton.isUserInteractionEnabled = true
+		loveButton.setImage(UIImage(named: "Player-Love-Inactive"), for: .normal)
+		loveButton.tintColor = UIColor(named: "Button-Disabled")
+		loveButton.isUserInteractionEnabled = true
 	}
 
 	// MARK: - TuneURL support

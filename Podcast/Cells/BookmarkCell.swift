@@ -45,17 +45,15 @@ class BookmarkCell: UITableViewCell {
 
 	@IBAction func play(_ sender: AnyObject) {
 		// get the player item
-		guard let playerItem = currentBookmark?.playerItem else {
+		guard let bookmark = currentBookmark else {
 			return
 		}
 
 		// play the item
-		Player.shared.playList = [playerItem]
+		Player.shared.playList = [bookmark.playerItem]
 		Player.shared.currentPlaylistIndex = 0
-		Player.shared.setPlayerItem(playerItem)
+		Player.shared.setPlayerItem(bookmark.playerItem, startTime: bookmark.time)
 		Player.shared.maximizePlayer()
-
-		// TODO: advance to the correct time
 	}
 
 }

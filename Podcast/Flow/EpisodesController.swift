@@ -10,7 +10,7 @@ import UIKit
 
 class EpisodesController: UIViewController {
 
-	var episodes: [Episode] = []
+	var episodes = [Episode]()
 
 	fileprivate let cellId = "episodesCell"
 	private let activity = UIActivityIndicatorView(style: .medium)
@@ -61,9 +61,9 @@ class EpisodesController: UIViewController {
 	}
 
 	fileprivate func setupNavigationBarButtons(isFavorite: Bool) {
-		let emptyHeart = UIBarButtonItem(image: #imageLiteral(resourceName: "love"), style: .plain, target: self, action: #selector(addFavorite(_:)))
+		let emptyHeart = UIBarButtonItem(image: UIImage(named: "Player-Love-Inactive"), style: .plain, target: self, action: #selector(addFavorite(_:)))
 		emptyHeart.tintColor = UIColor(named: "Item-Primary")
-		let filledHeart = UIBarButtonItem(image: #imageLiteral(resourceName: "love_sel"), style: .plain, target: self, action: #selector(removeFavorite(_:)))
+		let filledHeart = UIBarButtonItem(image: UIImage(named: "Player-Love-Active"), style: .plain, target: self, action: #selector(removeFavorite(_:)))
 		filledHeart.tintColor = UIColor(named: "Item-Favorite")
 		navigationItem.rightBarButtonItem = isFavorite ? filledHeart : emptyHeart
 	}
@@ -106,7 +106,7 @@ class EpisodesController: UIViewController {
 		downloadProgress.removeFromSuperview()
 		let main = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
 		main.viewControllers?[2].tabBarItem.badgeValue = "new"
-		presentConfirmation(image: #imageLiteral(resourceName: "downloadAction"), message: "Episode Downloaded")
+		presentConfirmation(image: UIImage(named: "downloadAction")!, message: "Episode Downloaded")
 	}
 
 }

@@ -21,7 +21,7 @@ class FavoriteCell: BaseCollectionViewCell {
 	}
 
 	lazy var favImage: UIImageView = {
-		let imageView = UIImageView(image: #imageLiteral(resourceName: "blankPodcast"))
+		let imageView = UIImageView(image: UIImage(named: "blankPodcast"))
 		imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.0).isActive = true
 		imageView.clipsToBounds = true
 		imageView.layer.cornerRadius = 5.0

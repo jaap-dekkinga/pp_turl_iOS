@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		043E833627160D160050A7A3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043E833427160D160050A7A3 /* SettingsViewController.swift */; };
 		049CF60E2719F103008BEF52 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF60C2719F103008BEF52 /* BookmarksViewController.swift */; };
-		04A9A56D273046C600164A82 /* trigger.wav in Resources */ = {isa = PBXBuildFile; fileRef = 04A9A56C273046C500164A82 /* trigger.wav */; };
+		04A9A56D273046C600164A82 /* Trigger-Sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 04A9A56C273046C500164A82 /* Trigger-Sound.wav */; };
 		3C0793CD21E5343800E4F0E1 /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793CC21E5343800E4F0E1 /* EpisodesController.swift */; };
 		3C0793CF21E536A100E4F0E1 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793CE21E536A100E4F0E1 /* Episode.swift */; };
 		3C0793D121E53D1400E4F0E1 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793D021E53D1400E4F0E1 /* DateExtension.swift */; };
@@ -50,6 +50,7 @@
 		ECB0D2D32786B8F400B1F012 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB0D2D22786B8F400B1F012 /* Favorite.swift */; };
 		ECB0D2D52786BEB100B1F012 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB0D2D42786BEB100B1F012 /* BookmarkCell.swift */; };
 		ECB0D2D72786C99C00B1F012 /* PlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB0D2D62786C99C00B1F012 /* PlayerItem.swift */; };
+		ECB0D2DD278776FD00B1F012 /* Reporting.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB0D2DC278776FD00B1F012 /* Reporting.swift */; };
 		ECB2B9F5277AB23100D85E98 /* Player.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB2B9F3277AB23100D85E98 /* Player.xib */; };
 		ECB9A2312735D3F600E7A28B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ECB9A22F2735D3F600E7A28B /* Main.storyboard */; };
 		ECDC2EC4273EFAE900EC70D5 /* DownloadCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDC2EC3273EFAE900EC70D5 /* DownloadCache.swift */; };
@@ -61,7 +62,7 @@
 /* Begin PBXFileReference section */
 		043E833427160D160050A7A3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		049CF60C2719F103008BEF52 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
-		04A9A56C273046C500164A82 /* trigger.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = trigger.wav; sourceTree = "<group>"; };
+		04A9A56C273046C500164A82 /* Trigger-Sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Trigger-Sound.wav"; sourceTree = "<group>"; };
 		18B055326B418B11B57E48D7 /* Pods-Podcast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podcast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Podcast/Pods-Podcast.debug.xcconfig"; sourceTree = "<group>"; };
 		3C0793CC21E5343800E4F0E1 /* EpisodesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodesController.swift; path = Podcast/Flow/EpisodesController.swift; sourceTree = SOURCE_ROOT; };
 		3C0793CE21E536A100E4F0E1 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
@@ -105,6 +106,7 @@
 		ECB0D2D22786B8F400B1F012 /* Favorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		ECB0D2D42786BEB100B1F012 /* BookmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		ECB0D2D62786C99C00B1F012 /* PlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerItem.swift; path = "Podcast/Data Model/PlayerItem.swift"; sourceTree = SOURCE_ROOT; };
+		ECB0D2DC278776FD00B1F012 /* Reporting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reporting.swift; sourceTree = "<group>"; };
 		ECB2B9F4277AB23100D85E98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Player.xib; sourceTree = "<group>"; };
 		ECB9A22E2734D1A200E7A28B /* UpdateBuildNumber.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = UpdateBuildNumber.sh; sourceTree = "<group>"; };
 		ECB9A2302735D3F600E7A28B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 		3C16D93921E3BB8000BAB9B7 /* Podcast */ = {
 			isa = PBXGroup;
 			children = (
+				3CE7080C21E3FFF00007B4BF /* API.swift */,
 				3C16D93A21E3BB8000BAB9B7 /* AppDelegate.swift */,
 				ECF6D5342745FC270039E7B9 /* Bookmark.swift */,
 				ECF6D5322745FAFA0039E7B9 /* Bookmarks.swift */,
@@ -157,7 +160,7 @@
 				3C16D96121E3EAC100BAB9B7 /* ErrorMessage.swift */,
 				ECB0D2D22786B8F400B1F012 /* Favorite.swift */,
 				ECB0D2D02786B77900B1F012 /* Favorites.swift */,
-				3CE7080E21E403EF0007B4BF /* API */,
+				ECB0D2DC278776FD00B1F012 /* Reporting.swift */,
 				3C16D96D21E3F3E100BAB9B7 /* Cells */,
 				3C16D95E21E3EA7B00BAB9B7 /* Data Model */,
 				3C16D94F21E3BC6800BAB9B7 /* Flow */,
@@ -169,7 +172,7 @@
 				3C16D94321E3BB8000BAB9B7 /* LaunchScreen.storyboard */,
 				ECB9A22F2735D3F600E7A28B /* Main.storyboard */,
 				ECB2B9F3277AB23100D85E98 /* Player.xib */,
-				04A9A56C273046C500164A82 /* trigger.wav */,
+				04A9A56C273046C500164A82 /* Trigger-Sound.wav */,
 			);
 			path = Podcast;
 			sourceTree = "<group>";
@@ -225,14 +228,6 @@
 				3C16D96E21E3F3F700BAB9B7 /* PodcastCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		3CE7080E21E403EF0007B4BF /* API */ = {
-			isa = PBXGroup;
-			children = (
-				3CE7080C21E3FFF00007B4BF /* API.swift */,
-			);
-			path = API;
 			sourceTree = "<group>";
 		};
 		3CE7081621E415150007B4BF /* Utils */ = {
@@ -346,7 +341,7 @@
 				3C16D94521E3BB8000BAB9B7 /* LaunchScreen.storyboard in Resources */,
 				ECB9A2312735D3F600E7A28B /* Main.storyboard in Resources */,
 				ECB2B9F5277AB23100D85E98 /* Player.xib in Resources */,
-				04A9A56D273046C600164A82 /* trigger.wav in Resources */,
+				04A9A56D273046C600164A82 /* Trigger-Sound.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +416,7 @@
 				3C16D96221E3EAC100BAB9B7 /* ErrorMessage.swift in Sources */,
 				ECB0D2D32786B8F400B1F012 /* Favorite.swift in Sources */,
 				ECB0D2D12786B77900B1F012 /* Favorites.swift in Sources */,
+				ECB0D2DD278776FD00B1F012 /* Reporting.swift in Sources */,
 				3CE7080D21E3FFF00007B4BF /* API.swift in Sources */,
 				EC464CCA276A562A00B09AEA /* BaseCollectionViewCell.swift in Sources */,
 				3C16D96421E3EF2100BAB9B7 /* BaseTableViewCell.swift in Sources */,

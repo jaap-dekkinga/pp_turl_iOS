@@ -31,14 +31,14 @@ class Bookmarks {
 
 	// MARK: - Public
 
-	func addBookmark(podcast: Podcast, episode: Episode, time: Double) {
+	func addBookmark(playerItem: PlayerItem, time: Double) {
 		// safety check
-		guard podcast.isValid else {
+		guard playerItem.isValid, (time >= 0.0) else {
 			return
 		}
 
 		// create the new bookmark
-		let bookmark = Bookmark(episode: episode, podcast: podcast, time: time)
+		let bookmark = Bookmark(episode: playerItem.episode, podcast: playerItem.podcast, time: time)
 		bookmarks.append(bookmark)
 
 		// save the bookmarks file

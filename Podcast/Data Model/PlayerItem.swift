@@ -13,6 +13,12 @@ struct PlayerItem: Codable, Equatable {
 	var episode: Episode
 	var podcast: Podcast
 
+	// MARK: -
+
+	var isValid: Bool {
+		return (podcast.isValid && episode.isValid)
+	}
+
 	// MARK: - Equatable
 
 	static func == (lhs: Self, rhs: Self) -> Bool {

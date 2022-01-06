@@ -42,8 +42,8 @@ class FavoritesViewController: UIViewController {
 		let location = gesture.location(in: collectionView)
 		if let index = collectionView.indexPathForItem(at: location) {
 			let item = Favorites.shared.favorites[index.item]
-			let confirmation = OptionSheet(title: "Remove from Favorites!", message: "Are you sure that you want to remove \"\(item.podcast.title)\" from your favorites library. You will no longer have access to this podcast.")
-			confirmation.addButton(image: #imageLiteral(resourceName: "delete"), title: "Remove Podcast", color: UIColor(named: "optionRed")!) {
+			let confirmation = OptionSheet(title: "Remove from Favorites!", message: "Are you sure that you want to remove \"\(item.podcast.title)\" from your favorites library?")
+			confirmation.addButton(image: UIImage(named: "delete")!, title: "Remove Podcast", color: UIColor(named: "optionRed")!) {
 				[unowned self] in
 				Favorites.shared.removeFavorite(at: index.item)
 				self.collectionView.deleteItems(at: [index])

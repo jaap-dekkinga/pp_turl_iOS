@@ -26,6 +26,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return url
 	}()
 
+	static var uniqueID: String = {
+		// get the uuid
+		if let uuid = UserDefaults.standard.string(forKey: "Unique ID") {
+			return uuid
+		}
+		// create a new uuid
+		let uuid = UUID().uuidString
+		UserDefaults.standard.set(uuid, forKey: "Unique ID")
+		return uuid
+	}()
+
 	// public
 	var window: UIWindow?
 
@@ -58,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	private func setupTuneURLTrigger() {
-		guard let url = Bundle.main.url(forResource: "trigger", withExtension: "wav") else {
+		guard let url = Bundle.main.url(forResource: "Trigger-Sound", withExtension: "wav") else {
 			return
 		}
 

@@ -42,6 +42,10 @@ struct Episode: Codable, Equatable {
 		self.artwork = data["artwork_url"] as? String ?? ""
 	}
 
+	var isValid: Bool {
+		return ((url != nil) && (url?.isEmpty == false))
+	}
+
 	// MARK: - Equatable
 
 	static func == (lhs: Self, rhs: Self) -> Bool {
