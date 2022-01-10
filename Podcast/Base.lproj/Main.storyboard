@@ -7,6 +7,7 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -41,7 +42,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="Bwv-Rw-Y2b" kind="relationship" relationship="rootViewController" id="2gJ-KS-2of"/>
+                        <segue destination="cHx-AI-bFe" kind="relationship" relationship="rootViewController" id="9LR-6K-RBH"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a03-IF-ZqD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -49,20 +50,83 @@
             <point key="canvasLocation" x="309" y="-42"/>
         </scene>
         <!--Favorites-->
-        <scene sceneID="FpP-Z5-HQF">
+        <scene sceneID="vVM-Vy-tal">
             <objects>
-                <viewController id="Bwv-Rw-Y2b" customClass="FavoritesViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="UCl-Rh-KmK">
+                <collectionViewController id="cHx-AI-bFe" customClass="FavoritesViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="1bQ-Fp-Ecv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="zua-0b-3Tb"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Favorites" id="jKD-J3-TO2"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wf0-NW-rsh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="12" minimumInteritemSpacing="12" id="eSt-dC-VAp">
+                            <size key="itemSize" width="200" height="238"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="FavoritesCell" id="dqP-mr-Lrm" customClass="FavoriteCell" customModule="Podcast" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="238"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Iyg-UT-EAD">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="238"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blankPodcast" translatesAutoresizingMaskIntoConstraints="NO" id="rGB-bW-Usf">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="rGB-bW-Usf" secondAttribute="height" multiplier="1:1" id="jcL-5t-jeK"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYe-8b-d8j">
+                                            <rect key="frame" x="8" y="202" width="184" height="19"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="17" id="bmj-XW-0nR"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                            <color key="textColor" name="Item-Primary"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84L-2a-Sl5">
+                                            <rect key="frame" x="8" y="223" width="184" height="15"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="ryF-ht-N6Y"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" name="Item-Tertiary"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="84L-2a-Sl5" firstAttribute="top" secondItem="hYe-8b-d8j" secondAttribute="bottom" constant="2" id="0xe-F3-kiD"/>
+                                        <constraint firstAttribute="bottom" secondItem="84L-2a-Sl5" secondAttribute="bottom" id="2EE-TI-DyF"/>
+                                        <constraint firstAttribute="trailing" secondItem="84L-2a-Sl5" secondAttribute="trailing" constant="8" id="LQw-iQ-MUJ"/>
+                                        <constraint firstItem="hYe-8b-d8j" firstAttribute="leading" secondItem="Iyg-UT-EAD" secondAttribute="leading" constant="8" id="NCp-9M-mxI"/>
+                                        <constraint firstAttribute="trailing" secondItem="rGB-bW-Usf" secondAttribute="trailing" id="dqn-jr-HiV"/>
+                                        <constraint firstItem="hYe-8b-d8j" firstAttribute="top" secondItem="rGB-bW-Usf" secondAttribute="bottom" constant="2" id="gc1-Qd-zSZ"/>
+                                        <constraint firstAttribute="trailing" secondItem="hYe-8b-d8j" secondAttribute="trailing" constant="8" id="hWK-GD-nBt"/>
+                                        <constraint firstItem="rGB-bW-Usf" firstAttribute="top" secondItem="Iyg-UT-EAD" secondAttribute="top" id="m4T-C7-Ps7"/>
+                                        <constraint firstItem="rGB-bW-Usf" firstAttribute="leading" secondItem="Iyg-UT-EAD" secondAttribute="leading" id="xbV-tX-ePH"/>
+                                        <constraint firstItem="84L-2a-Sl5" firstAttribute="leading" secondItem="Iyg-UT-EAD" secondAttribute="leading" constant="8" id="yZS-BW-2px"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="artistLabel" destination="84L-2a-Sl5" id="tDr-T7-M9s"/>
+                                    <outlet property="podcastImage" destination="rGB-bW-Usf" id="gfV-Ts-TNu"/>
+                                    <outlet property="titleLabel" destination="hYe-8b-d8j" id="Ptv-HQ-E1l"/>
+                                    <segue destination="WGt-aE-bYt" kind="show" identifier="ShowEpisodesSegue" id="6w5-2a-Z1J"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="cHx-AI-bFe" id="ZLc-v6-ji9"/>
+                            <outlet property="delegate" destination="cHx-AI-bFe" id="isx-BK-t7c"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Favorites" id="dFl-80-tV3"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wzc-wL-dWG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="310" y="-726"/>
+            <point key="canvasLocation" x="308.69565217391306" y="-727.23214285714278"/>
         </scene>
         <!--Search-->
         <scene sceneID="310-Eu-W86">
@@ -125,6 +189,7 @@
                                 <connections>
                                     <outlet property="artworkImageView" destination="CpB-nF-XTC" id="eFl-xG-gBS"/>
                                     <outlet property="infoLabel" destination="DR3-cP-mVg" id="rQZ-7x-3iH"/>
+                                    <segue destination="WGt-aE-bYt" kind="show" identifier="ShowEpisodesSegue" id="VkI-dO-CnT"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -411,7 +476,29 @@
             </objects>
             <point key="canvasLocation" x="3222" y="-727"/>
         </scene>
+        <!--Episodes-->
+        <scene sceneID="yqs-Y3-Oc6">
+            <objects>
+                <tableViewController id="WGt-aE-bYt" customClass="EpisodesViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="1E2-HY-98M">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="WGt-aE-bYt" id="Bmb-3O-2tP"/>
+                            <outlet property="delegate" destination="WGt-aE-bYt" id="Rvf-u5-eFA"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Episodes" id="AbK-Rn-C16"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wu0-Fu-Yfx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="681" y="-1429"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="6w5-2a-Z1J"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="Bookmark-Background" width="64" height="64"/>
         <image name="Bookmark-Play" width="20" height="20"/>

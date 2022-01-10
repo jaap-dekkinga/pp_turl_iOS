@@ -10,7 +10,7 @@
 		043E833627160D160050A7A3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043E833427160D160050A7A3 /* SettingsViewController.swift */; };
 		049CF60E2719F103008BEF52 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF60C2719F103008BEF52 /* BookmarksViewController.swift */; };
 		04A9A56D273046C600164A82 /* Trigger-Sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 04A9A56C273046C500164A82 /* Trigger-Sound.wav */; };
-		3C0793CD21E5343800E4F0E1 /* EpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793CC21E5343800E4F0E1 /* EpisodesController.swift */; };
+		3C0793CD21E5343800E4F0E1 /* EpisodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793CC21E5343800E4F0E1 /* EpisodesViewController.swift */; };
 		3C0793CF21E536A100E4F0E1 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793CE21E536A100E4F0E1 /* Episode.swift */; };
 		3C0793D121E53D1400E4F0E1 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793D021E53D1400E4F0E1 /* DateExtension.swift */; };
 		3C0793D321E53ED700E4F0E1 /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793D221E53ED700E4F0E1 /* EpisodeCell.swift */; };
@@ -64,7 +64,7 @@
 		049CF60C2719F103008BEF52 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		04A9A56C273046C500164A82 /* Trigger-Sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Trigger-Sound.wav"; sourceTree = "<group>"; };
 		18B055326B418B11B57E48D7 /* Pods-Podcast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podcast.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Podcast/Pods-Podcast.debug.xcconfig"; sourceTree = "<group>"; };
-		3C0793CC21E5343800E4F0E1 /* EpisodesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodesController.swift; path = Podcast/Flow/EpisodesController.swift; sourceTree = SOURCE_ROOT; };
+		3C0793CC21E5343800E4F0E1 /* EpisodesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodesViewController.swift; path = Podcast/Flow/EpisodesViewController.swift; sourceTree = SOURCE_ROOT; };
 		3C0793CE21E536A100E4F0E1 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		3C0793D021E53D1400E4F0E1 /* DateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		3C0793D221E53ED700E4F0E1 /* EpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
@@ -182,7 +182,7 @@
 			children = (
 				049CF60C2719F103008BEF52 /* BookmarksViewController.swift */,
 				3C16D95621E3BE2C00BAB9B7 /* DownloadsViewController.swift */,
-				3C0793CC21E5343800E4F0E1 /* EpisodesController.swift */,
+				3C0793CC21E5343800E4F0E1 /* EpisodesViewController.swift */,
 				3C16D95221E3BCA800BAB9B7 /* FavoritesViewController.swift */,
 				EC9C72D527437C8800933D6F /* InterestViewController.swift */,
 				3C16D94C21E3BC1C00BAB9B7 /* MainViewController.swift */,
@@ -430,7 +430,7 @@
 				3C16D97121E3F51B00BAB9B7 /* Podcast.swift in Sources */,
 				049CF60E2719F103008BEF52 /* BookmarksViewController.swift in Sources */,
 				3C16D95721E3BE2C00BAB9B7 /* DownloadsViewController.swift in Sources */,
-				3C0793CD21E5343800E4F0E1 /* EpisodesController.swift in Sources */,
+				3C0793CD21E5343800E4F0E1 /* EpisodesViewController.swift in Sources */,
 				3C16D95321E3BCA800BAB9B7 /* FavoritesViewController.swift in Sources */,
 				EC9C72D627437C8800933D6F /* InterestViewController.swift in Sources */,
 				3C16D94D21E3BC1C00BAB9B7 /* MainViewController.swift in Sources */,
@@ -618,7 +618,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dekidea.Podcast;
 				PRODUCT_NAME = Podcast;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -637,7 +637,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dekidea.Podcast;
 				PRODUCT_NAME = Podcast;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

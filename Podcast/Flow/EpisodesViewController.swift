@@ -1,5 +1,5 @@
 //
-//  EpisodesController.swift
+//  EpisodesViewController.swift
 //  Podcast
 //
 //  Created on 10/14/21.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class EpisodesController: UIViewController {
+class EpisodesViewController: UITableViewController {
 
 	var episodes = [Episode]()
 
-	fileprivate let cellId = "episodesCell"
+	fileprivate let cellId = "EpisodesCell"
 	private let activity = UIActivityIndicatorView(style: .medium)
 	private var downloadProgress: LoadingView!
 
@@ -30,23 +30,6 @@ class EpisodesController: UIViewController {
 				}
 			}
 		}
-	}
-
-	lazy var tableView: UITableView = {
-		let table = UITableView()
-		table.translatesAutoresizingMaskIntoConstraints = false
-		table.showsVerticalScrollIndicator = true
-		let footer = UIView()
-		table.tableFooterView = footer
-		table.delegate = self
-		table.dataSource = self
-		table.register(EpisodeCell.self, forCellReuseIdentifier: cellId)
-		return table
-	}()
-
-	fileprivate func setupTable() {
-		view.addSubview(tableView)
-		tableView.fillSuperview()
 	}
 
 	fileprivate func addLoader() {
@@ -109,23 +92,30 @@ class EpisodesController: UIViewController {
 		presentConfirmation(image: UIImage(named: "downloadAction")!, message: "Episode Downloaded")
 	}
 
-}
+	fileprivate func setupTable() {
+		// setup the table view footer
+		let footer = UIView()
+		self.tableView.tableFooterView = footer
+		self.tableView.delegate = self
+		self.tableView.dataSource = self
+		self.tableView.register(EpisodeCell.self, forCellReuseIdentifier: cellId)
+	}
 
-// MARK: - Search Table DataSource and Delegate
+	// MARK: - UITableViewDataSource
 
-extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
-
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return episodes.count
 	}
 
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
 		cell.episode = episodes[indexPath.row]
 		return cell
 	}
 
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+	// MARK: - UITableViewDelegate
+
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// safety check
 		guard let podcast = self.podcast, (indexPath.row < episodes.count) else {
 			return
@@ -144,7 +134,7 @@ extension EpisodesController: UITableViewDelegate, UITableViewDataSource {
 		Player.shared.maximizePlayer()
 	}
 
-	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+	override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		// safety check
 		guard let podcast = self.podcast, (indexPath.row < episodes.count) else {
 			return nil

@@ -8,59 +8,29 @@
 
 import UIKit
 
-class FavoriteCell: BaseCollectionViewCell {
+class FavoriteCell: UICollectionViewCell {
 
+	// interface
+	@IBOutlet weak var artistLabel: UILabel!
+	@IBOutlet weak var podcastImage: UIImageView!
+	@IBOutlet weak var titleLabel: UILabel!
+
+	// computed
 	var podcast: Podcast? {
 		didSet {
 			if let podcast = podcast {
 				titleLabel.text = podcast.title
 				artistLabel.text = podcast.author
-				favImage.downloadImage(url: podcast.largeArtwork)
+				podcastImage.downloadImage(url: podcast.largeArtwork)
 			}
 		}
 	}
 
-	lazy var favImage: UIImageView = {
-		let imageView = UIImageView(image: UIImage(named: "blankPodcast"))
-		imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.0).isActive = true
-		imageView.clipsToBounds = true
-		imageView.layer.cornerRadius = 5.0
-		return imageView
-	}()
-
-	let titleLabel: UILabel = {
-		let label = UILabel()
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.lineBreakMode = .byTruncatingTail
-		label.textColor = UIColor(named: "Item-Primary")
-		label.font = .systemFont(ofSize: 15, weight: .semibold)
-		return label
-	}()
-
-	let artistLabel: UILabel = {
-		let label = UILabel()
-		label.translatesAutoresizingMaskIntoConstraints = false
-		label.numberOfLines = 2
-		label.lineBreakMode = .byTruncatingTail
-		label.textColor = UIColor(named: "Item-Secondary")
-		label.font = .systemFont(ofSize: 12.25)
-		return label
-	}()
-
-	lazy var stackView: UIStackView = {
-		let stack = UIStackView(arrangedSubviews: [favImage, titleLabel, artistLabel])
-		stack.axis = .vertical
-		stack.distribution = .fill
-		stack.spacing = 4
-		stack.translatesAutoresizingMaskIntoConstraints = false
-		return stack
-	}()
-
 	// MARK: -
 
-	override func setup() {
-		self.addSubview(stackView)
-		stackView.fillSuperview()
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		podcastImage.layer.cornerRadius = 5.0
 	}
 
 }

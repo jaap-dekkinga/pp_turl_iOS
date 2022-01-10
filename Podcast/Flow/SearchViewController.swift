@@ -24,7 +24,7 @@ class SearchViewController: UITableViewController {
 		return search
 	}()
 
-	// MARK: -
+	// MARK: - UIViewController
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -34,7 +34,15 @@ class SearchViewController: UITableViewController {
 		navigationItem.hidesSearchBarWhenScrolling = false
 	}
 
-	// MARK: - Search Table DataSource and Delegate
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if (segue.identifier == "ShowEpisodesSegue"),
+		   let episodesController = segue.destination as? EpisodesViewController,
+		   let podcastCell = sender as? PodcastCell {
+			episodesController.podcast = podcastCell.podcast
+		}
+	}
+
+	// MARK: - UITableViewDataSource
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return podcasts.count
@@ -46,19 +54,14 @@ class SearchViewController: UITableViewController {
 		return cell
 	}
 
-	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		return isSearching ? SearchLoadingHeader() : TextTableViewHeader(text: headerString)
-	}
+	// MARK: - UITableViewDelegate
 
 	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return podcasts.count == 0 ? 250 : 0
+		return (podcasts.count == 0) ? 250.0 : 0.0
 	}
 
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		searchController.dismiss(animated: true, completion: nil)
-		let controller = EpisodesController()
-		controller.podcast = podcasts[indexPath.row]
-		navigationController?.pushViewController(controller, animated: true)
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		return isSearching ? SearchLoadingHeader() : TextTableViewHeader(text: headerString)
 	}
 
 }
