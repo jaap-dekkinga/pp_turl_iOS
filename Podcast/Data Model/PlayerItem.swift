@@ -15,6 +15,19 @@ struct PlayerItem: Codable, Equatable {
 
 	// MARK: -
 
+	var displayAuthor: String {
+		if let author = episode.author {
+			return author
+		} else if (podcast.author.isEmpty == false) {
+			return podcast.author
+		}
+		return podcast.title
+	}
+
+	var displayTitle: String {
+		return episode.title
+	}
+
 	var isValid: Bool {
 		return (podcast.isValid && episode.isValid)
 	}

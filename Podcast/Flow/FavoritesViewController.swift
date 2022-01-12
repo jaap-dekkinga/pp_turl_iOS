@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FavoritesViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class FavoritesViewController: BaseCollectionViewController, UICollectionViewDelegateFlowLayout {
 
 	fileprivate let cellId = "FavoritesCell"
 	fileprivate let headerId = "FavoritesHeader"
@@ -24,7 +24,7 @@ class FavoritesViewController: UICollectionViewController, UICollectionViewDeleg
 		self.collectionView.contentInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
 		self.collectionView.register(EmptyFavorites.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
 		let gesture = UILongPressGestureRecognizer(target: self, action: #selector(deleteFavorite(_:)))
-		gesture.minimumPressDuration = 0.60
+		gesture.minimumPressDuration = 0.6
 		self.collectionView.addGestureRecognizer(gesture)
 	}
 
@@ -86,12 +86,12 @@ class FavoritesViewController: UICollectionViewController, UICollectionViewDeleg
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-		return (Favorites.shared.favorites.count == 0) ? CGSize(width: collectionView.frame.width, height: 400) : CGSize(width: 0, height: 0)
+		return (Favorites.shared.favorites.count == 0) ? CGSize(width: collectionView.frame.width, height: 400.0) : CGSize(width: 0, height: 0)
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		let width = (view.frame.width - (2 * padding + spacing)) / 2
-		return CGSize(width: width, height: width + 36)
+		let width = ((view.frame.width - (2.0 * padding + spacing)) / 2.0)
+		return CGSize(width: width, height: (width + 38.0))
 	}
 
 }

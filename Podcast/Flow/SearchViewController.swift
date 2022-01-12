@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchViewController: UITableViewController {
+class SearchViewController: BaseTableViewController {
 
 	fileprivate let cellID = "PodcastCell"
 

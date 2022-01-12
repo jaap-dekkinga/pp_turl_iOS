@@ -24,13 +24,13 @@ struct Podcast: Codable, Equatable {
 	// MARK: -
 
 	init(json: [String : Any]) {
-		self.author = json["artistName"] as? String ?? "Unknown"
-		self.title = json["trackName"] as? String ?? "No Title"
+		self.author = json["artistName"] as? String ?? ""
+		self.title = json["trackName"] as? String ?? ""
+		self.description = ""
 		self.trackCount = json["trackCount"] as? Int ?? 0
 		self.artwork = json["artworkUrl100"] as? String ?? ""
 		self.feedURL = json["feedUrl"] as? String ?? ""
 		self.largeArtwork = json["artworkUrl600"] as? String ?? ""
-		self.description = ""
 	}
 
 	init?(item: RSSFeedItem) {

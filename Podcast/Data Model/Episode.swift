@@ -14,18 +14,18 @@ struct Episode: Codable, Equatable {
 	var date: String
 	var description: String
 	var artwork: String?
-	var author: String
+	var author: String?
 	var title: String
 	var url: String?
 
 	// MARK: -
 
 	init(feed: RSSFeedItem) {
-		self.title = feed.title ?? "No Title"
-		self.description = feed.description ?? "No Description"
-		self.date = feed.pubDate?.formatDate() ?? "Unknown"
+		self.title = feed.title ?? ""
+		self.description = feed.description ?? ""
+		self.date = feed.pubDate?.formatDate() ?? ""
 		self.url = feed.enclosure?.attributes?.url
-		self.author = feed.iTunes?.iTunesAuthor ?? "Unknown"
+		self.author = feed.iTunes?.iTunesAuthor
 		self.artwork = feed.iTunes?.iTunesImage?.attributes?.href ?? ""
 	}
 
@@ -35,7 +35,7 @@ struct Episode: Codable, Equatable {
 
 		let dateFormat = DateFormatter()
 		dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS-HH:mm"
-		self.date = dateFormat.date(from: data["published_at"] as! String)?.formatDate() ?? "Unknown"
+		self.date = dateFormat.date(from: data["published_at"] as! String)?.formatDate() ?? ""
 		//self.date = data["published_at"] as? String ?? ""
 		self.author = data["artist"] as? String ?? "Unknown"
 		self.url = data["audio_url"] as? String ?? ""

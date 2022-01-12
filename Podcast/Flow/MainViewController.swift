@@ -45,7 +45,7 @@ class MainViewController: UITabBarController {
 		playerMaximizedConstraint = playerContainer.topAnchor.constraint(equalTo: self.view.topAnchor)
 
 		// create the minimized player constraints
-		playerMinimizedConstraint = playerContainer.topAnchor.constraint(equalTo: self.tabBar.topAnchor, constant: -64)
+		playerMinimizedConstraint = playerContainer.topAnchor.constraint(equalTo: self.tabBar.topAnchor, constant: -Player.miniPlayerHeight)
 
 		// create the collapsed player constraints
 		playerCollapsedConstraint = playerContainer.topAnchor.constraint(equalTo: self.tabBar.topAnchor, constant: -1)
@@ -69,6 +69,7 @@ extension MainViewController: PlayerDelegate {
 			playerMaximizedConstraint.isActive = true
 			playerMinimizedConstraint.isActive = false
 			player.showFullPlayer()
+			player.notifyContentInsetsShouldChange()
 
 			self.tabBar.isHidden = true
 		})
@@ -83,6 +84,7 @@ extension MainViewController: PlayerDelegate {
 			playerMaximizedConstraint.isActive = false
 			playerMinimizedConstraint.isActive = true
 			player.showMiniPlayer(above: self.tabBar)
+			player.notifyContentInsetsShouldChange()
 
 			self.tabBar.isHidden = false
 		})

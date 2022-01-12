@@ -81,7 +81,7 @@ class InterestViewController: UIViewController, DMSwipeCardsViewDelegate {
 			label.text = element
 			label.textAlignment = .center
 			label.textColor = UIColor.white.withAlphaComponent(0.7)
-			label.font = UIFont.systemFont(ofSize: 26, weight: UIFont.Weight.thin)
+			label.font = UIFont.systemFont(ofSize: 26, weight: .thin)
 			label.clipsToBounds = true
 			label.layer.cornerRadius = 16
 			label.adjustsFontSizeToFitWidth = true
@@ -102,7 +102,7 @@ class InterestViewController: UIViewController, DMSwipeCardsViewDelegate {
 			let label = UILabel(frame: rect)
 			label.text = text
 			label.textAlignment = .center
-			label.font = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.thin)
+			label.font = UIFont.systemFont(ofSize: 32, weight: .thin)
 			label.textColor = UIColor.white.withAlphaComponent(0.7)
 			label.clipsToBounds = true
 			label.adjustsFontSizeToFitWidth = true

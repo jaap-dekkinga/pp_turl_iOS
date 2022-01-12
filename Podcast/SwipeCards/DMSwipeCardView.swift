@@ -54,7 +54,7 @@ public class DMSwipeCardsView<Element>: UIView {
 		fatalError("Please use init(frame:,viewGenerator)")
 	}
 
-	required public init?(coder aDecoder: NSCoder) {
+	required public init?(coder decoder: NSCoder) {
 		fatalError("Please use init(frame:,viewGenerator)")
 	}
 

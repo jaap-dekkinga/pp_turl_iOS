@@ -44,14 +44,14 @@ class OptionSheet: UIViewController {
 		setupGesture()
 	}
 
-	required init?(coder aDecoder: NSCoder) {
+	required init?(coder decoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
 	let titleLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = UIColor(named: "Item-Primary")
-		label.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
+		label.font = UIFont.systemFont(ofSize: 16.0, weight: .semibold)
 		label.textAlignment = .center
 		return label
 	}()
@@ -59,7 +59,7 @@ class OptionSheet: UIViewController {
 	lazy var messageLabel: UILabel = {
 		let label = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.width - messagePadding, height: .greatestFiniteMagnitude))
 		label.textColor = UIColor(named: "Item-Tertiary")
-		label.font = UIFont(name: "Avenir Next", size: 13)
+		label.font = UIFont.systemFont(ofSize: 13.0)
 		label.textAlignment = .left
 		label.numberOfLines = 0
 		label.lineBreakMode = .byWordWrapping
@@ -77,7 +77,7 @@ class OptionSheet: UIViewController {
 		button.backgroundColor = UIColor(named: "Button-Active")
 		button.setTitle("Dismiss", for: .normal)
 		button.setTitleColor(.white, for: .normal)
-		button.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 16)
+		button.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .semibold)
 		button.addTarget(self, action: #selector(dismissPressed), for: .touchUpInside)
 		return button
 	}()

@@ -8,13 +8,13 @@
 
 import UIKit
 
-class EpisodesViewController: UITableViewController {
+class EpisodesViewController: BaseTableViewController {
 
-	var episodes = [Episode]()
-
-	fileprivate let cellId = "EpisodesCell"
+	// private
+	private let cellId = "EpisodeCell"
 	private let activity = UIActivityIndicatorView(style: .medium)
 	private var downloadProgress: LoadingView!
+	private var playerItems = [PlayerItem]()
 
 	var podcast: Podcast? {
 		didSet {
@@ -22,10 +22,15 @@ class EpisodesViewController: UITableViewController {
 				navigationItem.title = podcast.title
 				setupNavigationBarButtons(isFavorite: Favorites.shared.isFavorite(podcast))
 				API.shared.getEpisodes(podcast: podcast) { [weak self] episodes in
-					self?.episodes = episodes
-					DispatchQueue.main.async { [weak self] in
-						self?.tableView.reloadData()
-						self?.removeLoader()
+					if let self = self {
+						self.playerItems.removeAll()
+						for episode in episodes {
+							self.playerItems.append(PlayerItem(episode: episode, podcast: podcast))
+						}
+						DispatchQueue.main.async { [weak self] in
+							self?.tableView.reloadData()
+							self?.removeLoader()
+						}
 					}
 				}
 			}
@@ -98,18 +103,17 @@ class EpisodesViewController: UITableViewController {
 		self.tableView.tableFooterView = footer
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
-		self.tableView.register(EpisodeCell.self, forCellReuseIdentifier: cellId)
 	}
 
 	// MARK: - UITableViewDataSource
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return episodes.count
+		return playerItems.count
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
-		cell.episode = episodes[indexPath.row]
+		cell.playerItem = playerItems[indexPath.row]
 		return cell
 	}
 
@@ -117,14 +121,8 @@ class EpisodesViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// safety check
-		guard let podcast = self.podcast, (indexPath.row < episodes.count) else {
+		guard let podcast = self.podcast, (indexPath.row < playerItems.count) else {
 			return
-		}
-
-		// create the player items
-		var playerItems = [PlayerItem]()
-		for episode in episodes {
-			playerItems.append(PlayerItem(episode: episode, podcast: podcast))
 		}
 
 		// start playing the selected item
@@ -136,12 +134,12 @@ class EpisodesViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 		// safety check
-		guard let podcast = self.podcast, (indexPath.row < episodes.count) else {
+		guard let podcast = self.podcast, (indexPath.row < playerItems.count) else {
 			return nil
 		}
 
-		// create the player item
-		let playerItem = PlayerItem(episode: episodes[indexPath.row], podcast: podcast)
+		// get the player item
+		let playerItem = playerItems[indexPath.row]
 
 		downloadProgress = LoadingView()
 
