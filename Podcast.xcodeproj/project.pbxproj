@@ -42,8 +42,7 @@
 		3CFBD72421E90209005EEE48 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBD72321E90209005EEE48 /* LoadingView.swift */; };
 		50BA61FD6D4C69B5E78AADC5 /* Pods_Podcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC241C5E1288099CD85C6B20 /* Pods_Podcast.framework */; };
 		EC9C72D627437C8800933D6F /* InterestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C72D527437C8800933D6F /* InterestViewController.swift */; };
-		EC9C72D927437F5E00933D6F /* DMSwipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C72D827437F5E00933D6F /* DMSwipeCard.swift */; };
-		EC9C72DB27437F7800933D6F /* DMSwipeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C72DA27437F7800933D6F /* DMSwipeCardView.swift */; };
+		EC9DFFF927A43FA00045C1D8 /* TuneURL.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC9DFFF727A43FA00045C1D8 /* TuneURL.storyboard */; };
 		ECB0D2D12786B77900B1F012 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB0D2D02786B77900B1F012 /* Favorites.swift */; };
 		ECB0D2D32786B8F400B1F012 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB0D2D22786B8F400B1F012 /* Favorite.swift */; };
 		ECB0D2D52786BEB100B1F012 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB0D2D42786BEB100B1F012 /* BookmarkCell.swift */; };
@@ -98,8 +97,7 @@
 		3CFBD72321E90209005EEE48 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		D041E43D9EA39502B47908E4 /* Pods-Podcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podcast.release.xcconfig"; path = "Pods/Target Support Files/Pods-Podcast/Pods-Podcast.release.xcconfig"; sourceTree = "<group>"; };
 		EC9C72D527437C8800933D6F /* InterestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestViewController.swift; sourceTree = "<group>"; };
-		EC9C72D827437F5E00933D6F /* DMSwipeCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMSwipeCard.swift; sourceTree = "<group>"; };
-		EC9C72DA27437F7800933D6F /* DMSwipeCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DMSwipeCardView.swift; sourceTree = "<group>"; };
+		EC9DFFF827A43FA00045C1D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TuneURL.storyboard; sourceTree = "<group>"; };
 		ECB0D2D02786B77900B1F012 /* Favorites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		ECB0D2D22786B8F400B1F012 /* Favorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
 		ECB0D2D42786BEB100B1F012 /* BookmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
@@ -164,7 +162,6 @@
 				3C16D96D21E3F3E100BAB9B7 /* Cells */,
 				3C16D95E21E3EA7B00BAB9B7 /* Data Model */,
 				3C16D94F21E3BC6800BAB9B7 /* Flow */,
-				EC9C72D727437F4900933D6F /* SwipeCards */,
 				3CE7081621E415150007B4BF /* Utils */,
 				3C16D95D21E3EA1600BAB9B7 /* Views */,
 				3C16D94121E3BB8000BAB9B7 /* Assets.xcassets */,
@@ -172,6 +169,7 @@
 				3C16D94321E3BB8000BAB9B7 /* LaunchScreen.storyboard */,
 				ECB9A22F2735D3F600E7A28B /* Main.storyboard */,
 				ECB2B9F3277AB23100D85E98 /* Player.xib */,
+				EC9DFFF727A43FA00045C1D8 /* TuneURL.storyboard */,
 				04A9A56C273046C500164A82 /* Trigger-Sound.wav */,
 			);
 			path = Podcast;
@@ -261,15 +259,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		EC9C72D727437F4900933D6F /* SwipeCards */ = {
-			isa = PBXGroup;
-			children = (
-				EC9C72D827437F5E00933D6F /* DMSwipeCard.swift */,
-				EC9C72DA27437F7800933D6F /* DMSwipeCardView.swift */,
-			);
-			path = SwipeCards;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -341,6 +330,7 @@
 				3C16D94521E3BB8000BAB9B7 /* LaunchScreen.storyboard in Resources */,
 				ECB9A2312735D3F600E7A28B /* Main.storyboard in Resources */,
 				ECB2B9F5277AB23100D85E98 /* Player.xib in Resources */,
+				EC9DFFF927A43FA00045C1D8 /* TuneURL.storyboard in Resources */,
 				04A9A56D273046C600164A82 /* Trigger-Sound.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,8 +426,6 @@
 				3C16D94D21E3BC1C00BAB9B7 /* MainViewController.swift in Sources */,
 				3C16D95521E3BD9F00BAB9B7 /* SearchViewController.swift in Sources */,
 				043E833627160D160050A7A3 /* SettingsViewController.swift in Sources */,
-				EC9C72D927437F5E00933D6F /* DMSwipeCard.swift in Sources */,
-				EC9C72DB27437F7800933D6F /* DMSwipeCardView.swift in Sources */,
 				3C0793D121E53D1400E4F0E1 /* DateExtension.swift in Sources */,
 				3C0793D521E544C700E4F0E1 /* StringExtension.swift in Sources */,
 				3C1600C421E7F9F0005E38FB /* UIApplicationExtension.swift in Sources */,
@@ -464,6 +452,14 @@
 				3C16D94421E3BB8000BAB9B7 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		EC9DFFF727A43FA00045C1D8 /* TuneURL.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EC9DFFF827A43FA00045C1D8 /* Base */,
+			);
+			name = TuneURL.storyboard;
 			sourceTree = "<group>";
 		};
 		ECB2B9F3277AB23100D85E98 /* Player.xib */ = {
