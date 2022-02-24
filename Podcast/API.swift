@@ -20,6 +20,7 @@ class API {
 
 	// private
 	private let dataCache = NSCache<AnyObject, AnyObject>()
+	private var useITunesDirectory = true
 
 	// MARK: - Public
 
@@ -75,7 +76,11 @@ class API {
 	}
 
 	func searchPodcasts(searchText: String, completion: @escaping ([Podcast]) -> Void) {
-		return searchDigitalPodcast(searchText: searchText, completion: completion)
+		if useITunesDirectory {
+			return searchITunes(searchText: searchText, completion: completion)
+		} else {
+			return searchDigitalPodcast(searchText: searchText, completion: completion)
+		}
 	}
 
 	// MARK: - Private
@@ -169,30 +174,6 @@ class API {
 			DispatchQueue.main.async {
 				completion(podcasts)
 			}
-		}
-	}
-
-	// MARK: -
-
-	private func getEpisodesBuzzsprout(podcast: Podcast, completion: @escaping ([Episode]) -> Void) {
-		let url = "https://www.buzzsprout.com/api/1865534/episodes.json"
-		let headers = [
-			"Authorization" : "Token token=135e81a09c9db21a3893046af8b3d080",
-			"Accept" : "application/json",
-			"Content-Type" : "application/json" ]
-
-		Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.queryString, headers: headers).responseJSON { (response) in
-			guard let results = response.value as? [[String : Any]] else {
-				completion([])
-				return
-			}
-
-			var episodes = [Episode]()
-			results.forEach { (item) in
-				episodes.append(Episode(data: item))
-			}
-
-			completion(episodes)
 		}
 	}
 

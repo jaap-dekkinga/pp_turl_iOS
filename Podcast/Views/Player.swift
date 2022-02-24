@@ -338,7 +338,7 @@ class Player: UIViewController {
 		Bookmarks.shared.addBookmark(playerItem: playerItem, time: time)
 
 		// report the bookmark was created
-		Reporting.report(playerItem: playerItem, action: .bookmarked, time: time)
+		Reporting.shared.report(playerItem: playerItem, action: .bookmarked, time: time)
 
 		// update the bookmark button
 		bookmarkButton.isUserInteractionEnabled = false
@@ -437,6 +437,9 @@ class Player: UIViewController {
 
 		// reset the episode view animation
 		episodeView.transform = CGAffineTransform(scaleX: imageScaleDown, y: imageScaleDown)
+
+		// report the starting playback on a new item
+		Reporting.shared.report(playerItem: newPlayerItem, action: .started, time: startTime)
 
 		// start playing
 		startPlaying()
@@ -737,7 +740,7 @@ class Player: UIViewController {
 		loveButton.isUserInteractionEnabled = false
 
 		// report the reaction
-		Reporting.report(playerItem: playerItem, action: action, time: time)
+		Reporting.shared.report(playerItem: playerItem, action: action, time: time)
 
 		// start the reaction reset timer
 		reactionResetTimer = Timer.scheduledTimer(withTimeInterval: reactionTime, repeats: false) {
