@@ -71,7 +71,7 @@ class DownloadCache {
 		}
 
 		// download and return the player item
-		download(playerItem: playerItem, userDownloaded: false, progress: nil, completion: {
+		download(playerItem: playerItem, userDownloaded: false, tryAWS: true, progress: nil, completion: {
 			(download, error) in
 			DispatchQueue.main.async {
 				var cacheFileURL: URL?
@@ -98,7 +98,7 @@ class DownloadCache {
 		}
 
 		// download and return the player item
-		download(playerItem: playerItem, userDownloaded: true, progress: progressHandler, completion: {
+		download(playerItem: playerItem, userDownloaded: true, tryAWS: true, progress: progressHandler, completion: {
 			(download, error) in
 			DispatchQueue.main.async {
 				completion(playerItem, error)
@@ -126,7 +126,7 @@ class DownloadCache {
 
 	// MARK: - Private
 
-	private func download(playerItem: PlayerItem, userDownloaded: Bool, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Download?, Error?) -> Void) {
+	private func download(playerItem: PlayerItem, userDownloaded: Bool, tryAWS: Bool, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Download?, Error?) -> Void) {
 
 		// safety check
 		if let downloadIndex = downloadIndex(for: playerItem) {
@@ -135,20 +135,33 @@ class DownloadCache {
 			return
 		}
 
-		// get the episode url
-		guard let episodeURL = URL(string: playerItem.episode.url ?? "") else {
-			DispatchQueue.main.async {
-				let error = NSError(domain: "Podcast", code: 100, userInfo: nil)
-				completion(nil, error)
+		let awsDownloadAttempt: Bool
+		let downloadURL: URL
+
+		// check for an aws feed
+		if tryAWS, let awsFeed = AWSFeed.feed(for: playerItem.podcast),
+		   let awsURL = awsFeed.url(for: playerItem.episode) {
+			// attempt to download from amazon first
+			awsDownloadAttempt = true
+			downloadURL = awsURL
+		} else {
+			// use the standard episode url
+			guard let episodeURL = URL(string: playerItem.episode.url ?? "") else {
+				DispatchQueue.main.async {
+					let error = NSError(domain: "Podcast", code: 100, userInfo: nil)
+					completion(nil, error)
+				}
+				return
 			}
-			return
+			downloadURL = episodeURL
+			awsDownloadAttempt = false
 		}
 
 		// get the download location
 		let location = DownloadRequest.suggestedDownloadDestination()
 
 		// start the download
-		Alamofire.download(episodeURL, to: location).downloadProgress { (progress) in
+		Alamofire.download(downloadURL, to: location).downloadProgress { (progress) in
 			DispatchQueue.main.async {
 				progressHandler?(progress.fractionCompleted)
 			}
@@ -156,7 +169,9 @@ class DownloadCache {
 			var download: Download?
 			var error: Error?
 			// add the download to the downloads
-			if let responseFileURL = response.destinationURL {
+			if let responseFileURL = response.destinationURL,
+			   let statusCode = response.response?.statusCode,
+			   ((statusCode >= 200) && (statusCode < 300)) {
 				// make sure the downloads folder exists
 				let fileManager = FileManager.default
 				_ = try? fileManager.createDirectory(at: self.downloadFolderURL, withIntermediateDirectories: true, attributes: nil)
@@ -169,7 +184,16 @@ class DownloadCache {
 				self.downloads.insert(download!, at: 0)
 				_ = self.saveDownloadIndex()
 			} else {
-				error = NSError(domain: "Podcast", code: 101, userInfo: nil)
+				if awsDownloadAttempt {
+					// retry with the standard url
+					DispatchQueue.main.async {
+						self.download(playerItem: playerItem, userDownloaded: userDownloaded, tryAWS: false, progress: progressHandler, completion: completion)
+					}
+					return
+				} else {
+					// return an error
+					error = NSError(domain: "Podcast", code: 101, userInfo: nil)
+				}
 			}
 			// call the completion handler
 			completion(download, error)

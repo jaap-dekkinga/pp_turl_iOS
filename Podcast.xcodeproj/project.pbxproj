@@ -91,6 +91,8 @@
 		EC5C846F285ADCFB00D1CF1F /* Assets-HearAct.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC5C846E285ADCFB00D1CF1F /* Assets-HearAct.xcassets */; };
 		EC5C8472285ADF9F00D1CF1F /* LaunchScreen-ChooseToBeCurious.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC5C8470285ADF9F00D1CF1F /* LaunchScreen-ChooseToBeCurious.storyboard */; };
 		EC5C8473285AE0A800D1CF1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C16D94121E3BB8000BAB9B7 /* Assets.xcassets */; };
+		EC5C8475285AE60B00D1CF1F /* AWSFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5C8474285AE60B00D1CF1F /* AWSFeed.swift */; };
+		EC5C8476285AE60B00D1CF1F /* AWSFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC5C8474285AE60B00D1CF1F /* AWSFeed.swift */; };
 		EC9C72D627437C8800933D6F /* InterestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9C72D527437C8800933D6F /* InterestViewController.swift */; };
 		EC9DFFF927A43FA00045C1D8 /* TuneURL.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC9DFFF727A43FA00045C1D8 /* TuneURL.storyboard */; };
 		ECB0D2D12786B77900B1F012 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB0D2D02786B77900B1F012 /* Favorites.swift */; };
@@ -156,6 +158,7 @@
 		EC5C846B285ADCD100D1CF1F /* Assets-ChooseToBeCurious.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-ChooseToBeCurious.xcassets"; sourceTree = "<group>"; };
 		EC5C846E285ADCFB00D1CF1F /* Assets-HearAct.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-HearAct.xcassets"; sourceTree = "<group>"; };
 		EC5C8471285ADF9F00D1CF1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/LaunchScreen-ChooseToBeCurious.storyboard"; sourceTree = "<group>"; };
+		EC5C8474285AE60B00D1CF1F /* AWSFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSFeed.swift; sourceTree = "<group>"; };
 		EC9C72D527437C8800933D6F /* InterestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InterestViewController.swift; sourceTree = "<group>"; };
 		EC9DFFF827A43FA00045C1D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TuneURL.storyboard; sourceTree = "<group>"; };
 		ECB0D2D02786B77900B1F012 /* Favorites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
@@ -219,6 +222,7 @@
 			children = (
 				3CE7080C21E3FFF00007B4BF /* API.swift */,
 				3C16D93A21E3BB8000BAB9B7 /* AppDelegate.swift */,
+				EC5C8474285AE60B00D1CF1F /* AWSFeed.swift */,
 				ECF6D5342745FC270039E7B9 /* Bookmark.swift */,
 				ECF6D5322745FAFA0039E7B9 /* Bookmarks.swift */,
 				ECDC2EC5273EFEC100EC70D5 /* Download.swift */,
@@ -562,7 +566,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CE7080D21E3FFF00007B4BF /* API.swift in Sources */,
 				3C16D93B21E3BB8000BAB9B7 /* AppDelegate.swift in Sources */,
+				EC5C8475285AE60B00D1CF1F /* AWSFeed.swift in Sources */,
 				ECF6D5352745FC270039E7B9 /* Bookmark.swift in Sources */,
 				ECF6D5332745FAFA0039E7B9 /* Bookmarks.swift in Sources */,
 				ECDC2EC6273EFEC100EC70D5 /* Download.swift in Sources */,
@@ -571,7 +577,6 @@
 				ECB0D2D32786B8F400B1F012 /* Favorite.swift in Sources */,
 				ECB0D2D12786B77900B1F012 /* Favorites.swift in Sources */,
 				ECB0D2DD278776FD00B1F012 /* Reporting.swift in Sources */,
-				3CE7080D21E3FFF00007B4BF /* API.swift in Sources */,
 				ECB0D2D52786BEB100B1F012 /* BookmarkCell.swift in Sources */,
 				3C0793D321E53ED700E4F0E1 /* EpisodeCell.swift in Sources */,
 				3C8411C221E6B5E9007A10E6 /* FavoriteCell.swift in Sources */,
@@ -611,7 +616,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC5C843A285ADA9C00D1CF1F /* API.swift in Sources */,
 				EC5C8431285ADA9C00D1CF1F /* AppDelegate.swift in Sources */,
+				EC5C8476285AE60B00D1CF1F /* AWSFeed.swift in Sources */,
 				EC5C8432285ADA9C00D1CF1F /* Bookmark.swift in Sources */,
 				EC5C8433285ADA9C00D1CF1F /* Bookmarks.swift in Sources */,
 				EC5C8434285ADA9C00D1CF1F /* Download.swift in Sources */,
@@ -620,7 +627,6 @@
 				EC5C8437285ADA9C00D1CF1F /* Favorite.swift in Sources */,
 				EC5C8438285ADA9C00D1CF1F /* Favorites.swift in Sources */,
 				EC5C8439285ADA9C00D1CF1F /* Reporting.swift in Sources */,
-				EC5C843A285ADA9C00D1CF1F /* API.swift in Sources */,
 				EC5C843B285ADA9C00D1CF1F /* BookmarkCell.swift in Sources */,
 				EC5C843C285ADA9C00D1CF1F /* EpisodeCell.swift in Sources */,
 				EC5C843D285ADA9C00D1CF1F /* FavoriteCell.swift in Sources */,
