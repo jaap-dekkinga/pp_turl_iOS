@@ -14,3 +14,10 @@ target 'ChooseToBeCurious' do
 	pod 'FeedKit', '~> 9.1.0'
 	pod 'TuneURL'
 end
+
+target 'IBC' do
+  use_frameworks!
+  pod 'Alamofire', '~> 4.9.0'
+  pod 'FeedKit', '~> 9.1.0'
+  pod 'TuneURL'
+end
