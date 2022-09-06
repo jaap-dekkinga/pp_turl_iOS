@@ -248,13 +248,11 @@ let downloader = DownloadCache()
 				webView.isHidden = true
             
 
-//			case "save_page":
-//
-//            if let url = URL(string: tuneURL.info) {
-//                webView.load(URLRequest(url: url))
-//            }
-//
-            
+                    case "save_page":
+				actionMessage = "Save bookmark for \(tuneURL.info)?"
+				if let url = URL(string: tuneURL.info) {
+					webView.load(URLRequest(url: url))
+				}
             
 
 			case "sms":
