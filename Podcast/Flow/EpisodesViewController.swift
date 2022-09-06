@@ -30,7 +30,7 @@ class EpisodesViewController: BaseTableViewController {
 						}
                         
 						DispatchQueue.main.async { [weak self] in
-                            print(episodes)
+                    
 							self?.tableView.reloadData()
 							self?.removeLoader()
 						}
