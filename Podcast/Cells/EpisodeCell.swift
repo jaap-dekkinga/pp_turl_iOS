@@ -50,6 +50,7 @@ class EpisodeCell: UITableViewCell {
 	// MARK: - Actions
 
 	@IBAction func play(_ sender: AnyObject) {
+        
 		if let playerItem = self.playerItem {
 			// play the item
 			Player.shared.playList = [playerItem]

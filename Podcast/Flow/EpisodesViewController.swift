@@ -26,8 +26,11 @@ class EpisodesViewController: BaseTableViewController {
 						self.playerItems.removeAll()
 						for episode in episodes {
 							self.playerItems.append(PlayerItem(episode: episode, podcast: podcast))
+                            
 						}
+                        
 						DispatchQueue.main.async { [weak self] in
+                            print(episodes)
 							self?.tableView.reloadData()
 							self?.removeLoader()
 						}
@@ -36,6 +39,8 @@ class EpisodesViewController: BaseTableViewController {
 			}
 		}
 	}
+    
+    
 
 	fileprivate func addLoader() {
 		view.addSubview(activity)
@@ -47,6 +52,8 @@ class EpisodesViewController: BaseTableViewController {
 		view.removeConstraints(activity.constraints)
 		activity.removeFromSuperview()
 	}
+    
+    
 
 	fileprivate func setupNavigationBarButtons(isFavorite: Bool) {
 		let emptyHeart = UIBarButtonItem(image: UIImage(named: "Player-Love-Inactive"), style: .plain, target: self, action: #selector(addFavorite(_:)))
@@ -64,6 +71,13 @@ class EpisodesViewController: BaseTableViewController {
 		setupTable()
 		addLoader()
 	}
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupTable()
+        addLoader()
+    }
 
 	// MARK: - Actions
 
@@ -91,6 +105,7 @@ class EpisodesViewController: BaseTableViewController {
 	// MARK: - Private
 
 	fileprivate func addedToDownloads() {
+        
 		downloadProgress.removeFromSuperview()
 		let main = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
 		main.viewControllers?[2].tabBarItem.badgeValue = "new"
@@ -108,8 +123,11 @@ class EpisodesViewController: BaseTableViewController {
 	// MARK: - UITableViewDataSource
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        
 		return playerItems.count
 	}
+    
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodeCell
@@ -120,16 +138,17 @@ class EpisodesViewController: BaseTableViewController {
 	// MARK: - UITableViewDelegate
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		// safety check
+
 		guard let podcast = self.podcast, (indexPath.row < playerItems.count) else {
 			return
 		}
 
 		// start playing the selected item
-		Player.shared.playList = playerItems
-		Player.shared.currentPlaylistIndex = indexPath.row
-		Player.shared.setPlayerItem(playerItems[indexPath.row])
-		Player.shared.maximizePlayer()
+      
+//		Player.shared.playList = playerItems
+//		Player.shared.currentPlaylistIndex = indexPath.row
+//		Player.shared.setPlayerItem(playerItems[indexPath.row])
+//		Player.shared.maximizePlayer()
 	}
 
 	override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -144,6 +163,7 @@ class EpisodesViewController: BaseTableViewController {
 		downloadProgress = LoadingView()
 
 		if DownloadCache.shared.isUserDownloaded(playerItem: playerItem) {
+            
 			let downloadAction =
 			UITableViewRowAction(style: .normal, title: "Download") {
 				(_,_) in

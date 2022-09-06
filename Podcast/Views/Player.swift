@@ -25,7 +25,7 @@ class Player: UIViewController {
 		case like
 		case love
 	}
-
+     let activity = UIActivityIndicatorView(style: .medium)
 	// static
 	static let shared = Player(nibName: "Player", bundle: nil)
 	static let miniPlayerHeight = 64.0
@@ -36,7 +36,10 @@ class Player: UIViewController {
 	let bookmarkRewindTime: Float64 = 10.0 // seconds
 	let reactionTime = 3.0 // seconds
 	let timeToPresentTuneURL: Float = 10.0 // seconds
-
+    var next_mp3 = URL(string: "")
+    var mp3_path = String()
+    
+     var fromInterest = false
 	// interface
 	@IBOutlet var fullPlayer: UIView!
 	@IBOutlet var miniPlayer: UIView!
@@ -89,6 +92,7 @@ class Player: UIViewController {
 
 	@objc private dynamic lazy var player = AVPlayer()
 
+  
 	private var activeTuneURL: TuneURL.Match? {
 		didSet {
 			if ((activeTuneURL?.id ?? -1) != (oldValue?.id ?? -1)) {
@@ -105,9 +109,54 @@ class Player: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
 		self.view.translatesAutoresizingMaskIntoConstraints = false
+        
 		setup()
+        
 	}
+    
+    func printNextUrl()
+    {    activity.fillSuperview()
+        activity.startAnimating()
+
+        
+        resetViewForNextMp3()
+        player.pause()
+        DownloadCache.shared.downloadMp3(playerItem: self.playerItem!, url: next_mp3!,Path: mp3_path,userDownloaded: false, tryAWS: true,progress: {
+            (completed) in
+//            self.downloadProgress.setPercentage(value: completed * 100)
+        }, completion: {
+            
+            [weak self] (episode,fileURL ,error) in
+        
+             print("huma",fileURL)
+            
+            if(fileURL != nil) {self?.startPlaying(fileURL!)}
+  
+            
+            if (error == nil) {
+//                self?.addedToDownloads()
+            } else {
+               
+            }
+        })
+
+    
+     
+        
+      
+      
+     
+        
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+    }
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -127,6 +176,8 @@ class Player: UIViewController {
 		// add the full player view
 		fullPlayer.translatesAutoresizingMaskIntoConstraints = false
 		contentView.addSubview(fullPlayer)
+        contentView.addSubview(activity)
+      
 		fullPlayerConstraints.append(fullPlayer.leftAnchor.constraint(equalTo: contentView.leftAnchor))
 		fullPlayerConstraints.append(fullPlayer.rightAnchor.constraint(equalTo: contentView.rightAnchor))
 		fullPlayerConstraints.append(fullPlayer.topAnchor.constraint(equalTo: contentView.topAnchor))
@@ -158,6 +209,13 @@ class Player: UIViewController {
 
 	// MARK: - Private
 
+    private func resetViewForNextMp3() {
+//        episodeImage.image = UIImage(named: "blankPodcast")
+        currentTime.text = "00:00"
+        totalTime.text = "--:--"
+        timeSlider.setValue(0, animated: false)
+    }
+    
 	private func resetView() {
 		episodeImage.image = UIImage(named: "blankPodcast")
 		currentTime.text = "00:00"
@@ -220,16 +278,19 @@ class Player: UIViewController {
 	}
 
 	private func startPlaying() {
+        
 		// safety check
 		guard let playerItem = self.playerItem else {
 			return
 		}
 
 		// get the podcast episode from the cache
+//        
 		DownloadCache.shared.cachedFile(for: playerItem, completion: startPlaying)
 	}
 
 	private func startPlaying(_ fileURL: URL?) {
+        
 		// safety check
 		guard let fileURL = fileURL else {
 			return
@@ -239,7 +300,10 @@ class Player: UIViewController {
 		tuneURLs.removeAll()
 
 		// set the current item
+
+        
 		let item = AVPlayerItem(url: fileURL)
+        
 		player.replaceCurrentItem(with: item)
 		currentFileURL = fileURL
 
@@ -248,25 +312,46 @@ class Player: UIViewController {
 			player.seek(to: CMTime(seconds: currentStartTime, preferredTimescale: Int32(NSEC_PER_SEC)))
 		}
 
+     
 		// start playback
 		player.play()
+        activity.stopAnimating()
 
 		// update the now playing info
 		updateNowPlayingInfo()
-
+        
+         print("url", fileURL)
 		// process the podcast for tuneurls
-		Detector.processAudio(for: fileURL) { [weak self] matches in
-			if let self = self, (matches.count > 0),
-			   (self.currentFileURL == fileURL) {
-				DispatchQueue.main.async {
-					// save the discovered tuneurls
-					self.tuneURLs = matches
+//if(fromInterest == false){
+    
+    Detector.processAudio(for: fileURL) { [weak self] matches in
+            
+            if let self = self, (matches.count > -1),
+               (self.currentFileURL == fileURL) {
+                DispatchQueue.main.async {
+                    // save the discovered tuneurls
+                    self.tuneURLs = matches
 #if DEBUG
-					print("Found \(matches.count) tuneurls in the podcast.")
+                    print("Found \(matches.count) tuneurls in the podcast.")
+                    
 #endif // DEBUG
-				}
-			}
-		}
+                }
+            }
+}
+    
+//}else{
+
+
+
+
+
+
+//    player.seek(to: .zero)
+//    fromInterest = false
+//    player.play()
+//    
+//}
+        
 	}
 
 	private func enlargeImage() {
@@ -285,6 +370,7 @@ class Player: UIViewController {
 
 	@IBAction func minimizePlayer(_ sender: AnyObject?) {
 		delegate.playerMinimize()
+        
 	}
 
 	@IBAction func togglePlaying() {
@@ -399,10 +485,11 @@ class Player: UIViewController {
 	}
 
 	@objc func maximizePlayer() {
-		delegate.playerMaximize()
+    delegate.playerMaximize()
 	}
 
 	func setPlayerItem(_ newPlayerItem: PlayerItem, startTime: Double = 0.0) {
+        
 		// check for a new player item
 		if (playerItem == newPlayerItem) {
 			// same item -- skip to the time
@@ -478,6 +565,7 @@ class Player: UIViewController {
 	}
 
 	private func updateNowPlayingInfo() {
+        
 		// safety check
 		guard let playerItem = self.playerItem else {
 			MPNowPlayingInfoCenter.default().nowPlayingInfo = nil
@@ -526,6 +614,7 @@ class Player: UIViewController {
 
 		// load the podcast image
 		let tempIv = UIImageView()
+        
 		tempIv.downloadImage(url: playerItem.episode.artwork ?? "") { (image) in
 			if let image = image {
 				let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (_) -> UIImage in

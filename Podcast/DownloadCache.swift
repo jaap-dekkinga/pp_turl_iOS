@@ -16,6 +16,8 @@ class DownloadCache {
 
 	let maxCachedItems = 5
 	var downloads = [Download]()
+    var downloads2 = [Download]()
+    
 
 	// private
 	private let downloadFolderURL: URL
@@ -44,15 +46,26 @@ class DownloadCache {
 	}
 
 	var userDownloads: [PlayerItem] {
+        
 		var userDownloads = [PlayerItem]()
 		for download in downloads {
 			if download.isUserDownload {
-				userDownloads.append(download.playerItem)
+                userDownloads.append(download.playerItem!)
 			}
 		}
 		return userDownloads
 	}
 
+    
+    var userDownloads2: [URL] {
+        var userDownloads2 = [URL]()
+        for download in downloads2 {
+            if download.isUserDownload {
+                userDownloads2.append(download.fileURL)
+            }
+        }
+        return userDownloads2
+    }
 	// MARK: -
 
 	func cachedFile(for playerItem: PlayerItem, completion: @escaping (URL?) -> Void) {
@@ -72,7 +85,7 @@ class DownloadCache {
 
 		// download and return the player item
 		download(playerItem: playerItem, userDownloaded: false, tryAWS: true, progress: nil, completion: {
-			(download, error) in
+			(download, nil,error) in
 			DispatchQueue.main.async {
 				var cacheFileURL: URL?
 				if let cacheFileName = download?.cacheFileName {
@@ -85,7 +98,7 @@ class DownloadCache {
 
 	func download(playerItem: PlayerItem, progress progressHandler: ((Double) -> Void)?, completion: @escaping (PlayerItem, Error?) -> Void) {
 
-		// check if a cached file already exists
+//		 check if a cached file already exists
 		if let downloadIndex = downloadIndex(for: playerItem) {
 			var download = downloads[downloadIndex]
 			if (download.isUserDownload == false) {
@@ -99,7 +112,7 @@ class DownloadCache {
 
 		// download and return the player item
 		download(playerItem: playerItem, userDownloaded: true, tryAWS: true, progress: progressHandler, completion: {
-			(download, error) in
+			(download, nil,error) in
 			DispatchQueue.main.async {
 				completion(playerItem, error)
 			}
@@ -126,14 +139,15 @@ class DownloadCache {
 
 	// MARK: - Private
 
-	private func download(playerItem: PlayerItem, userDownloaded: Bool, tryAWS: Bool, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Download?, Error?) -> Void) {
+	private func download(playerItem: PlayerItem, userDownloaded: Bool, tryAWS: Bool, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Download?,URL?, Error?) -> Void) {
 
-		// safety check
-		if let downloadIndex = downloadIndex(for: playerItem) {
-			let download = downloads[downloadIndex]
-			completion(download, nil)
-			return
-		}
+        
+////		 safety check
+//		if let downloadIndex = downloadIndex(for: playerItem) {
+//			let download = downloads[downloadIndex]
+//            completion(download, URL(string:playerItem.episode.url ?? ""),nil)
+//			return
+//		}
 
 		let awsDownloadAttempt: Bool
 		let downloadURL: URL
@@ -149,11 +163,12 @@ class DownloadCache {
 			guard let episodeURL = URL(string: playerItem.episode.url ?? "") else {
 				DispatchQueue.main.async {
 					let error = NSError(domain: "Podcast", code: 100, userInfo: nil)
-					completion(nil, error)
+					completion(nil,nil, error)
 				}
 				return
 			}
 			downloadURL = episodeURL
+            
 			awsDownloadAttempt = false
 		}
 
@@ -176,15 +191,17 @@ class DownloadCache {
 				let fileManager = FileManager.default
 				_ = try? fileManager.createDirectory(at: self.downloadFolderURL, withIntermediateDirectories: true, attributes: nil)
 				// move the file to the downloads folder
-				let fileName = "\(UUID().uuidString).\(responseFileURL.pathExtension)"
+                let fileName = "\(UUID().uuidString).\(responseFileURL.pathExtension)"
 				let fileURL = self.downloadFolderURL.appendingPathComponent(fileName)
 				_ = try? fileManager.moveItem(at: responseFileURL, to: fileURL)
 				// add the download to the index
-				download = Download(cacheFileName: fileName, isUserDownload: userDownloaded, playerItem: playerItem)
-				self.downloads.insert(download!, at: 0)
+                
+                download = Download(cacheFileName: fileName, isUserDownload: userDownloaded, playerItem: nil, fileURL: fileURL)
+				self.downloads2.insert(download!, at: 0)
 				_ = self.saveDownloadIndex()
 			} else {
 				if awsDownloadAttempt {
+                    
 					// retry with the standard url
 					DispatchQueue.main.async {
 						self.download(playerItem: playerItem, userDownloaded: userDownloaded, tryAWS: false, progress: progressHandler, completion: completion)
@@ -193,12 +210,121 @@ class DownloadCache {
 				} else {
 					// return an error
 					error = NSError(domain: "Podcast", code: 101, userInfo: nil)
+                    print(error?.localizedDescription ?? "")
 				}
 			}
 			// call the completion handler
-			completion(download, error)
+			completion(download,nil ,error)
 		}
 	}
+    
+    func randomString(length: Int) -> String {
+      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+      return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+    
+    
+    
+    
+    
+    
+    
+    func downloadMp3(playerItem: PlayerItem, url : URL,Path: String ,userDownloaded: Bool, tryAWS: Bool, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Download?,URL?, Error?) -> Void) {
+         print("string to compare",url.absoluteString)
+         
+         for file in downloads {
+             print("abcd", file.cacheFileName, Path)
+             if (file.cacheFileName == Path){
+                 
+                completion(nil, file.fileURL,nil)
+                 return
+             }
+         }
+     
+
+      var fileURL2 = URL(string: "")
+
+         let awsDownloadAttempt: Bool
+         let downloadURL: URL
+
+         // check for an aws feed
+//         if tryAWS, let awsFeed = AWSFeed.feed(for: playerItem.podcast),
+//            let awsURL = awsFeed.url(for: playerItem.episode){
+//             // attempt to download from amazon first
+//             awsDownloadAttempt = true
+//             downloadURL = awsURL
+//
+//
+//         }
+//         else {
+             // use the standard episode url
+             guard let episodeURL = url ?? URL(string: "") else {
+                 DispatchQueue.main.async {
+                     let error = NSError(domain: "Podcast", code: 100, userInfo: nil)
+                     completion(nil,nil, error)
+                     
+                 }
+                 return
+             }
+             downloadURL = episodeURL
+             
+             awsDownloadAttempt = false
+//         }
+
+         // get the download location
+         let location = DownloadRequest.suggestedDownloadDestination()
+
+         // start the download
+         Alamofire.download(downloadURL, to: location).downloadProgress { (progress) in
+             
+             
+             print("hi",progress)
+//             DispatchQueue.main.async {
+//                 progressHandler?(progress.fractionCompleted)
+//             }
+             
+         }.response { (response) in
+        
+         
+             var download: Download?
+             var error: Error?
+             // add the download to the downloads
+             if let responseFileURL = response.destinationURL,
+                let statusCode = response.response?.statusCode,
+                ((statusCode >= 200) && (statusCode < 300)) {
+                 // make sure the downloads folder exists
+                 let fileManager = FileManager.default
+                 _ = try? fileManager.createDirectory(at: self.downloadFolderURL, withIntermediateDirectories: true, attributes: nil)
+                 // move the file to the downloads folder
+                 let fileName = "\(UUID().uuidString).\(responseFileURL.pathExtension)"
+                 let fileURL = self.downloadFolderURL.appendingPathComponent(fileName)
+                 _ = try? fileManager.moveItem(at: responseFileURL, to: fileURL)
+                 // add the download to the index
+                 fileURL2 = fileURL
+                 download = Download(cacheFileName: Path, isUserDownload: userDownloaded, playerItem: nil, fileURL: fileURL)
+                 self.downloads.insert(download!, at: 0)
+                 _ = self.saveDownloadIndex()
+                 
+                 
+             } else {
+                 if awsDownloadAttempt {
+                     // retry with the standard url
+                     DispatchQueue.main.async {
+                         self.download(playerItem: playerItem, userDownloaded: userDownloaded, tryAWS: false, progress: progressHandler, completion: completion)
+                         
+                     }
+                     return
+                 } else {
+                     // return an error
+                     error = NSError(domain: "Podcast", code: 101, userInfo: nil)
+                     print(error?.localizedDescription ?? "")
+                 }
+             }
+             // call the completion handler
+             completion(download,fileURL2 ,error)
+         }
+         
+     }
 
 	private func downloadIndex(for playerItem: PlayerItem) -> Int? {
 		for index in 0 ..< downloads.count {
@@ -209,6 +335,7 @@ class DownloadCache {
 		}
 		return nil
 	}
+
 
 	private func removeDownload(index: Int) {
 		// remove the cache file

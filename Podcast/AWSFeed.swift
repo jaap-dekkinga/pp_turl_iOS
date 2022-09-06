@@ -45,5 +45,17 @@ struct AWSFeed {
 
 		return URL(string: newURL)
 	}
+    func url_next(for episode: URL?) -> URL? {
+        // get the file name
+        guard let episodeURL = episode,
+              let lastPathComponent = episode?.lastPathComponent else {
+            return nil
+        }
+
+        // create the aws bucket url
+        let newURL = "https://\(bucket).\(AWSFeed.baseURL)/\(lastPathComponent)"
+
+        return URL(string: newURL)
+    }
 
 }
