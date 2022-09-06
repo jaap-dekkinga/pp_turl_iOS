@@ -10,6 +10,9 @@
 		043E833627160D160050A7A3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043E833427160D160050A7A3 /* SettingsViewController.swift */; };
 		049CF60E2719F103008BEF52 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049CF60C2719F103008BEF52 /* BookmarksViewController.swift */; };
 		04A9A56D273046C600164A82 /* Trigger-Sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 04A9A56C273046C500164A82 /* Trigger-Sound.wav */; };
+		2A219B9328C4F769005B12D9 /* CYOAItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A219B9228C4F769005B12D9 /* CYOAItem.swift */; };
+		2A219B9428C4F769005B12D9 /* CYOAItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A219B9228C4F769005B12D9 /* CYOAItem.swift */; };
+		2A219B9528C4F769005B12D9 /* CYOAItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A219B9228C4F769005B12D9 /* CYOAItem.swift */; };
 		3C0793CD21E5343800E4F0E1 /* EpisodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793CC21E5343800E4F0E1 /* EpisodesViewController.swift */; };
 		3C0793CF21E536A100E4F0E1 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793CE21E536A100E4F0E1 /* Episode.swift */; };
 		3C0793D121E53D1400E4F0E1 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0793D021E53D1400E4F0E1 /* DateExtension.swift */; };
@@ -159,7 +162,7 @@
 		ECDC2EC6273EFEC100EC70D5 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECDC2EC5273EFEC100EC70D5 /* Download.swift */; };
 		ECF6D5332745FAFA0039E7B9 /* Bookmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF6D5322745FAFA0039E7B9 /* Bookmarks.swift */; };
 		ECF6D5352745FC270039E7B9 /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF6D5342745FC270039E7B9 /* Bookmark.swift */; };
-		ED4193FC76ADF74DCFD7B4A3 /* Pods_ChooseToBeCurious.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC9E015D082B6362AF6DAA4 /* Pods_ChooseToBeCurious.framework */; };
+		ED4193FC76ADF74DCFD7B4A3 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -167,6 +170,7 @@
 		049CF60C2719F103008BEF52 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		04A9A56C273046C500164A82 /* Trigger-Sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Trigger-Sound.wav"; sourceTree = "<group>"; };
 		09E3435A5FF195CB11FCA0A0 /* Pods-IBC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBC.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBC/Pods-IBC.release.xcconfig"; sourceTree = "<group>"; };
+		2A219B9228C4F769005B12D9 /* CYOAItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CYOAItem.swift; sourceTree = "<group>"; };
 		30FF838BA4B17873A3598329 /* Pods-ChooseToBeCurious.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChooseToBeCurious.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChooseToBeCurious/Pods-ChooseToBeCurious.debug.xcconfig"; sourceTree = "<group>"; };
 		3C0793CC21E5343800E4F0E1 /* EpisodesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EpisodesViewController.swift; path = Podcast/Flow/EpisodesViewController.swift; sourceTree = SOURCE_ROOT; };
 		3C0793CE21E536A100E4F0E1 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
@@ -255,7 +259,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED4193FC76ADF74DCFD7B4A3 /* Pods_ChooseToBeCurious.framework in Frameworks */,
+				ED4193FC76ADF74DCFD7B4A3 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +362,7 @@
 				3C0793CE21E536A100E4F0E1 /* Episode.swift */,
 				ECB0D2D62786C99C00B1F012 /* PlayerItem.swift */,
 				3C16D97021E3F51B00BAB9B7 /* Podcast.swift */,
+				2A219B9228C4F769005B12D9 /* CYOAItem.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -749,6 +754,7 @@
 				049CF60E2719F103008BEF52 /* BookmarksViewController.swift in Sources */,
 				3C16D95721E3BE2C00BAB9B7 /* DownloadsViewController.swift in Sources */,
 				3C0793CD21E5343800E4F0E1 /* EpisodesViewController.swift in Sources */,
+				2A219B9428C4F769005B12D9 /* CYOAItem.swift in Sources */,
 				3C16D95321E3BCA800BAB9B7 /* FavoritesViewController.swift in Sources */,
 				EC9C72D627437C8800933D6F /* InterestViewController.swift in Sources */,
 				3C16D94D21E3BC1C00BAB9B7 /* MainViewController.swift in Sources */,
@@ -799,6 +805,7 @@
 				EC54892A28B2ECC80050C0EF /* BookmarksViewController.swift in Sources */,
 				EC54892B28B2ECC80050C0EF /* DownloadsViewController.swift in Sources */,
 				EC54892C28B2ECC80050C0EF /* EpisodesViewController.swift in Sources */,
+				2A219B9528C4F769005B12D9 /* CYOAItem.swift in Sources */,
 				EC54892D28B2ECC80050C0EF /* FavoritesViewController.swift in Sources */,
 				EC54892E28B2ECC80050C0EF /* InterestViewController.swift in Sources */,
 				EC54892F28B2ECC80050C0EF /* MainViewController.swift in Sources */,
@@ -849,6 +856,7 @@
 				EC5C8445285ADA9C00D1CF1F /* BookmarksViewController.swift in Sources */,
 				EC5C8446285ADA9C00D1CF1F /* DownloadsViewController.swift in Sources */,
 				EC5C8447285ADA9C00D1CF1F /* EpisodesViewController.swift in Sources */,
+				2A219B9328C4F769005B12D9 /* CYOAItem.swift in Sources */,
 				EC5C8448285ADA9C00D1CF1F /* FavoritesViewController.swift in Sources */,
 				EC5C8449285ADA9C00D1CF1F /* InterestViewController.swift in Sources */,
 				EC5C844A285ADA9C00D1CF1F /* MainViewController.swift in Sources */,

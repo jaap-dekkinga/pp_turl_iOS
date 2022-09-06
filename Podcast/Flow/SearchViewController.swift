@@ -35,6 +35,7 @@ class SearchViewController: BaseTableViewController {
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
 		if (segue.identifier == "ShowEpisodesSegue"),
 		   let episodesController = segue.destination as? EpisodesViewController,
 		   let podcastCell = sender as? PodcastCell {
@@ -82,6 +83,7 @@ extension SearchViewController: UISearchBarDelegate {
 		}
 
 		API.shared.searchPodcasts(searchText: searchText) {
+            
 			[weak self] (searchedPodcasts) in
 
 			// safety check
@@ -89,7 +91,9 @@ extension SearchViewController: UISearchBarDelegate {
 				return
 			}
 
+            
 			self.podcasts = searchedPodcasts
+            print("pod",self.podcasts)
 			self.isSearching = false
 			self.headerString = "We couldn't find any results for\n\n\"\(searchText)\".\n\nPlease try again."
 			self.tableView.reloadData()

@@ -12,6 +12,7 @@ struct Download: Codable {
 
 	var cacheFileName: String
 	var isUserDownload: Bool
-	var playerItem: PlayerItem
+	var playerItem: PlayerItem?
+    var fileURL : URL
 
 }

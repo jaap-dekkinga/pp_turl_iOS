@@ -203,6 +203,11 @@ extension RSSFeedItem: Equatable {
     
     public static func ==(lhs: RSSFeedItem, rhs: RSSFeedItem) -> Bool {
         return
+        
+//        lhs.tuneurlID == rhs.tuneurlID &&
+//        lhs.options == rhs.options &&
+//        lhs.mp3URL == rhs.mp3URL &&
+            
             lhs.author == rhs.author &&
             lhs.categories == rhs.categories &&
             lhs.comments == rhs.comments &&

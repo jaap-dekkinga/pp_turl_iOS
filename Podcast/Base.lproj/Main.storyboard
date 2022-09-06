@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VyI-x9-XIZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VyI-x9-XIZ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -14,7 +14,7 @@
         <!--Main View Controller-->
         <scene sceneID="74R-8h-Pd7">
             <objects>
-                <tabBarController id="VyI-x9-XIZ" customClass="MainViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="VyI-x9-XIZ" customClass="MainViewController" customModule="Choose_to_Be_Curious" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="o1u-y9-OFn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -52,7 +52,7 @@
         <!--Favorites-->
         <scene sceneID="vVM-Vy-tal">
             <objects>
-                <collectionViewController id="cHx-AI-bFe" customClass="FavoritesViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController id="cHx-AI-bFe" customClass="FavoritesViewController" customModule="Choose_to_Be_Curious" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="1bQ-Fp-Ecv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -64,7 +64,7 @@
                             <inset key="sectionInset" minX="12" minY="0.0" maxX="12" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="FavoritesCell" id="dqP-mr-Lrm" customClass="FavoriteCell" customModule="Podcast" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="FavoritesCell" id="dqP-mr-Lrm" customClass="FavoriteCell" customModule="Choose_to_Be_Curious" customModuleProvider="target">
                                 <rect key="frame" x="107" y="0.0" width="200" height="238"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Iyg-UT-EAD">
@@ -148,13 +148,13 @@
         <!--Search-->
         <scene sceneID="KHL-Wd-XrI">
             <objects>
-                <tableViewController id="xux-5h-f3d" customClass="SearchViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="xux-5h-f3d" customClass="SearchViewController" customModule="Choose_to_Be_Curious" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="fkR-NN-Fbu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PodcastCell" id="wXD-TQ-6QU" customClass="PodcastCell" customModule="Podcast" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PodcastCell" id="wXD-TQ-6QU" customClass="PodcastCell" customModule="Choose_to_Be_Curious" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wXD-TQ-6QU" id="8b2-aP-REt">
@@ -224,13 +224,13 @@
         <!--Downloads-->
         <scene sceneID="Umh-Qc-8D1">
             <objects>
-                <tableViewController title="Downloads" id="qs0-AR-i1z" customClass="DownloadsViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Downloads" id="qs0-AR-i1z" customClass="DownloadsViewController" customModule="Choose_to_Be_Curious" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="qgZ-g8-QVB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EpisodeCell" id="dSF-nP-Wyk" customClass="EpisodeCell" customModule="Podcast" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EpisodeCell" id="dSF-nP-Wyk" customClass="EpisodeCell" customModule="Choose_to_Be_Curious" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="104.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dSF-nP-Wyk" id="acJ-fC-zPg">
@@ -349,13 +349,13 @@
         <!--Bookmarks-->
         <scene sceneID="AJL-Gs-5kt">
             <objects>
-                <tableViewController id="NEN-Yl-cYu" customClass="BookmarksViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="NEN-Yl-cYu" customClass="BookmarksViewController" customModule="Choose_to_Be_Curious" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="4Is-8q-u0E">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" id="qEL-0d-fb4" customClass="BookmarkCell" customModule="Podcast" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" id="qEL-0d-fb4" customClass="BookmarkCell" customModule="Choose_to_Be_Curious" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="104.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qEL-0d-fb4" id="jNV-GA-DdI">
@@ -478,7 +478,7 @@
         <!--Settings-->
         <scene sceneID="Cgg-es-Ea7">
             <objects>
-                <viewController id="UPQ-Gs-vEU" customClass="SettingsViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="UPQ-Gs-vEU" customClass="SettingsViewController" customModule="Choose_to_Be_Curious" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="y0E-kl-zRC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -571,13 +571,13 @@
         <!--Episodes-->
         <scene sceneID="yqs-Y3-Oc6">
             <objects>
-                <tableViewController id="WGt-aE-bYt" customClass="EpisodesViewController" customModule="Podcast" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="WGt-aE-bYt" customClass="EpisodesViewController" customModule="Choose_to_Be_Curious" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="1E2-HY-98M">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EpisodeCell" id="ffu-F0-8Zt" customClass="EpisodeCell" customModule="Podcast" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EpisodeCell" id="ffu-F0-8Zt" customClass="EpisodeCell" customModule="Choose_to_Be_Curious" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="104.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ffu-F0-8Zt" id="XQv-AG-5sJ">
@@ -678,7 +678,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6w5-2a-Z1J"/>
+        <segue reference="VkI-dO-CnT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Bookmark-Play" width="20" height="20"/>
