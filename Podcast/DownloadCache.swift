@@ -230,10 +230,10 @@ class DownloadCache {
     
     
     func downloadMp3(playerItem: PlayerItem, url : URL,Path: String ,userDownloaded: Bool, tryAWS: Bool, progress progressHandler: ((Double) -> Void)?, completion: @escaping (Download?,URL?, Error?) -> Void) {
-         print("string to compare",url.absoluteString)
+//         print("string to compare",url.absoluteString)
          
          for file in downloads {
-             print("abcd", file.cacheFileName, Path)
+
              if (file.cacheFileName == Path){
                  
                 completion(nil, file.fileURL,nil)
@@ -278,7 +278,7 @@ class DownloadCache {
          Alamofire.download(downloadURL, to: location).downloadProgress { (progress) in
              
              
-             print("hi",progress)
+
 //             DispatchQueue.main.async {
 //                 progressHandler?(progress.fractionCompleted)
 //             }

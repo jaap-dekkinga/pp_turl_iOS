@@ -103,12 +103,7 @@ let downloader = DownloadCache()
 
 		switch (tuneURL.type){
             
-        case "CYOA":
-
-            
-            print("Called CYOA")
-
-            break
+     
             
 			case "coupon":
 				// TODO: save the coupon
@@ -149,20 +144,88 @@ let downloader = DownloadCache()
 
     var count = 3
 	private func setupTuneURL(_ tuneURL: TuneURL.Match) {
-         print("trigger",tuneURL.type)
+
 		// setup the action message
 		var actionMessage = ""
 
 		switch (tuneURL.type) {
+        case "CYOA":
+        
+            actionMessage = "Choose Your Own Adventure"
+            webView.isHidden = true
+        countDownTimerLabel.isHidden = false
+        next_mp3 = URL(string: tuneURL.info)
+        openWebsiteButton.isHidden =  true
+           API.shared.getCYOA(id: tuneURL.id){ [self] files in
+               mp3Playlist = files as! [String]
+              count = 3
+               Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(InterestViewController.update), userInfo: nil, repeats: true)
+            
+               
+            for i in 0...2 {
+                let oneBtn : UIButton = {
+                             let button = UIButton()
+                             button.setTitle(data[i], for: .normal)
+                              button.backgroundColor = UIColor(named: "Item-Active")
+                             button.setTitleColor(UIColor.white, for: .normal)
+                             //button.translatesAutoresizingMaskIntoConstraints = false
+                             button.contentHorizontalAlignment = .center
+                             button.contentVerticalAlignment = .center
+                             button.titleLabel?.font = UIFont(name: "SpartanMB-Bold", size: UIScreen.main.bounds.height * 0.02463054187)
+                             button.layer.cornerRadius = UIScreen.main.bounds.height * 0.006157635468
+                             button.tag = i
+                     
+                    button.addTarget(self, action: #selector(self.buttonAction), for: .touchUpInside)
+                             return button
+                         }()
+                self.buttonStackView.addArrangedSubview(oneBtn)
+                self.buttonStackView.spacing = UIScreen.main.bounds.height * 0.04310344828
+                oneBtn.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.6333333333).isActive = true
+                oneBtn.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.06157635468).isActive = true
+                }
+
+          
+        }
     
         case "cyoa":
+        
+            actionMessage = "Choose Your Own Adventure"
+            webView.isHidden = true
+        countDownTimerLabel.isHidden = false
+        next_mp3 = URL(string: tuneURL.info)
+        openWebsiteButton.isHidden =  true
+           API.shared.getCYOA(id: tuneURL.id){ [self] files in
+               mp3Playlist = files as! [String]
+              count = 3
+               Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(InterestViewController.update), userInfo: nil, repeats: true)
+            
+               
+            for i in 0...2 {
+                let oneBtn : UIButton = {
+                             let button = UIButton()
+                             button.setTitle(data[i], for: .normal)
+                              button.backgroundColor = UIColor(named: "Item-Active")
+                             button.setTitleColor(UIColor.white, for: .normal)
+                             //button.translatesAutoresizingMaskIntoConstraints = false
+                             button.contentHorizontalAlignment = .center
+                             button.contentVerticalAlignment = .center
+                             button.titleLabel?.font = UIFont(name: "SpartanMB-Bold", size: UIScreen.main.bounds.height * 0.02463054187)
+                             button.layer.cornerRadius = UIScreen.main.bounds.height * 0.006157635468
+                             button.tag = i
+                     
+                    button.addTarget(self, action: #selector(self.buttonAction), for: .touchUpInside)
+                             return button
+                         }()
+                self.buttonStackView.addArrangedSubview(oneBtn)
+                self.buttonStackView.spacing = UIScreen.main.bounds.height * 0.04310344828
+                oneBtn.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.6333333333).isActive = true
+                oneBtn.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.06157635468).isActive = true
+                }
 
-            actionMessage = "CYOA"
-            countDownTimerLabel.isHidden = true
-//            if let url = URL(string: tuneURL.info) {
-//                webView.load(URLRequest(url: url))
-//            }
-            break
+          
+        }
+           
+         
 			case "coupon":
             countDownTimerLabel.isHidden = true
 				actionMessage = "Tap to Save Coupon"
@@ -185,47 +248,14 @@ let downloader = DownloadCache()
 				webView.isHidden = true
             
 
-			case "save_page":
-            
-				actionMessage = "temp CYOA"
-                webView.isHidden = true
-            countDownTimerLabel.isHidden = false
-            next_mp3 = URL(string: tuneURL.info)
-            openWebsiteButton.isHidden =  true
-               API.shared.getCYOA(id: tuneURL.id){ [self] files in
-                   mp3Playlist = files as! [String]
-                  count = 3
-                   Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(InterestViewController.update), userInfo: nil, repeats: true)
-                
-                   
-                for i in 0...2 {
-                    let oneBtn : UIButton = {
-                                 let button = UIButton()
-                                 button.setTitle(data[i], for: .normal)
-                                  button.backgroundColor = UIColor(named: "Item-Active")
-                                 button.setTitleColor(UIColor.white, for: .normal)
-                                 //button.translatesAutoresizingMaskIntoConstraints = false
-                                 button.contentHorizontalAlignment = .center
-                                 button.contentVerticalAlignment = .center
-                                 button.titleLabel?.font = UIFont(name: "SpartanMB-Bold", size: UIScreen.main.bounds.height * 0.02463054187)
-                                 button.layer.cornerRadius = UIScreen.main.bounds.height * 0.006157635468
-                                 button.tag = i
-                         
-                        button.addTarget(self, action: #selector(self.buttonAction), for: .touchUpInside)
-                                 return button
-                             }()
-                    self.buttonStackView.addArrangedSubview(oneBtn)
-                    self.buttonStackView.spacing = UIScreen.main.bounds.height * 0.04310344828
-                    oneBtn.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.6333333333).isActive = true
-                    oneBtn.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.06157635468).isActive = true
-                    }
-
-              
-            }
+//			case "save_page":
+//
+//            if let url = URL(string: tuneURL.info) {
+//                webView.load(URLRequest(url: url))
+//            }
+//
             
             
-            
-
 
 			case "sms":
             countDownTimerLabel.isHidden = true
@@ -243,7 +273,7 @@ let downloader = DownloadCache()
         next_mp3 = URL(string: mp3Playlist[sender.tag])
         mp3_path = mp3Playlist[sender.tag]
         self.dismiss(animated: true, completion: {
-            print("next url",self.next_mp3!)
+
             Player.shared.next_mp3 = self.next_mp3
             Player.shared.mp3_path = self.mp3_path
             Player.shared.printNextUrl()
@@ -259,7 +289,6 @@ let downloader = DownloadCache()
             if count == 0
             {
             self.dismiss(animated: true, completion: {
-                print("next url",self.next_mp3!)
                 Player.shared.next_mp3 = self.next_mp3
                 Player.shared.mp3_path = self.mp3_path
                 Player.shared.printNextUrl()
