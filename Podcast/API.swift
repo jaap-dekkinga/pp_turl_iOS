@@ -184,7 +184,7 @@ class API {
     
      func getCYOA(id: Int, completion: @escaping ([Any]) -> Void) {
          var mp3URLData = [Any]()
-        let searchURL = "https://pnz3vadc52.execute-api.us-east-2.amazonaws.com/dev/get-cyoa-mp3?tuneurl_id=299"
+        let searchURL = "https://pnz3vadc52.execute-api.us-east-2.amazonaws.com/dev/get-cyoa-mp3?tuneurl_id=\(id)"
       
         Alamofire.request(searchURL, method: .get, encoding: URLEncoding.queryString, headers: nil).responseJSON { (response) in
             switch response.result{
