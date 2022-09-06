@@ -185,15 +185,21 @@ class API {
      func getCYOA(id: Int, completion: @escaping ([Any]) -> Void) {
          var mp3URLData = [Any]()
         let searchURL = "https://pnz3vadc52.execute-api.us-east-2.amazonaws.com/dev/get-cyoa-mp3?tuneurl_id=\(id)"
+        
       
         Alamofire.request(searchURL, method: .get, encoding: URLEncoding.queryString, headers: nil).responseJSON { (response) in
             switch response.result{
+                
             case .success(let data):
-                     let data2 = data as! NSArray as [AnyObject]
+            
+             let data2 = data as! NSArray as [AnyObject]
                     if (data2.count > 0)  {
                 for dat3 in data2
                     {
+                    let checkURL : String = dat3["mp3_url"]!! as! String
+                    if(checkURL.contains("https://")){
                     mp3URLData.append(dat3["mp3_url"]!!)
+                    }
                       
                    }
                         
